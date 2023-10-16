@@ -81,12 +81,12 @@ namespace RE
 
 		struct RUNTIME_DATA
 		{
-#define RUNTIME_DATA_CONTENT                               \
-	BSTSmartPointer<MapMoveHandler> moveHandler;  /* 00 */ \
-	BSTSmartPointer<MapLookHandler> lookHandler;  /* 08 */ \
-	BSTSmartPointer<MapZoomHandler> zoomHandler;  /* 10 */ \
+#define RUNTIME_DATA_CONTENT                                \
+	BSTSmartPointer<MapMoveHandler> moveHandler;   /* 00 */ \
+	BSTSmartPointer<MapLookHandler> lookHandler;   /* 08 */ \
+	BSTSmartPointer<MapZoomHandler> zoomHandler;   /* 10 */ \
 	ObjectRefHandle                 mapMarker;     /* 18 */ \
-	LocalMapMenu                    localMapMenu; /* 20 */
+	LocalMapMenu                    localMapMenu;  /* 20 */
 
 			RUNTIME_DATA_CONTENT
 		};
@@ -98,25 +98,23 @@ namespace RE
 
 		struct RUNTIME_DATA2
 		{
-#define RUNTIME_DATA2_CONTENT                      \
-	RefHandle                unk30460;   /* 000 */ \
-	std::uint32_t            unk30464;   /* 004 */ \
-	std::uint32_t            unk30468;   /* 008 */ \
-	std::uint32_t            unk3046C;   /* 00C */ \
-	BSTArray<Unk30470Entry*> unk30470;   /* 010 */ \
-	BSTArray<Unk30488Entry*> unk30488;   /* 028 */ \
-	MapCamera                camera;     /* 040 */ \
-	std::uint64_t            unk30530;   /* 0D0 */ \
-	TESWorldSpace*           worldSpace; /* 0D8 */ \
-	GFxValue                 unk30540;   /* 0E0 */ \
-	std::uint64_t            unk30558;   /* 0F8 */ \
-	std::uint64_t            unk30560;   /* 100 */ \
-	std::uint64_t            unk30568;   /* 108 */ \
-	std::uint32_t            unk30570;   /* 110 */ \
-	BSSoundHandle            unk30574;   /* 114 */ \
-	std::uint64_t            unk30580;   /* 120 */ \
-	std::uint64_t            unk30588;   /* 128 */ \
-	std::uint64_t            unk30590;   /* 130 */
+#define RUNTIME_DATA2_CONTENT                                 \
+	RefHandle                unk30460;              /* 000 */ \
+	NiPoint3                 playerMarkerPosition;  /* 004 */ \
+	BSTArray<Unk30470Entry*> unk30470;              /* 010 */ \
+	BSTArray<Unk30488Entry*> unk30488;              /* 028 */ \
+	MapCamera                camera;                /* 040 */ \
+	std::uint64_t            unk30530;              /* 0D0 */ \
+	TESWorldSpace*           worldSpace;            /* 0D8 */ \
+	GFxValue                 unk30540;              /* 0E0 */ \
+	std::uint64_t            unk30558;              /* 0F8 */ \
+	std::uint64_t            unk30560;              /* 100 */ \
+	std::uint64_t            unk30568;              /* 108 */ \
+	std::uint32_t            unk30570;              /* 110 */ \
+	BSSoundHandle            unk30574;              /* 114 */ \
+	std::uint64_t            unk30580;              /* 120 */ \
+	std::uint64_t            unk30588;              /* 128 */ \
+	std::uint64_t            unk30590;              /* 130 */
             RUNTIME_DATA2_CONTENT
 		};
 		static_assert(sizeof(RUNTIME_DATA2) == 0x138);

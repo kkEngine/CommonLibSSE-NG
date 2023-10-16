@@ -187,6 +187,7 @@ set(SOURCES
 	include/RE/B/BGSStoryManagerTreeForm.h
 	include/RE/B/BGSStoryTeller.h
 	include/RE/B/BGSTalkingActivator.h
+	include/RE/B/BGSTerrainManager.h
 	include/RE/B/BGSTextureModel.h
 	include/RE/B/BGSTextureSet.h
 	include/RE/B/BGSTypedItem.h
