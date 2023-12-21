@@ -5,7 +5,7 @@
 
 namespace RE
 {
-    struct TintMask
+    class TintMask
     {
     public:
         enum class Type

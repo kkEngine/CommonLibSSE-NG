@@ -19,6 +19,7 @@
 #include "RE/P/PositionPlayerEvent.h"
 #include "RE/T/TESObjectWEAP.h"
 #include "RE/T/TESQuest.h"
+#include "RE/T/TintMask.h"
 
 namespace RE
 {
@@ -43,7 +44,6 @@ namespace RE
 	class ObjectListItem;
 	class TESObject;
 	class TESObjectREFR;
-	class TintMask;
 	class UserEventEnabledEvent;
 	struct BGSActorCellEvent;
 	struct BGSActorDeathEvent;
