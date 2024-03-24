@@ -43,6 +43,34 @@ namespace RE
 		return func(this);
 	}
 
+	bool TESForm::HasAnyKeywordByEditorID(const std::vector<std::string>& editorIDs) const
+	{
+		// Try to cast to a keyword form interface
+		const auto keywordForm = As<BGSKeywordForm>();
+		if (!keywordForm) {
+			return false;
+		}
+
+		// Iterate through the keywords
+		for (std::uint32_t i = 0; i < keywordForm->GetNumKeywords(); ++i) {
+			auto keywordOpt = keywordForm->GetKeywordAt(i);
+			if (keywordOpt) {
+				auto keyword = *keywordOpt;
+				if (keyword) {
+					const char* keywordEditorID = keyword->GetFormEditorID();
+					if (keywordEditorID) {
+						// Check if the keywordEditorID is in the given editorIDs vector
+						if (std::find(editorIDs.begin(), editorIDs.end(), keywordEditorID) != editorIDs.end()) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
 	bool TESForm::HasKeywordInArray(const std::vector<BGSKeyword*>& a_keywords, bool a_matchAll) const
 	{
 		const auto keywordForm = As<BGSKeywordForm>();
@@ -179,5 +207,12 @@ namespace RE
 		default:
 			return false;
 		}
+	}
+
+	void TESForm::SetPlayerKnows(bool a_known)
+	{
+		using func_t = decltype(&TESForm::SetPlayerKnows);
+		REL::Relocation<func_t> func{ RELOCATION_ID(14482, 14639) };
+		return func(this, a_known);
 	}
 }

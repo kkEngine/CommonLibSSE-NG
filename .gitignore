@@ -5,7 +5,11 @@ CMakeCache.txt
 *.cmake
 /out*
 /.vs*
+/.xmake/
 /.idea
+/build
+/out
+*.zip
 conan.lock
 conanbuildinfo.*
 conaninfo.txt

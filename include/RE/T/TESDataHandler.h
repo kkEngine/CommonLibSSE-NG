@@ -40,6 +40,8 @@ namespace RE
 	public:
 		static TESDataHandler* GetSingleton();
 
+		bool AddFormToDataHandler(TESForm* a_form);
+
 		std::uint32_t LoadScripts();
 		TESForm*      LookupForm(FormID a_localFormID, std::string_view a_modName);
 		TESForm*      LookupFormRaw(FormID a_rawFormID, std::string_view a_modName);
@@ -192,6 +194,7 @@ namespace RE
 		InventoryChanges*     merchantInventory;  // 1588
 #endif
 	};
+#undef RUNTIME_DATA_CONTENT
 
 	template <class T>
 	T* TESDataHandler::LookupForm(FormID a_localFormID, std::string_view a_modName)

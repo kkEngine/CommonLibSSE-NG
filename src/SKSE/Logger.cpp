@@ -72,13 +72,16 @@ namespace SKSE
 			}
 
 			std::filesystem::path path = knownPath.get();
-			path /= "My Games";
+			path /= "My Games"sv;
 			if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
 				path /= "Skyrim VR";
 			} else {
-				path /= *REL::Relocation<const char**>(RELOCATION_ID(508778, 380738)).get();
+				path /= std::filesystem::exists("steam_api64.dll") ?
+					(std::filesystem::exists("openvr_api.dll") ? "Skyrim VR" : "Skyrim Special Edition") :
+				    "Skyrim Special Edition GOG";
 			}
 			path /= "SKSE"sv;
+
 			return path;
 		}
 

@@ -262,6 +262,7 @@ namespace RE
 		enum class ByCharGenFlag
 		{
 			kNone = 0,
+			kDisableSaving = 1 << 0,
 			kHandsBound = 1 << 2
 		};
 
@@ -562,6 +563,7 @@ namespace RE
 		[[nodiscard]] TintMask*                GetTintMask(std::uint32_t a_tintType, std::uint32_t a_index);
 		[[nodiscard]] bool HasActorDoingCommand() const;
 		[[nodiscard]] bool IsGrabbing() const;
+		void                     PlayMagicFailureSound(MagicSystem::SpellType a_spellType);
 		void               PlayPickupEvent(TESForm* a_item, TESForm* a_containerOwner, TESObjectREFR* a_containerRef, EventType a_eventType);
 		void                     SetAIDriven(bool a_enable);
 		void                     SetEscaping(bool a_flag, bool a_escaped);

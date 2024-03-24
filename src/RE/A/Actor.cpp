@@ -480,6 +480,12 @@ namespace RE
 		}
 	}
 
+	HighProcessData* Actor::GetHighProcess() const
+	{
+		const auto& runtimeData = GetActorRuntimeData();
+		return runtimeData.currentProcess ? runtimeData.currentProcess->high : nullptr;
+	}
+
 	Actor* Actor::GetKiller() const
 	{
 		if (IsDead(false)) {
@@ -494,6 +500,12 @@ namespace RE
 		using func_t = decltype(&Actor::GetLevel);
 		REL::Relocation<func_t> func{ Offset::Actor::GetLevel };
 		return func(this);
+	}
+
+	MiddleHighProcessData* Actor::GetMiddleHighProcess() const
+	{
+		const auto& runtimeData = GetActorRuntimeData();
+		return runtimeData.currentProcess ? runtimeData.currentProcess->middleHigh : nullptr;
 	}
 
 	bool Actor::GetMount(NiPointer<Actor>& a_outMount)
@@ -538,6 +550,15 @@ namespace RE
 		return base ? base->race : nullptr;
 	}
 
+	float Actor::GetRegenDelay(ActorValue a_actorValue) const
+	{
+		const auto& runtimeData = GetActorRuntimeData();
+		if (runtimeData.currentProcess) {
+			return runtimeData.currentProcess->GetRegenDelay(a_actorValue);
+		}
+		return 0.0f;
+	}
+
 	bool Actor::GetRider(NiPointer<Actor>& a_outRider)
 	{
 		using func_t = decltype(&Actor::GetRider);
@@ -567,6 +588,13 @@ namespace RE
 	{
 		using func_t = decltype(&Actor::GetSoulSize);
 		REL::Relocation<func_t> func{ RELOCATION_ID(37862, 38817) };
+		return func(this);
+	}
+
+	float Actor::GetTotalCarryWeight()
+	{
+		using func_t = decltype(&Actor::GetTotalCarryWeight);
+		REL::Relocation<func_t> func{ RELOCATION_ID(36456, 37452) };
 		return func(this);
 	}
 
@@ -678,6 +706,13 @@ namespace RE
 		using func_t = decltype(&Actor::HasSpell);
 		REL::Relocation<func_t> func{ RELOCATION_ID(37828, 38782) };
 		return func(this, a_spell);
+	}
+
+	void Actor::InitiateDoNothingPackage()
+	{
+		using func_t = decltype(&Actor::InitiateDoNothingPackage);
+		REL::Relocation<func_t> func{ RELOCATION_ID(36408, 37402) };
+		return func(this);
 	}
 
 	void Actor::InterruptCast(bool a_restoreMagicka) const
@@ -932,6 +967,13 @@ namespace RE
 		extraList.RemoveByType(ExtraDataType::kAttachedArrows3D);
 	}
 
+	void Actor::RemoveFromFaction(RE::TESFaction* a_faction)
+	{
+		using func_t = decltype(&Actor::RemoveFromFaction);
+		REL::Relocation<func_t> func{ RELOCATION_ID(36680, 37688) };
+		return func(this, a_faction);
+	}
+
 	bool Actor::RemoveSpell(SpellItem* a_spell)
 	{
 		using func_t = decltype(&Actor::RemoveSpell);
@@ -1080,6 +1122,14 @@ namespace RE
 					model->UpdateHairColor(color);
 				}
 			}
+		}
+	}
+
+	void Actor::UpdateRegenDelay(ActorValue a_actorValue, float a_regenDelay)
+	{
+		const auto& runtimeData = GetActorRuntimeData();
+		if (runtimeData.currentProcess) {
+			runtimeData.currentProcess->UpdateRegenDelay(a_actorValue, a_regenDelay);
 		}
 	}
 

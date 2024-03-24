@@ -95,6 +95,7 @@ set(SOURCES
 	include/RE/B/BGSEntryPointFunctionData.h
 	include/RE/B/BGSEntryPointFunctionDataActivateChoice.h
 	include/RE/B/BGSEntryPointFunctionDataOneValue.h
+	include/RE/B/BGSEntryPointFunctionDataSpellItem.h
 	include/RE/B/BGSEntryPointFunctionDataText.h
 	include/RE/B/BGSEntryPointPerkEntry.h
 	include/RE/B/BGSEquipSlot.h
@@ -143,6 +144,7 @@ set(SOURCES
 	include/RE/B/BGSMusicType.h
 	include/RE/B/BGSNamedPackageData.h
 	include/RE/B/BGSNote.h
+	include/RE/B/BGSNumericIDIndex.h
 	include/RE/B/BGSOpenCloseForm.h
 	include/RE/B/BGSOutfit.h
 	include/RE/B/BGSOverridePackCollection.h
@@ -164,6 +166,9 @@ set(SOURCES
 	include/RE/B/BGSReferenceEffect.h
 	include/RE/B/BGSRelationship.h
 	include/RE/B/BGSReverbParameters.h
+	include/RE/B/BGSSaveFormBuffer.h
+	include/RE/B/BGSSaveGameBuffer.h
+	include/RE/B/BGSSaveLoadGame.h
 	include/RE/B/BGSSaveLoadManager.h
 	include/RE/B/BGSScene.h
 	include/RE/B/BGSSceneAction.h
@@ -710,6 +715,7 @@ set(SOURCES
 	include/RE/F/FavoritesMenu.h
 	include/RE/F/FightReactions.h
 	include/RE/F/FileID.h
+	include/RE/F/FindMaxMagnitudeVisitor.h
 	include/RE/F/FirstPersonState.h
 	include/RE/F/FixedStrings.h
 	include/RE/F/FlameProjectile.h
@@ -1619,6 +1625,7 @@ set(SOURCES
 	include/SKSE/Impl/DInputAPI.h
 	include/SKSE/Impl/PCH.h
 	include/SKSE/Impl/RegistrationTraits.h
+	include/SKSE/Impl/ScePadAPI.h
 	include/SKSE/Impl/Stubs.h
 	include/SKSE/Impl/WinAPI.h
 	include/SKSE/Impl/XInputAPI.h
@@ -1643,7 +1650,6 @@ set(SOURCES
 	src/RE/A/ActorValueList.cpp
 	src/RE/A/ActorValueOwner.cpp
 	src/RE/A/AddCallbackVisitor.cpp
-	src/RE/A/AnimationFileManagerSingleton.cpp
 	src/RE/A/ArmorRatingVisitor.cpp
 	src/RE/A/ArmorRatingVisitorBase.cpp
 	src/RE/A/Array.cpp
@@ -1767,7 +1773,8 @@ set(SOURCES
 	src/RE/E/ExtraSoul.cpp
 	src/RE/E/ExtraTextDisplayData.cpp
 	src/RE/E/ExtraUniqueID.cpp
-    src/RE/F/FormTypes.cpp
+	src/RE/F/FindMaxMagnitudeVisitor.cpp
+	src/RE/F/FormTypes.cpp
 	src/RE/F/FxDelegate.cpp
 	src/RE/F/FxDelegateArgs.cpp
 	src/RE/G/GAtomic.cpp

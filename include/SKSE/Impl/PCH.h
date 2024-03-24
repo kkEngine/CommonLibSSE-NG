@@ -22,6 +22,7 @@
 #include <format>
 #include <fstream>
 #include <functional>
+#include <intrin.h>
 #include <iomanip>
 #include <ios>
 #include <istream>
@@ -63,6 +64,7 @@ static_assert(
 #pragma warning(pop)
 
 #include "SKSE/Impl/DInputAPI.h"
+#include "SKSE/Impl/ScePadAPI.h"
 #include "SKSE/Impl/WinAPI.h"
 #include "SKSE/Impl/XInputAPI.h"
 
@@ -669,7 +671,7 @@ namespace SKSE
 				}
 
 				return utf8_to_utf16(
-					fmt::format(
+					std::format(
 						"{}({}): {}"sv,
 						filename,
 						a_loc.line(),

@@ -194,12 +194,12 @@ namespace RE
 		float                                          unk29C;                      // 29C
 		float                                          unk2A0;                      // 2A0
 		float                                          unk2A4;                      // 2A4
-		float                                          unk2A8;                      // 2A8
+		float                                          currentMovementSpeed;        // 2A8
 		float                                          unk2AC;                      // 2AC
 		float                                          unk2B0;                      // 2B0
 		float                                          bleedoutRate;                // 2B4
 		float                                          unk2B8;                      // 2B8
-		float                                          unk2BC;                      // 2BC
+		float                                          maximumWardPower;            // 2BC
 		float                                          unk2C0;                      // 2C0
 		float                                          torchEvaluationTimer;        // 2C4
 		float                                          alphaMult;                   // 2C8

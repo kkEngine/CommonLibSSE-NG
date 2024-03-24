@@ -99,6 +99,7 @@ if (MSVC)
 			/wd4710 # 'function' : function not inlined
 			/wd4711 # function 'function' selected for inline expansion
 			/wd4820 # 'bytes' bytes padding added after construct 'member_name'
+			/wd4996 # 'deprecated function': required due to Microsoft STL itself using its own deprecated functions
 			/wd5026 # 'type': move constructor was implicitly defined as deleted
 			/wd5027 # 'type': move assignment operator was implicitly defined as deleted
 			/wd5045 # Compiler will insert Spectre mitigation for memory load if /Qspectre switch specified

@@ -195,13 +195,12 @@ namespace RE
 		// members
 #ifndef SKYRIM_CROSS_VR
 		RUNTIME_DATA_CONTENT       // 40, 68
-			RUNTIME_DATA2_CONTENT  // 30460, 30508
+		RUNTIME_DATA2_CONTENT  // 30460, 30508
 #endif
 	};
+
 #ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(MapMenu) == 0x30598);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(MapMenu) == 0x30640);
 #endif
 }
 
