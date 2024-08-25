@@ -13,6 +13,7 @@
 #include "RE/M/Movement.h"
 #include "RE/N/NiPoint3.h"
 #include "RE/N/NiSmartPointer.h"
+#include "RE/P/PathingPoint.h"
 #include "RE/P/PlayerCharacter.h"
 #include "RE/T/TESShout.h"
 
@@ -21,6 +22,8 @@ namespace RE
 	class ActorKnowledge;
 	class BGSAttackData;
 	class BGSProjectile;
+	class BSPathingRequest;
+	class BSPathingSolutionsContainer;
 	class DialogueItem;
 	class IAnimationSetCallbackFunctor;
 	class MagicItem;
@@ -28,6 +31,7 @@ namespace RE
 	class NiAVObject;
 	class NiPointLight;
 	class NiRefObject;
+	class RunActionAnimationLoadedCallback;
 	class TESObjectREFR;
 	class TESObjectWEAP;
 	class StandardDetectionListener;
@@ -92,46 +96,6 @@ namespace RE
 			};
 		};
 		using HEAD_TRACK_TYPE = HEAD_TRACK_TYPES::HEAD_TRACK_TYPE;
-
-		struct Data190 : public BSIntrusiveRefCounted
-		{
-		public:
-			struct Data
-			{
-			public:
-				struct UnkData
-				{
-					std::uint64_t unk00;  // 00
-					std::uint64_t unk08;  // 08
-					std::uint64_t unk10;  // 10
-					std::uint64_t unk18;  // 18
-					std::uint64_t unk20;  // 20
-					std::uint64_t unk28;  // 28
-					std::uint64_t unk30;  // 30
-					std::uint64_t unk38;  // 38
-					std::uint64_t unk40;  // 40
-					std::uint64_t unk48;  // 48
-					std::uint64_t unk50;  // 50
-					std::uint64_t unk58;  // 58
-					std::uint64_t unk60;  // 60
-					std::uint64_t unk68;  // 68
-					std::uint64_t unk70;  // 70
-					std::uint64_t unk78;  // 78
-				};
-				static_assert(sizeof(UnkData) == 0x80);
-
-				// members
-				UnkData*      unk00;  // 00
-				std::uint64_t unk08;  // 08
-			};
-			static_assert(sizeof(Data) == 0x10);
-
-			// members
-			std::uint32_t       unk04;  // 00
-			BSTSmallArray<Data> unk08;  // 08
-			std::uint64_t       unk28;  // 28
-		};
-		static_assert(sizeof(Data190) == 0x30);
 
 		struct Data208
 		{
@@ -223,20 +187,13 @@ namespace RE
 		float                                                 headTrackTargetOffsetTimer;                // 174
 		ObjectRefHandle                                       lastTarget;                                // 178
 		ObjectRefHandle                                       pathLookAtTarget;                          // 17C
-		void*                                                 unk180;                                    // 180 - smart ptr
-		void*                                                 unk188;                                    // 188 - smart ptr
-		BSTSmartPointer<Data190>                              unk190;                                    // 190
-		BSTSmartPointer<Data190>                              unk198;                                    // 198
-		float                                                 unk1A0;                                    // 1A0
-		float                                                 unk1A4;                                    // 1A4
-		float                                                 unk1A8;                                    // 1A8
-		std::uint32_t                                         unk1AC;                                    // 1AC
-		std::uint64_t                                         unk1B0;                                    // 1B0
-		std::uint64_t                                         unk1B8;                                    // 1B8
-		std::uint64_t                                         unk1C0;                                    // 1C0
-		std::uint64_t                                         unk1C8;                                    // 1C8
+		BSTSmartPointer<BSPathingRequest>                     unk180;                                    // 180 - smart ptr
+		BSTSmartPointer<BSPathingRequest>                     unk188;                                    // 188 - smart ptr
+		BSTSmartPointer<BSPathingSolutionsContainer>          unk190;                                    // 190
+		BSTSmartPointer<BSPathingSolutionsContainer>          unk198;                                    // 198
+		PathingPoint                                          unk1A0;                                    // 1A0
 		std::uint64_t                                         unk1D0;                                    // 1D0
-		std::uint64_t                                         unk1D8;                                    // 1D8
+		BSSpinLock                                            unk1D8;                                    // 1D8
 		float                                                 unk1E0;                                    // 1E0
 		float                                                 cachedActorHeight;                         // 1E4
 		NiPointer<NiRefObject>                                unk1E8;                                    // 1E8
@@ -261,7 +218,7 @@ namespace RE
 		NiPoint3                                              deathForceDirection;                       // 27C
 		float                                                 deathForce;                                // 288
 		float                                                 unk28C;                                    // 28C
-		float                                                 unk290;                                    // 290
+		float                                                 AITalkToNPCTimer;                          // 290
 		float                                                 unk294;                                    // 294
 		float                                                 unk298;                                    // 298
 		float                                                 clearTalkToListTimer;                      // 29C
@@ -321,11 +278,13 @@ namespace RE
 		NiPointer<StandardDetectionListener>                  detectionListener;                         // 3E0
 		std::uint64_t                                         unk3E8;                                    // 3E8
 		void*                                                 unk3F0;                                    // 3F0 - smart ptr
-		std::uint64_t                                         unk3F8;                                    // 3F8
-		BSTSmallArray<std::uint64_t>                          unk400;                                    // 400
+		std::uint16_t                                         replacedLeftHandItemType;                  // 3F8
+		std::uint16_t                                         replacedRightHandItemType;                 // 3FA
+		std::uint32_t                                         unk3FC;                                    // 3FC
+		BSTSmallArray<DEFAULT_OBJECT, 2>                      movementActionsQueue;                      // 400
 		NiPoint3                                              animationDelta;                            // 418
 		NiPoint3                                              animationAngleMod;                         // 424
-		BSTSmartPointer<IAnimationSetCallbackFunctor>         unk430;                                    // 430
+		BSTSmartPointer<RunActionAnimationLoadedCallback>     runActionAnimationLoadedCallback;          // 430
 		float                                                 absorbTimer;                               // 438
 		float                                                 unk43C;                                    // 43C
 		Crime*                                                crimeToReactTo;                            // 440
@@ -344,7 +303,7 @@ namespace RE
 		std::uint8_t                                          unk45B;                                    // 45B
 		std::uint8_t                                          unk45C;                                    // 45C
 		std::uint8_t                                          unk45D;                                    // 45D
-		std::uint8_t                                          unk45E;                                    // 45E
+		bool                                                  isInLoadingMenu;                           // 45E
 		bool                                                  isDualCasting;                             // 45F
 		bool                                                  getPlantedExplosive;                       // 460
 		bool                                                  approachingAutoTeleportDoor;               // 461
@@ -359,9 +318,9 @@ namespace RE
 		bool                                                  unk46A;                                    // 46A
 		bool                                                  deathDialogue;                             // 46B
 		bool                                                  fistsDrawn;                                // 46C
-		bool                                                  unk46D;                                    // 46D
+		bool                                                  isAnimationDriven;                         // 46D
 		bool                                                  unk46E;                                    // 46E
-		bool                                                  unk46F;                                    // 46F
+		bool                                                  isAllowRotation;                           // 46F
 		bool                                                  doorActivated;                             // 470
 		bool                                                  unk471;                                    // 471
 		bool                                                  aggroRadiusStarted;                        // 472

@@ -6,6 +6,7 @@
 #include "RE/B/BSTArray.h"
 #include "RE/B/BSTEvent.h"
 #include "RE/B/BSTSmartPointer.h"
+#include "RE/B/BShkbHkxDB.h"
 #include "RE/H/hkbCharacter.h"
 
 namespace RE
@@ -130,7 +131,7 @@ namespace RE
 		float                          interpolationTimeOffsets[2];  // 1E8
 		BSFixedString                  projectName;                  // 1F0
 		BSResource::ID*                unk1F8;                       // 1F8
-		void*                          projectDBData;                // 200 - BShkbHkxDB::ProjectDBData*
+		BShkbHkxDB::ProjectDBData*     projectDBData;                // 200
 		hkbBehaviorGraph*              behaviorGraph;                // 208
 		Actor*                         holder;                       // 210
 		BSFadeNode*                    rootNode;                     // 218

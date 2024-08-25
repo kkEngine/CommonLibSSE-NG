@@ -1905,9 +1905,9 @@ namespace RE
 		return RelocateVirtual<decltype(&Actor::GetResponseString)>(0x119, 0x11B, this);
 	}
 
-	void Actor::ModifyMovementData(float a_delta, NiPoint3& a_arg3, NiPoint3& a_arg4)
+	void Actor::ModifyMovementData(float a_delta, NiPoint3& a_deltaTranslation, NiPoint3& a_deltaRotation)
 	{
-		RelocateVirtual<decltype(&Actor::ModifyMovementData)>(0x11A, 0x11C, this, a_delta, a_arg3, a_arg4);
+		RelocateVirtual<decltype(&Actor::ModifyMovementData)>(0x11A, 0x11C, this, a_delta, a_deltaTranslation, a_deltaRotation);
 	}
 
 	void Actor::UpdateCombatControllerSettings()

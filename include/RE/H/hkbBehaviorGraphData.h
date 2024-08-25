@@ -4,10 +4,12 @@
 
 namespace RE
 {
-	class hkbVariableInfo;
 	class hkbEventInfo;
 	class hkbVariableBounds;
+	class hkbVariableInfo;
 	class hkbVariableValueSet;
+
+	union hkbVariableValue;
 
 	class hkbBehaviorGraphData : public hkReferencedObject
 	{
@@ -22,9 +24,8 @@ namespace RE
 		hkArray<hkbVariableInfo>             variableInfos;           // 20
 		hkArray<hkbVariableInfo>             characterPropertyInfos;  // 30
 		hkArray<hkbVariableInfo>             eventInfos;              // 40
-		hkArray<hkbVariableBounds>           variableBounds;          // 50
-		uint64_t                             unk60;                   // 60
-		uint64_t                             unk68;                   // 68
+		hkArray<hkbVariableValue>            wordMinVariableValues;   // 50
+		hkArray<hkbVariableValue>            wordMaxVariableValues;   // 60
 		hkbVariableValueSet*                 variableInitialValues;   // 70
 		hkRefPtr<hkbBehaviorGraphStringData> stringData;              // 78
 	};

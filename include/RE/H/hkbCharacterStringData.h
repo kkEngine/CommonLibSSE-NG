@@ -20,6 +20,8 @@ namespace RE
 			hkStringPtr meshName;
 		};
 
+		~hkbCharacterStringData() override;  // 00
+
 		// members
 		hkArray<FileNameMeshNamePair>     deformableSkinNames;                 // 10
 		hkArray<FileNameMeshNamePair>     rigidSkinNames;                      // 20

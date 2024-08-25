@@ -80,7 +80,8 @@ namespace RE
 			kMaterialsApplied = 1 << 23,
 			kHighDetail = 1 << 24,
 			kForceUpdate = 1 << 25,
-			kPreProcessedNode = 1 << 26
+			kPreProcessedNode = 1 << 26,
+			Unk27 = 1 << 27,
 		};
 
 		~NiAVObject() override;  // 00
@@ -99,10 +100,10 @@ namespace RE
 #if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 		virtual void Unk_VRFunc(void);
 #endif
-		SKYRIM_REL_VR_VIRTUAL void PerformOp(PerformOpFunc& a_func);                                                                          // 26
-		SKYRIM_REL_VR_VIRTUAL void AttachProperty(NiAlphaProperty* a_property);                                                               // 27 - { return; }
-		SKYRIM_REL_VR_VIRTUAL void SetMaterialNeedsUpdate(bool a_needsUpdate);                                                                // 28 - { return; }
-		SKYRIM_REL_VR_VIRTUAL void SetDefaultMaterialNeedsUpdateFlag(bool a_flag);                                                            // 29 - { return; }
+		SKYRIM_REL_VR_VIRTUAL void        PerformOp(PerformOpFunc& a_func);                                                                   // 26
+		SKYRIM_REL_VR_VIRTUAL void        AttachProperty(NiAlphaProperty* a_property);                                                        // 27 - { return; }
+		SKYRIM_REL_VR_VIRTUAL void        SetMaterialNeedsUpdate(bool a_needsUpdate);                                                         // 28 - { return; }
+		SKYRIM_REL_VR_VIRTUAL void        SetDefaultMaterialNeedsUpdateFlag(bool a_flag);                                                     // 29 - { return; }
 		SKYRIM_REL_VR_VIRTUAL NiAVObject* GetObjectByName(const BSFixedString& a_name);                                                       // 2A
 		SKYRIM_REL_VR_VIRTUAL void        SetSelectiveUpdateFlags(bool& a_selectiveUpdate, bool a_selectiveUpdateTransforms, bool& a_rigid);  // 2B
 		SKYRIM_REL_VR_VIRTUAL void        UpdateDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2);                                     // 2C

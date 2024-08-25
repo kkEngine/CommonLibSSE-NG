@@ -7,7 +7,13 @@ namespace RE
 {
 	namespace BSGraphics
 	{
-		class Texture;
+		struct Texture
+		{
+			ID3D11Texture2D*          texture;
+			uint64_t                  unk08;
+			ID3D11ShaderResourceView* resourceView;
+		};
+		static_assert(sizeof(Texture) == 0x18);
 	}
 
 	namespace BSResource
@@ -21,7 +27,14 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiSourceTexture;
-		inline static auto           Ni_RTTI = NiRTTI_NiSourceTexture;
+		inline static constexpr auto Ni_RTTI = NiRTTI_NiSourceTexture;
+
+		static void Load(const BSFixedString& path, bool unk01, NiPointer<NiSourceTexture>& texture, bool isCubemap)
+		{
+			using func_t = decltype(&NiSourceTexture::Load);
+			REL::Relocation<func_t> func{ RELOCATION_ID(98986, 105640) };
+			func(path, unk01, texture, isCubemap);
+		}
 
 		~NiSourceTexture() override;  // 00
 

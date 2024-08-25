@@ -13,7 +13,13 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_NiTimeController;
-		inline static auto           Ni_RTTI = NiRTTI_NiTimeController;
+		inline static constexpr auto Ni_RTTI = NiRTTI_NiTimeController;
+
+		enum class AnimType
+		{
+			kAppTime,
+			kAppInit,
+		};
 
 		enum class CycleType
 		{
@@ -57,7 +63,7 @@ namespace RE
 		// add
 		virtual void               Start(float a_time);                             // 25
 		virtual void               Stop();                                          // 26
-		virtual void               Update(float a_time) = 0;                        // 27
+		virtual void               Update(float* a_time) = 0;                       // 27
 		virtual void               SetTarget(NiObjectNET* a_target);                // 28
 		[[nodiscard]] virtual bool IsTransformController() const { return false; }  // 29
 		[[nodiscard]] virtual bool IsVertexController() const { return false; }     // 2A

@@ -9,7 +9,7 @@ namespace RE
 	public:
 		inline static constexpr auto RTTI = RTTI_BaseFormComponent;
 
-		virtual ~BaseFormComponent();  // 00
+		virtual ~BaseFormComponent() = default;  // 00
 
 		// add
 		virtual void InitializeDataComponent() = 0;            // 01

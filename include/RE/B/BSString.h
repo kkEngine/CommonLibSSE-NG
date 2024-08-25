@@ -123,7 +123,7 @@ namespace RE
 
 		BSStringT(const std::string_view& a_rhs)
 		{
-			set_cstr(a_rhs.data(), a_rhs.size());
+			set_cstr(a_rhs.data(), static_cast<uint32_t>(a_rhs.size()));
 		}
 
 		~BSStringT()

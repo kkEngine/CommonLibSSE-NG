@@ -1,6 +1,6 @@
 #pragma once
 
-#include "RE/B/BSShaderMaterial.h"
+#include "RE/B/BSLightingShaderMaterialBase.h"
 #include "RE/N/NiColor.h"
 #include "RE/N/NiSmartPointer.h"
 #include "RE/T/TextureAddressModes.h"

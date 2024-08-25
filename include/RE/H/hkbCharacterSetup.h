@@ -20,6 +20,8 @@ namespace RE
 		inline static constexpr auto RTTI = RTTI_hkbCharacterSetup;
 		inline static constexpr auto VTABLE = VTABLE_hkbCharacterSetup;
 
+		~hkbCharacterSetup() override;  // 00
+
 		// members
 		hkArray<hkRefPtr<const hkaSkeletonMapper>> retargetingSkeletonMappers;        // 10
 		hkRefPtr<const hkaSkeleton>                animationSkeleton;                 // 20

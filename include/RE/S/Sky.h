@@ -7,6 +7,7 @@
 #include "RE/N/NiColor.h"
 #include "RE/N/NiSmartPointer.h"
 #include "RE/S/SkyEffectController.h"
+#include "RE/T/TESWeather.h"
 
 namespace RE
 {
@@ -25,7 +26,6 @@ namespace RE
 	class Sun;
 	class TESClimate;
 	class TESRegion;
-	class TESWeather;
 
 	class Sky
 	{
@@ -62,17 +62,39 @@ namespace RE
 		public:
 		};
 
+		struct FogTimeInfo
+		{
+		public:
+			float dayPercent = 0.f;
+		};
+
+		struct ColorTimeInfo
+		{
+		public:
+			TESWeather::ColorTime firstTime = TESWeather::ColorTime::kDay;
+			TESWeather::ColorTime secondTime = TESWeather::ColorTime::kDay;
+			bool                  needsTimeInterpolation = false;
+			float                 timePercent = 0.f;
+		};
+
 		virtual ~Sky();  // 00
 
 		static Sky* GetSingleton();
 
-		[[nodiscard]] bool IsRaining() const;
-		[[nodiscard]] bool IsSnowing() const;
+		[[nodiscard]] bool  IsRaining() const;
+		[[nodiscard]] bool  IsSnowing() const;
+		[[nodiscard]] float GetDayBeginTime();
+		[[nodiscard]] float GetNightBeginTime();
+		[[nodiscard]] float GetSunriseEndTime();
+		[[nodiscard]] float GetSunsetBeginTime();
 
 		void SetWeather(TESWeather* a_weather, bool a_override, bool a_accelerate);
 		void ForceWeather(TESWeather* a_weather, bool a_override);
 		void ReleaseWeatherOverride();
 		void ResetWeather();
+
+		[[nodiscard]] FogTimeInfo   GetFogTimeInfo();
+		[[nodiscard]] ColorTimeInfo GetColorTimeInfo();
 
 		// members
 		NiPointer<BSMultiBoundNode>            root;                            // 008

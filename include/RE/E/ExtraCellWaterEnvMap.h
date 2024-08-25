@@ -12,11 +12,17 @@ namespace RE
 		inline static constexpr auto RTTI = RTTI_ExtraCellWaterEnvMap;
 		inline static auto           EXTRADATATYPE = ExtraDataType::kCellWaterEnvMap;
 
-		~ExtraCellWaterEnvMap() override;  // 00
+		~ExtraCellWaterEnvMap() override = default;  // 00
 
 		// override (BSExtraData)
-		ExtraDataType GetType() const override;                             // 01 - { return kCellWaterEnvMap; }
-		bool          IsNotEqual(const BSExtraData* a_rhs) const override;  // 02
+		ExtraDataType GetType() const override
+		{
+			return EXTRADATATYPE;
+		}  // 01 - { return kCellWaterEnvMap; }
+		bool IsNotEqual(const BSExtraData* a_rhs) const override
+		{
+			return waterEnvMap.textureName != static_cast<const ExtraCellWaterEnvMap*>(a_rhs)->waterEnvMap.textureName;
+		}  // 02
 
 		// members
 		TESTexture waterEnvMap;  // 10

@@ -177,6 +177,279 @@ namespace RE
 			Total = 159
 		};
 
+		struct ApplyReflectionsShaderInfo
+		{
+			BSShader* shader;
+			bool      isEnabled;
+		};
+		static_assert(sizeof(ApplyReflectionsShaderInfo) == 0x10);
+
+		struct ApplyVolumetricLightingShaderInfo
+		{
+			BSShader* shader;
+			bool      isEnabled;
+		};
+		static_assert(sizeof(ApplyVolumetricLightingShaderInfo) == 0x10);
+
+		struct BasicCopyShaderInfo
+		{
+			BSShader* shader;
+			bool      isEnabled;
+		};
+		static_assert(sizeof(BasicCopyShaderInfo) == 0x10);
+
+		struct IBLFShaderInfo
+		{
+			BSShader* ISBlurShader;
+			BSShader* ISDownsampleShader;
+			BSShader* ISDownsampleIgnoreBrightestShader;
+			BSShader* ISDownsampleCSShader;
+			BSShader* ISDownsampleIgnoreBrightestCSShader;
+			BSShader* ISIBLensFlaresShader;
+			bool      isEnabled;
+			uint64_t  unk38;
+			uint64_t  unk40;
+			uint32_t  unk48;
+			uint32_t  unk4C;
+			uint32_t  unk50;
+			uint32_t  unk54;
+			bool      unk58;
+			uint64_t  unk60;
+			uint64_t  unk68;
+			uint32_t  unk70;
+			uint32_t  unk74;
+			uint32_t  unk78;
+			uint32_t  unk7C;
+			bool      unk80;
+		};
+		static_assert(sizeof(IBLFShaderInfo) == 0x88);
+
+		struct BlurCSShaderInfo
+		{
+			BSShader* ISVolumetricLightingBlurHCSShader;
+			BSShader* ISVolumetricLightingBlurVCSShader;
+			BSShader* ISReflectionBlurHCSShader;
+			BSShader* ISReflectionBlurVCSShader;
+			BSShader* ISParallaxMaskHCSShader;
+			BSShader* ISParallaxMaskVCSShader;
+			BSShader* ISDepthOfFieldBlurHCSShader;
+			BSShader* ISDepthOfFieldBlurVCSShader;
+			bool      isEnabled;
+		};
+		static_assert(sizeof(BlurCSShaderInfo) == 0x48);
+
+		struct CompositeLensFlareVolumetricLightingShaderInfo
+		{
+			BSShader* ISCompositeVolumetricLightingShader;
+			BSShader* ISCompositeLensFlareVCSShader;
+			BSShader* ISCompositeLensFlareVolumetricLightingShader;
+			bool      isEnabled;
+		};
+		static_assert(sizeof(CompositeLensFlareVolumetricLightingShaderInfo) == 0x20);
+
+		struct CopySubRegionCSShaderInfo
+		{
+			BSShader* ISCopySubRegionCSShader;
+			bool      isEnabled;
+			uint64_t  unk10;
+			uint64_t  unk18;
+			uint64_t  unk20;
+			uint64_t  unk28;
+			uint64_t  unk30;
+			uint64_t  unk38;
+			uint64_t  unk40;
+			uint64_t  unk48;
+			uint64_t  unk50;
+			uint64_t  unk58;
+			uint64_t  unk60;
+		};
+		static_assert(sizeof(CopySubRegionCSShaderInfo) == 0x68);
+
+		struct DebugSnowShaderInfo
+		{
+			BSShader* shader;
+			bool      isEnabled;
+		};
+		static_assert(sizeof(DebugSnowShaderInfo) == 0x10);
+
+		struct IBExponentialPreFilterShaderInfo
+		{
+			BSShader* shader;
+			bool      isEnabled;
+			uint32_t  unk0C;
+			uint32_t  unk10;
+		};
+		static_assert(sizeof(IBExponentialPreFilterShaderInfo) == 0x18);
+
+		struct LightingCompositeShaderInfo
+		{
+			BSShader* ISLightingCompositeShader;
+			BSShader* ISLightingCompositeNoDirectionalLightShader;
+			BSShader* ISLightingCompositeMenuShader;
+			bool      isEnabled;
+		};
+		static_assert(sizeof(LightingCompositeShaderInfo) == 0x20);
+
+		struct PerlinNoiseCSShaderInfo
+		{
+			BSShader* ISPerlinNoiseCSShader;
+			BSShader* ISPerlinNoise2DCSShader;
+			bool      isEnabled;
+		};
+		static_assert(sizeof(PerlinNoiseCSShaderInfo) == 0x18);
+
+		struct ReflectionsShaderInfo
+		{
+			BSShader*       ISReflectionsRayTracingShader;
+			BSShader*       ISReflectionsDebugSpecMaskShader;
+			bool            isEnabled;
+			bool            unk11;
+			BSTArray<void*> unk18;
+			bool            syncReflection;
+			uint32_t        unk34;
+		};
+		static_assert(sizeof(ReflectionsShaderInfo) == 0x38);
+
+		struct ScalableAmbientObscuranceShaderInfo
+		{
+			BSShader* ISSAOBlurHShader;
+			BSShader* ISSAOBlurVShader;
+			BSShader* ISSAOCameraZShader;
+			BSShader* ISSAOCompositeSAOShader;
+			BSShader* ISSAOCompositeFogShader;
+			BSShader* ISSAOCompositeSAOFogShader;
+			BSShader* ISMinifyShader;
+			BSShader* ISMinifyContrastShader;
+			BSShader* ISSAORawAOShader;
+			BSShader* ISSAORawAONoTemporalShader;
+			bool      isEnabled;
+			uint32_t  unk54;
+			uint64_t  unk58;
+			uint64_t  unk60;
+			uint64_t  unk68;
+		};
+		static_assert(sizeof(ScalableAmbientObscuranceShaderInfo) == 0x70);
+
+		struct SAOCSShaderInfo
+		{
+			BSShader* ISSAOBlurHCShader;
+			BSShader* ISSAOBlurVCShader;
+			BSShader* ISSAOCameraZAndMipsCShader;
+			BSShader* ISSAORawAOCSShader;
+			bool      isEnabled;
+			uint32_t  unk24;
+			uint32_t  unk28;
+			uint32_t  unk2C;
+			uint32_t  unk30;
+			bool      unk34;
+			bool      unk35;
+			bool      unk36;
+		};
+		static_assert(sizeof(SAOCSShaderInfo) == 0x38);
+
+		struct IndirectLightingShaderInfo
+		{
+			BSShader* ISSILCompositeShader;
+			BSShader* ISSILRawIndShader;
+			bool      isEnabled;
+			uint32_t  unk14;
+		};
+		static_assert(sizeof(IndirectLightingShaderInfo) == 0x18);
+
+		struct SimpleColorShaderInfo
+		{
+			BSShader* ISSimpleColorShader;
+			BSShader* ISDisplayDepthShader;
+			bool      isEnabled;
+			uint64_t  unk18;
+			uint32_t  unk20;
+			uint32_t  unk24;
+			uint32_t  unk28;
+			uint32_t  unk2C;
+			uint32_t  unk30;
+			float     unk34 = 0.9f;
+			float     unk38 = 1.0f;
+		};
+		static_assert(sizeof(SimpleColorShaderInfo) == 0x40);
+
+		struct SnowSSSShaderInfo
+		{
+			BSShader* ISSnowSSSShader;
+			bool      isEnabled;
+			uint32_t  unk0C;
+			uint64_t  unk10;
+			uint64_t  unk18;
+			uint64_t  unk20;
+			uint64_t  unk28;
+		};
+		static_assert(sizeof(SnowSSSShaderInfo) == 0x30);
+
+		struct TemporalAAShaderInfo
+		{
+			BSShader* ISTemporalAAShader;
+			BSShader* ISTemporalAA_UIShader;
+			BSShader* ISTemporalAA_WaterShader;
+			bool      isEnabled;
+			float     unk1C = 0.1f;
+			float     unk20 = 0.1f;
+			float     unk24 = 1.0f;
+			float     unk28 = 1.0f;
+			uint32_t  unk2C = 63;
+			uint32_t  unk30;
+			uint32_t  unk34;
+			bool      taaWaterBlendingEnabled;
+		};
+		static_assert(sizeof(TemporalAAShaderInfo) == 0x40);
+
+		struct UpsampleDynamicResolutionShaderInfo
+		{
+			BSShader* shader;
+			bool      isEnabled;
+		};
+		static_assert(sizeof(UpsampleDynamicResolutionShaderInfo) == 0x10);
+
+		struct WaterBlendShaderInfo
+		{
+			BSShader* shader;
+			bool      isEnabled;
+			uint32_t  unk0C = 1;
+		};
+		static_assert(sizeof(WaterBlendShaderInfo) == 0x10);
+
+		struct UnderwaterMaskShaderInfo
+		{
+			BSShader* shader;
+			bool      isEnabled;
+			uint64_t  unk10 = 0;
+		};
+		static_assert(sizeof(UnderwaterMaskShaderInfo) == 0x18);
+
+		struct ShaderInfo
+		{
+			ApplyReflectionsShaderInfo*                     applyReflectionsShaderInfo;
+			ApplyVolumetricLightingShaderInfo*              applyVolumetricLightingShaderInfo;
+			BasicCopyShaderInfo*                            basicCopyShaderInfo;
+			IBLFShaderInfo*                                 iblfShaderInfo;
+			BlurCSShaderInfo*                               blurCSShaderInfo;
+			CompositeLensFlareVolumetricLightingShaderInfo* compositeLensFlareVolumetricLightingShaderInfo;
+			CopySubRegionCSShaderInfo*                      copySubRegionCSShaderInfo;
+			DebugSnowShaderInfo*                            debugSnowShaderInfo;
+			IBExponentialPreFilterShaderInfo*               ibExponentialPreFilterShaderInfo;
+			LightingCompositeShaderInfo*                    lightingCompositeShaderInfo;
+			PerlinNoiseCSShaderInfo*                        perlinNoiseCSShaderInfo;
+			ReflectionsShaderInfo*                          reflectionsShaderInfo;
+			ScalableAmbientObscuranceShaderInfo*            scalableAmbientObscuranceShaderInfo;
+			SAOCSShaderInfo*                                saoCSShaderInfo;
+			IndirectLightingShaderInfo*                     indirectLightingShaderInfo;
+			SimpleColorShaderInfo*                          simpleColorShaderInfo;
+			SnowSSSShaderInfo*                              snowSSSShaderInfo;
+			TemporalAAShaderInfo*                           temporalAAShaderInfo;
+			UpsampleDynamicResolutionShaderInfo*            upsampleDynamicResolutionShaderInfo;
+			WaterBlendShaderInfo*                           waterBlendShaderInfo;
+			UnderwaterMaskShaderInfo*                       underwaterMaskShaderInfo;
+		};
+		static_assert(sizeof(ShaderInfo) == 0xA8);
+
 		static ImageSpaceManager* GetSingleton()
 		{
 			REL::Relocation<ImageSpaceManager**> singleton{ RELOCATION_ID(527731, 414660) };
@@ -210,27 +483,7 @@ namespace RE
 		ImageSpaceBaseData*                  underwaterBaseData;  // 0B8
 		ImageSpaceBaseData*                  consoleBaseData;     // 0C0
 		ImageSpaceData                       data;                // 0C8
-		std::uint64_t                        unk168;              // 168
-		std::uint64_t                        unk170;              // 170
-		std::uint64_t                        unk178;              // 178
-		std::uint64_t                        unk180;              // 180
-		std::uint64_t                        unk188;              // 188
-		std::uint64_t                        unk190;              // 190
-		std::uint64_t                        unk198;              // 198
-		std::uint64_t                        unk1A0;              // 1A0
-		std::uint64_t                        unk1A8;              // 1A8
-		std::uint64_t                        unk1B0;              // 1B0
-		std::uint64_t                        unk1B8;              // 1B8
-		std::uint64_t                        unk1C0;              // 1C0
-		std::uint64_t                        unk1C8;              // 1C8
-		std::uint64_t                        unk1D0;              // 1D0
-		std::uint64_t                        unk1D8;              // 1D8
-		std::uint64_t                        unk1E0;              // 1E0
-		std::uint64_t                        unk1E8;              // 1E8
-		std::uint64_t                        unk1F0;              // 1F0
-		std::uint64_t                        unk1F8;              // 1F8
-		std::uint64_t                        unk200;              // 200
-		std::uint64_t                        unk208;              // 208
+		ShaderInfo                           shaderInfo;          // 168
 		bool                                 usesLDR;             // 210
 		bool                                 unk211;              // 211
 		std::uint64_t                        unk218;              // 218

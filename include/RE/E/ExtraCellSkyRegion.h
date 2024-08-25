@@ -11,16 +11,22 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraCellSkyRegion;
-		inline static auto           EXTRADATATYPE = ExtraDataType::kCellSkyRegion;
+		inline static constexpr auto EXTRADATATYPE = ExtraDataType::kCellSkyRegion;
 
-		~ExtraCellSkyRegion() override;  // 00
+		~ExtraCellSkyRegion() override = default;  // 00
 
 		// override (BSExtraData)
-		ExtraDataType GetType() const override;                             // 01 - { return kCellSkyRegion; }
-		bool          IsNotEqual(const BSExtraData* a_rhs) const override;  // 02 - { return skyRegion != a_rhs->skyRegion; }
+		ExtraDataType GetType() const override
+		{
+			return EXTRADATATYPE;
+		}  // 01 - { return kCellSkyRegion; }
+		bool IsNotEqual(const BSExtraData* a_rhs) const override
+		{
+			return skyRegion != static_cast<const ExtraCellSkyRegion*>(a_rhs)->skyRegion;
+		}  // 02 - { return skyRegion != a_rhs->skyRegion; }
 
 		// members
-		TESRegion* skyRegion;  // 10
+		TESRegion* skyRegion = nullptr;  // 10
 	};
 	static_assert(sizeof(ExtraCellSkyRegion) == 0x18);
 }

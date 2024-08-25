@@ -170,6 +170,24 @@ namespace RE
 			allocator_type::Deallocate(_data);
 		}
 
+		template <typename PushT>
+		void push_back(PushT&& value)
+		{
+			if (_freeIdx >= _capacity) {
+				auto oldData = _data;
+				_capacity += _growthSize;
+				_data = allocator_type::Allocate(_capacity);
+				for (size_type index = 0; index < _freeIdx; ++index) {
+					_data[index] = oldData[index];
+					std::destroy_at(oldData + index);
+				}
+				allocator_type::Deallocate(oldData);
+			}
+			_data[_freeIdx] = std::forward<T>(value);
+			++_size;
+			++_freeIdx;
+		}
+
 		reference operator[](size_type a_pos)
 		{
 			assert(a_pos < size());
@@ -248,6 +266,37 @@ namespace RE
 		}
 
 	private:
+		void change_capacity(uint32_t newCapacity)
+		{
+			if (newCapacity != _capacity) {
+				if (newCapacity < _freeIdx) {
+					for (size_t index = _capacity; index < _freeIdx; ++index) {
+						std::destroy_at(_data + index);
+					}
+				}
+				_freeIdx = newCapacity;
+			}
+			_capacity = newCapacity;
+			auto oldData = nullptr;
+			if (newCapacity > 0) {
+				oldData = _data;
+				_data = allocator_type::Allocate(_capacity);
+				if (_freeIdx > 0) {
+					for (size_t index = 0; index < _freeIdx; ++index) {
+						_data[index] = oldData[index];
+					}
+				}
+				for (size_t index = _freeIdx; index < _capacity; ++index) {
+					std::destroy_at(_data + index);
+				}
+			} else {
+				_data = nullptr;
+			}
+			if (oldData != nullptr) {
+				allocator_type::Deallocate(oldData);
+			}
+		}
+
 		// members
 		T*            _data;        // 08
 		std::uint32_t _capacity;    // 10

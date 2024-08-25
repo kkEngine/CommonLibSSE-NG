@@ -11,27 +11,33 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_BSFadeNode;
-		inline static auto           Ni_RTTI = NiRTTI_BSFadeNode;
+		inline static constexpr auto Ni_RTTI = NiRTTI_BSFadeNode;
+
+		static BSFadeNode* GetFadeNodeAnim()
+		{
+			REL::Relocation<BSFadeNode**> node{ RELOCATION_ID(527632, 414561) };
+			return *node;
+		}
 
 		struct RUNTIME_DATA
 		{
-#define RUNTIME_DATA_CONTENT            \
-	float         unk128;      /* 00 */ \
-	float         unk12C;      /* 04 */ \
-	float         currentFade; /* 08 */ \
-	std::uint32_t unk134;      /* 0C */ \
-	std::uint32_t unk138;      /* 10 */ \
-	std::uint32_t unk13C;      /* 14 */ \
-	float         unk140;      /* 18 */ \
-	std::uint32_t unk144;      /* 1C */ \
-	std::uint32_t unk148;      /* 20 */ \
-	float         unk14C;      /* 24 */ \
-	std::uint16_t unk150;      /* 28 */ \
-	std::uint8_t  unk152;      /* 2A */ \
-	std::uint8_t  unk153;      /* 2B */ \
-	std::uint8_t  unk154;      /* 2C */ \
-	std::uint8_t  unk155;      /* 2D */ \
-	std::uint16_t unk156;      /* 2E */
+#define RUNTIME_DATA_CONTENT                 \
+	float         unk128;           /* 00 */ \
+	float         unk12C;           /* 04 */ \
+	float         currentFade;      /* 08 */ \
+	std::uint32_t unk134;           /* 0C */ \
+	std::uint32_t unk138;           /* 10 */ \
+	std::uint32_t unk13C;           /* 14 */ \
+	float         unk140;           /* 18 */ \
+	float         currentDistance;  /* 1C */ \
+	float         previousDistance; /* 20 */ \
+	float         unk14C;           /* 24 */ \
+	std::uint16_t unk150;           /* 28 */ \
+	std::uint8_t  unk152;           /* 2A */ \
+	std::uint8_t  unk153;           /* 2B */ \
+	std::uint8_t  unk154;           /* 2C */ \
+	std::uint8_t  unk155;           /* 2D */ \
+	std::uint16_t unk156;           /* 2E */
 
 			RUNTIME_DATA_CONTENT
 		};
@@ -55,7 +61,7 @@ namespace RE
 #endif
 
 		// add
-		SKYRIM_REL_VR_VIRTUAL BSTreeNode* AsTreeNode();          // 3E - { return 0; }
+		SKYRIM_REL_VR_VIRTUAL BSTreeNode*     AsTreeNode();      // 3E - { return 0; }
 		SKYRIM_REL_VR_VIRTUAL BSLeafAnimNode* AsLeafAnimNode();  // 3F - { return 0; }
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept

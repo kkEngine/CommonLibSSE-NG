@@ -83,23 +83,29 @@ namespace RE
 	struct LOADED_REF_DATA
 	{
 	public:
+		enum class Flag : uint16_t
+		{
+			kHavokInitialized = 0x1,
+			kWaterLoaded = 0x8,
+		};
+
 		// members
-		BSTSmallArray<void*>  unk00;                // 00 - handleList?
-		TESWaterForm*         currentWaterType;     // 18
-		float                 relevantWaterHeight;  // 20
-		float                 cachedRadius;         // 24
-		std::uint16_t         flags;                // 28
-		std::int16_t          underwaterCount;      // 2A
-		std::uint32_t         pad2C;                // 2C
-		std::uint64_t         unk30;                // 30 - AIProcess::Data0B8
-		std::uint64_t         unk38;                // 38
-		std::uint64_t         unk40;                // 40
-		std::uint64_t         unk48;                // 48
-		std::uint64_t         unk50;                // 50
-		std::uint64_t         unk58;                // 58
-		std::uint64_t         unk60;                // 60
-		NiPointer<NiAVObject> data3D;               // 68
-		void*                 unk70;                // 70 - smart ptr
+		BSTSmallArray<void*>             unk00;                // 00 - handleList?
+		TESWaterForm*                    currentWaterType;     // 18
+		float                            relevantWaterHeight;  // 20
+		float                            cachedRadius;         // 24
+		stl::enumeration<Flag, uint16_t> flags;                // 28
+		std::int16_t                     underwaterCount;      // 2A
+		std::uint32_t                    pad2C;                // 2C
+		std::uint64_t                    unk30;                // 30 - AIProcess::Data0B8
+		std::uint64_t                    unk38;                // 38
+		std::uint64_t                    unk40;                // 40
+		std::uint64_t                    unk48;                // 48
+		std::uint64_t                    unk50;                // 50
+		std::uint64_t                    unk58;                // 58
+		std::uint64_t                    unk60;                // 60
+		NiPointer<NiAVObject>            data3D;               // 68
+		void*                            unk70;                // 70 - smart ptr
 	};
 	static_assert(sizeof(LOADED_REF_DATA) == 0x78);
 
@@ -323,7 +329,7 @@ namespace RE
 		[[nodiscard]] virtual const BSTSmartPointer<BipedAnim>& GetBiped2() const;                                                                                                                                                                                           // 7F
 		[[nodiscard]] virtual const BSTSmartPointer<BipedAnim>& GetCurrentBiped() const;                                                                                                                                                                                     // 80 - { return GetBiped2(); }
 		virtual void                                            SetBiped(const BSTSmartPointer<BipedAnim>& a_biped);                                                                                                                                                         // 81 - { return; }
-		virtual void                                            RemoveWeapon(BIPED_OBJECT equipIndex);                                                                                                                                                                                                // 82 - { return; }
+		virtual void                                            RemoveWeapon(BIPED_OBJECT equipIndex);                                                                                                                                                                       // 82 - { return; }
 		virtual void                                            Unk_83(void);                                                                                                                                                                                                // 83 - { return; }
 																																																																			 // Virtual functions defined in TESObjectREFR after the vtable structure becomes different in VR.
 #if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
@@ -451,8 +457,8 @@ namespace RE
 		[[nodiscard]] bool                              IsMarkedForDeletion() const;
 		[[nodiscard]] bool                              IsOffLimits();
 		[[nodiscard]] bool                              IsPersistent() const;
-        [[nodiscard]] float                             IsPointDeepUnderWater(float a_zPos, TESObjectCELL* a_cell) const;
-        [[nodiscard]] bool                              IsPointSubmergedMoreThan(const NiPoint3& a_pos, TESObjectCELL* a_cell, float a_waterLevel) const;
+		[[nodiscard]] float                             IsPointDeepUnderWater(float a_zPos, TESObjectCELL* a_cell) const;
+		[[nodiscard]] bool                              IsPointSubmergedMoreThan(const NiPoint3& a_pos, TESObjectCELL* a_cell, float a_waterLevel) const;
 		void                                            MoveTo(TESObjectREFR* a_target);
 		bool                                            MoveToNode(TESObjectREFR* a_target, const BSFixedString& a_nodeName);
 		bool                                            MoveToNode(TESObjectREFR* a_target, NiAVObject* a_node);
@@ -468,6 +474,8 @@ namespace RE
 		bool                                            SetMotionType(MotionType a_motionType, bool a_allowActivate = true);
 		void                                            SetPosition(float a_x, float a_y, float a_z);
 		void                                            SetPosition(NiPoint3 a_pos);
+		void                                            SetScale(float scale);
+		void                                            SetTransform(const RE::NiTransform& transform);
 
 		struct REFERENCE_RUNTIME_DATA
 		{
@@ -492,10 +500,10 @@ namespace RE
 		}
 
 		// members
-		OBJ_REFR         data;          // 40
-		TESObjectCELL*   parentCell;    // 60
-		LOADED_REF_DATA* loadedData;    // 68
-		ExtraDataList    extraList;     // 70
+		OBJ_REFR         data;        // 40
+		TESObjectCELL*   parentCell;  // 60
+		LOADED_REF_DATA* loadedData;  // 68
+		ExtraDataList    extraList;   // 70
 
 #ifndef ENABLE_SKYRIM_AE
 		RUNTIME_DATA_CONTENT

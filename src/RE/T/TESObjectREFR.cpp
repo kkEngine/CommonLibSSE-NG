@@ -95,7 +95,7 @@ namespace RE
 	void TESObjectREFR::Enable(bool a_resetInventory)
 	{
 		using func_t = decltype(&TESObjectREFR::Enable);
-		REL::Relocation<func_t> func{ RELOCATION_ID(19373, 19800) };
+		REL::Relocation<func_t> func{ Offset::TESObjectREFR::Enable };
 		return func(this, a_resetInventory);
 	}
 
@@ -929,6 +929,24 @@ namespace RE
 		using func_t = decltype(&TESObjectREFR::PlayAnimation_Impl);
 		REL::Relocation<func_t> func{ Offset::TESObjectREFR::PlayAnimation };
 		return func(this, a_manager, a_toSeq, a_fromSeq, a_arg4);
+	}
+
+	void TESObjectREFR::SetScale(float scale)
+	{
+		using func_t = decltype(&TESObjectREFR::SetScale);
+		REL::Relocation<func_t> func{ Offset::TESObjectREFR::SetScale };
+		return func(this, scale);
+	}
+
+	void TESObjectREFR::SetTransform(const RE::NiTransform& transform)
+	{
+		RE::NiPoint3 angle;
+		transform.rotate.ToEulerAnglesXYZ(angle);
+		formFlags |= RE::TESForm::RecordFlags::kDisabled;
+		MoveTo_Impl(RE::ObjectRefHandle(), GetParentCell(),
+			GetWorldspace(), transform.translate, angle);
+		formFlags &= ~RE::TESForm::RecordFlags::kDisabled;
+		SetScale(transform.scale);
 	}
 
 #ifdef SKYRIM_CROSS_VR

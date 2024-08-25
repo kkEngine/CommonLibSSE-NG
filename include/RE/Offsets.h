@@ -38,6 +38,11 @@ namespace RE::Offset
 		constexpr auto Update3DModel = RELOCATION_ID(38404, 39395);
 	}
 
+	namespace AnimationSetDataSingleton
+	{
+		constexpr auto Singleton = RELOCATION_ID(515415, 401554);
+	}
+
 	namespace BGSFootstepManager
 	{
 		constexpr auto Singleton = RELOCATION_ID(517045, 403553);
@@ -152,6 +157,11 @@ namespace RE::Offset
 		constexpr auto Set_CStr = RELOCATION_ID(10979, 11044);
 	}
 
+	namespace BSWaterShaderProperty
+	{
+		constexpr auto Ctor = RELOCATION_ID(100235, 106942);
+	}
+
 	namespace BucketTable
 	{
 		constexpr auto GetSingleton = RELOCATION_ID(67855, 69200);
@@ -171,6 +181,7 @@ namespace RE::Offset
 	{
 		constexpr auto SelectedRef = RELOCATION_ID(519394, 405935);
 		constexpr auto SetSelectedRef = RELOCATION_ID(50164, 51093);
+		constexpr auto SelectReference = RELOCATION_ID(50162, 51089);
 	}
 
 	namespace ConsoleLog
@@ -246,30 +257,30 @@ namespace RE::Offset
 	}
 
 #if !defined(ENABLE_SKYRIM_SE) && !defined(ENABLE_SKYRIM_VR)
-    namespace GFxPlaceObject2
-    {
-        constexpr auto Vtbl = RELOCATION_ID(0, 242592);
-    }
+	namespace GFxPlaceObject2
+	{
+		constexpr auto Vtbl = RELOCATION_ID(0, 242592);
+	}
 
-    namespace GFxPlaceObject3
-    {
-        constexpr auto Vtbl = RELOCATION_ID(0, 242593);
-    }
+	namespace GFxPlaceObject3
+	{
+		constexpr auto Vtbl = RELOCATION_ID(0, 242593);
+	}
 
-    namespace GFxRemoveObject
-    {
-        constexpr auto Vtbl = RELOCATION_ID(0, 244863);
-    }
+	namespace GFxRemoveObject
+	{
+		constexpr auto Vtbl = RELOCATION_ID(0, 244863);
+	}
 
-    namespace GFxRemoveObject2
-    {
-        constexpr auto Vtbl = RELOCATION_ID(0, 244864);
-    }
+	namespace GFxRemoveObject2
+	{
+		constexpr auto Vtbl = RELOCATION_ID(0, 244864);
+	}
 
-    namespace GFxSetBackgroundColor
-    {
-        constexpr auto Vtbl = RELOCATION_ID(0, 244865);
-    }
+	namespace GFxSetBackgroundColor
+	{
+		constexpr auto Vtbl = RELOCATION_ID(0, 244865);
+	}
 #endif
 
 	namespace GFxValue
@@ -279,9 +290,9 @@ namespace RE::Offset
 			constexpr auto AttachMovie = RELOCATION_ID(80197, 82219);
 			constexpr auto DeleteMember = RELOCATION_ID(80207, 82230);
 			constexpr auto GetArraySize = RELOCATION_ID(80214, 82237);
-            constexpr auto GetCxform = RELOCATION_ID(80215, 82238);
+			constexpr auto GetCxform = RELOCATION_ID(80215, 82238);
 			constexpr auto GetDisplayInfo = RELOCATION_ID(80216, 82239);
-            constexpr auto GetDisplayMatrix = RELOCATION_ID(80217, 82240);
+			constexpr auto GetDisplayMatrix = RELOCATION_ID(80217, 82240);
 			constexpr auto GetElement = RELOCATION_ID(80218, 82241);
 			constexpr auto GetMember = RELOCATION_ID(80222, 82245);
 			constexpr auto GotoAndPlay = RELOCATION_ID(80230, 82253);
@@ -292,13 +303,13 @@ namespace RE::Offset
 			constexpr auto PushBack = RELOCATION_ID(80248, 82273);
 			constexpr auto RemoveElements = RELOCATION_ID(80252, 82280);
 			constexpr auto SetArraySize = RELOCATION_ID(80261, 82285);
-            constexpr auto SetCxform = RELOCATION_ID(80262, 82286);
+			constexpr auto SetCxform = RELOCATION_ID(80262, 82286);
 			constexpr auto SetDisplayInfo = RELOCATION_ID(80263, 82287);
-            constexpr auto SetDisplayMatrix = RELOCATION_ID(80264, 82288);
+			constexpr auto SetDisplayMatrix = RELOCATION_ID(80264, 82288);
 			constexpr auto SetElement = RELOCATION_ID(80265, 82289);
 			constexpr auto SetMember = RELOCATION_ID(80268, 82292);
 			constexpr auto SetText = RELOCATION_ID(80270, 82293);
-            constexpr auto VisitMembers = RELOCATION_ID(80279, 82302);
+			constexpr auto VisitMembers = RELOCATION_ID(80279, 82302);
 		}
 	}
 
@@ -311,6 +322,11 @@ namespace RE::Offset
 	{
 		constexpr auto AddReference = RELOCATION_ID(56606, 57010);
 		constexpr auto RemoveReference = RELOCATION_ID(56607, 57011);
+	}
+
+	namespace ImageSpaceEffectManager
+	{
+		constexpr auto Singleton = RELOCATION_ID(527731, 414660);
 	}
 
 	namespace INIPrefSettingCollection
@@ -481,10 +497,24 @@ namespace RE::Offset
 		constexpr auto FirstScriptCommand = RELOCATION_ID(501789, 361120);
 	}
 
+	namespace Sky
+	{
+		constexpr auto GetSingleton = RELOCATION_ID(13789, 13878);
+		constexpr auto SetWeather = RELOCATION_ID(25694, 26241);
+		constexpr auto ForceWeather = RELOCATION_ID(25696, 26243);
+		constexpr auto ResetWeather = RELOCATION_ID(25695, 26242);
+		constexpr auto SunriseBeginTime = RELOCATION_ID(515516, 401655);
+		constexpr auto SunriseEndTime = RELOCATION_ID(515517, 401656);
+		constexpr auto SunsetBeginTime = RELOCATION_ID(515518, 401657);
+		constexpr auto SunsetEndTime = RELOCATION_ID(515519, 401658);
+		constexpr auto DayBeginTime = RELOCATION_ID(515520, 401659);
+		constexpr auto NightBeginTime = RELOCATION_ID(515521, 401660);
+	}
+
 	namespace SkyrimVM
 	{
 		constexpr auto QueuePostRenderCall = RELOCATION_ID(53144, 53955);
-        constexpr auto RelayEvent = RELOCATION_ID(53221, 54033);
+		constexpr auto RelayEvent = RELOCATION_ID(53221, 54033);
 		constexpr auto Singleton = RELOCATION_ID(514315, 400475);
 	}
 
@@ -544,12 +574,19 @@ namespace RE::Offset
 		constexpr auto InitInventoryIfRequired = RELOCATION_ID(15800, 16038);
 		constexpr auto MoveTo = RELOCATION_ID(56227, 56626);
 		constexpr auto PlayAnimation = RELOCATION_ID(14189, 14297);
+		constexpr auto SetScale = RELOCATION_ID(19239, 19665);
+		constexpr auto Enable = RELOCATION_ID(19373, 19800);
 	}
 
 	namespace TESQuest
 	{
 		constexpr auto EnsureQuestStarted = RELOCATION_ID(24481, 25003);
 		constexpr auto ResetQuest = RELOCATION_ID(24486, 25014);
+	}
+
+	namespace TESWaterForm
+	{
+		constexpr auto FillMaterial = RELOCATION_ID(19945, 20373);
 	}
 
 	namespace UI
@@ -582,5 +619,17 @@ namespace RE::Offset
 	constexpr auto LookupReferenceByHandle = RELOCATION_ID(12204, 12332);
 	constexpr auto PlaySound = RELOCATION_ID(52054, 52939);
 	constexpr auto TlsIndex = RELOCATION_ID(528600, 415542);
-    constexpr auto GlobalStateCounter = RELOCATION_ID(514157, 400305);
+	constexpr auto VisibilityFlag = RELOCATION_ID(514793, 400942);
+	constexpr auto ImageSpaceEOFEffectsEnabledFlag = RELOCATION_ID(513299, 391055);
+	constexpr auto Texture3dAccumulationVolumetricLightingEnabledFlag = RELOCATION_ID(527940, 414913);
+	constexpr auto ScreenRaymarchingVolumetricLightingEnabledFlag = RELOCATION_ID(528190, 415135);
+	constexpr auto SAOApplyFogEnabledFlag = RELOCATION_ID(528125, 415070);
+	constexpr auto HDREnabledFlag = RELOCATION_ID(513463, 391301);
+	constexpr auto OnQuitGame = RELOCATION_ID(35552, 36551);
+	constexpr auto WinMain = RELOCATION_ID(35545, 36544);
+	constexpr auto D3D11Device = RELOCATION_ID(524729, 411348);
+	constexpr auto D3D11DeviceContext = RELOCATION_ID(524771, 524729);
+	constexpr auto RendererStateInstance = RELOCATION_ID(524773, 388819);
+	constexpr auto NiObjectConstructorRegistry = RELOCATION_ID(523904, 410484);
+	constexpr auto GlobalStateCounter = RELOCATION_ID(514157, 400305);
 }
