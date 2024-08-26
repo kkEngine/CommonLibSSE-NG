@@ -2,12 +2,11 @@
 
 #include "RE/B/BSFixedString.h"
 #include "RE/I/IPipelineStageInterface.h"
+#include "RE/M/MovementControllerContext.h"
+#include "RE/M/MovementData.h"
 
 namespace RE
 {
-	class MovementControllerContext;
-	class MovementData;
-
 	class IMovementHandlerAgent : public IPipelineStageInterface
 	{
 	public:

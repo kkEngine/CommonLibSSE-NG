@@ -3,13 +3,13 @@
 #include "RE/B/BSFixedString.h"
 #include "RE/B/BSTSmartPointer.h"
 #include "RE/I/IPipelineStageInterface.h"
+#include "RE/M/MovementControllerContext.h"
 #include "RE/P/PathingPoint.h"
 
 namespace RE
 {
 	class BSPathingRequest;
 	class BSPathingSolution;
-	class MovementArbitersContext;
 
 	class IMovementPathManagerAgent : public IPipelineStageInterface
 	{

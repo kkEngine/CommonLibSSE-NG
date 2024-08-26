@@ -49,7 +49,7 @@ namespace RE
 			std::uint32_t        m_collisionFilterInfo;       // 88
 			bool                 m_useCollisionFilterInfo;    // 8C
 		};
-		static_assert(sizeof(Setup) == 0x90);
+		static_assert(sizeof(Input) == 0x90);
 
 		struct Output
 		{
@@ -68,5 +68,5 @@ namespace RE
 		hkVector4 m_lockedFootEndPositionInWS;     // B0
 		hkVector4 m_footUnlockingOffset;           // C0
 	};
-	static_assert(sizeof(hkaFootPlacementIkSolver) == 0xD0);
+	static_assert(sizeof(hkaFootPlacementIkSolver) == 0xF0);
 }

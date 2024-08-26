@@ -19,7 +19,7 @@ namespace RE
 		bool                 RegisterStreamables(NiStream& a_stream) override;                                                                                                                         // 1A
 		void                 SaveBinary(NiStream& a_stream) override;                                                                                                                                  // 1B
 		bool                 IsEqual(NiObject* a_object) override;                                                                                                                                     // 1C
-		void                 Update(float a_time) override;                                                                                                                                            // 27
+		void                 Update(float* a_time) override;                                                                                                                                           // 27
 		NiInterpolator*      CreatePoseInterpolator(std::uint16_t a_index) override;                                                                                                                   // 37
 		void                 SynchronizePoseInterpolator(NiInterpolator* a_interp, std::uint16_t a_index) override;                                                                                    // 38
 		NiBlendInterpolator* CreateBlendInterpolator(std::uint16_t a_index, bool a_managerControlled, bool a_accumulateAnimations, float a_weightThreshold, std::uint8_t a_arraySize) const override;  // 39

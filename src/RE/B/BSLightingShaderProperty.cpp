@@ -509,7 +509,7 @@ namespace RE
 				includeShadowLights,
 				shadowDirectionalLight,
 				renderMode == RenderMode::FirstPersonView,
-				accumulator->activeShadowSceneNode->unk248);
+				static_cast<uint32_t>(accumulator->activeShadowSceneNode->unk248));
 			const uint32_t pointLightCount = lightCount - 1;
 
 			bool shadowLightsAllowed = accumulator->unk178;

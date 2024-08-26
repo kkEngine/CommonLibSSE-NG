@@ -4,6 +4,7 @@
 #include "RE/B/BGSAnimationSequencer.h"
 #include "RE/B/BSFixedString.h"
 #include "RE/B/BSIntrusiveRefCounted.h"
+#include "RE/B/BSPathingSolution.h"
 #include "RE/B/BSPointerHandle.h"
 #include "RE/B/BSSoundHandle.h"
 #include "RE/B/BSTHashMap.h"
@@ -23,7 +24,6 @@ namespace RE
 	class BGSAttackData;
 	class BGSProjectile;
 	class BSPathingRequest;
-	class BSPathingSolutionsContainer;
 	class DialogueItem;
 	class IAnimationSetCallbackFunctor;
 	class MagicItem;
