@@ -1,5 +1,6 @@
 #pragma once
 
+#include "RE/B/BSTriShape.h"
 #include "RE/N/NiTArray.h"
 
 namespace RE

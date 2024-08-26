@@ -2,6 +2,7 @@
 
 #include "RE/B/BSFixedString.h"
 #include "RE/B/BSIntrusiveRefCounted.h"
+#include "RE/M/MovementControllerContext.h"
 
 namespace RE
 {
@@ -11,7 +12,6 @@ namespace RE
 	class IMovementInterface;
 	class IMovementState;
 	class MovementAgent;
-	class MovementArbitersContext;
 	class MovementControllerAI;
 
 	enum class MovementArbiterType : uint8_t

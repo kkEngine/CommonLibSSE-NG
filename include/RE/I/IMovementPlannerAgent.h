@@ -4,11 +4,11 @@
 #include "RE/B/BSTArray.h"
 #include "RE/B/BSTSmartPointer.h"
 #include "RE/I/IPipelineStageInterface.h"
+#include "RE/M/MovementControllerContext.h"
 #include "RE/M/MovementVector.h"
 
 namespace RE
 {
-	class MovementControllerContext;
 	class MovementParameters;
 
 	class IMovementPlannerAgent : public IPipelineStageInterface

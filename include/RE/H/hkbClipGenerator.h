@@ -4,14 +4,11 @@
 #include "RE/H/hkaDefaultAnimationControl.h"
 #include "RE/H/hkbContext.h"
 #include "RE/H/hkbEventBase.h"
+#include "RE/H/hkbEventProperty.h"
 #include "RE/H/hkbGenerator.h"
 
 namespace RE
 {
-	class hkbEventProperty : public hkbEventBase
-	{
-	};
-
 	class hkClipTrigger
 	{
 	public:

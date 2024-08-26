@@ -22,5 +22,5 @@ namespace RE
 		bool OnStopSlowingDown(IPathFollowerState::Context& context, float& outPathSpeed) override;                            // 02
 		bool OnStopMovingAlongPath(IPathFollowerState::Context& context, float& outPathParameter) override;                    // 03
 	};
-	static_assert(sizeof(MovementMessageActivateDoor) == 0x18);
+	static_assert(sizeof(MovementMessageActivateDoor) == 0x20);
 }

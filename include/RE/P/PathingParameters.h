@@ -21,5 +21,5 @@ namespace RE
 		NiPoint3                                 desiredMovementSpeed;  // 34
 		NiPoint3                                 desiredRotationSpeed;  // 40
 	};
-	static_assert(sizeof(PathingParameters) == 0x50);
+	static_assert(sizeof(PathingParameters) == 0x4C);
 }

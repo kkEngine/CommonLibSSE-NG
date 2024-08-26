@@ -11,7 +11,7 @@ namespace RE
 {
 	class MovementMessageActivateDoor;
 
-	struct BSPathingSolution : public BSIntrusiveRefCounted
+	class BSPathingSolution : public BSIntrusiveRefCounted
 	{
 	public:
 		struct HighLevelPathingPoint : PathingPoint
@@ -41,7 +41,7 @@ namespace RE
 	};
 	static_assert(sizeof(BSPathingSolution) == 0xB0);
 
-	struct BSPathingSolutionsContainer : public BSIntrusiveRefCounted
+	class BSPathingSolutionsContainer : public BSIntrusiveRefCounted
 	{
 	public:
 		struct BSPathingSolutionHolder
