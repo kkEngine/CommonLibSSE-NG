@@ -3,6 +3,7 @@
 #include "RE/B/BSBound.h"
 #include "RE/B/BSTEvent.h"
 #include "RE/B/BSTHashMap.h"
+#include "RE/B/bhkWorld.h"
 #include "RE/H/hkRefPtr.h"
 #include "RE/H/hkStepInfo.h"
 #include "RE/H/hkVector4.h"
@@ -83,7 +84,7 @@ namespace RE
 		virtual void            Integrate(void) = 0;                                                                      // 0B
 		virtual void            FireMoveFinishEvent(void) = 0;                                                            // 0C
 		virtual void            CheckSupportImpl() = 0;                                                                   // 0D
-		virtual void            MoveToWorld(bhkWorld* newWorld) = 0;                                                      // 0E
+		virtual void            MoveToWorld(bhkWorld* a_newWorld) = 0;                                                    // 0E
 		virtual bhkWorld*       GetbhkWorld(void) = 0;                                                                    // 0F
 		virtual hkpWorldObject* GetHavokWorldObject(void) = 0;                                                            // 10
 		virtual float           GetVDBAlpha() const = 0;                                                                  // 11
