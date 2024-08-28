@@ -24,7 +24,7 @@ namespace RE
 		virtual ~BSAudio();  // 00
 
 		// add
-		virtual void              Init(HWND* a_apWindow) = 0;                    // 01
+		virtual void              Init(REX::W32::HWND a_apWindow) = 0;           // 01
 		virtual void              Shutdown() = 0;                                // 02
 		virtual void              Unk_03(int) = 0;                               // 03
 		virtual uint32_t          Unk_04() = 0;                                  // 04
