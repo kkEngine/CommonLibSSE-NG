@@ -14,6 +14,7 @@
 #include "REX/W32/D3DCOMPILER.h"
 #include "REX/W32/DBGHELP.h"
 #include "REX/W32/DINPUT.h"
+#include "REX/W32/DSOUND.h"
 #include "REX/W32/DXGI.h"
 #include "REX/W32/DXGI_2.h"
 #include "REX/W32/DXGI_3.h"
