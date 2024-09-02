@@ -20,26 +20,62 @@ namespace RE
 		{
 			kNone = 0,
 			kFemale = 1 << 0,
+			/// <summary>
+			/// Essential Actors cannot be killed. When they reach 0 health, they go into a special "bleedout" state and recover over time.
+			/// </summary>
 			kEssential = 1 << 1,
+			/// <summary>
+			/// If checked, the face created for this actor is available for the player to choose in Character Gen. 
+			/// There is a misconception that this flag will also prevent CK from editing the NPC's Face Data, 
+			/// and some mods have used this heavily on their NPC's resulting in a heavily populated Character Gen menu. 
+			/// Do not use unless you wish this face to be an available Preset for the Player.
+			/// </summary>
 			kIsChargenFacePreset = 1 << 2,
+			/// <summary>
+			/// References of this Actor in the world will resurrect and reset when their cell is reset. The Actor will respawn at their original Editor Location.
+			/// </summary>
 			kRespawn = 1 << 3,
 			kAutoCalcStats = 1 << 4,
+			/// <summary>
+			/// Only one reference of this Actor is allowed to exist. Unique actors mainly exist so that the Story Manager can find them even when they are not currently persisting.
+			/// </summary>
 			kUnique = 1 << 5,
+			/// <summary>
+			/// When this Actor detects the Player, the stealth meter does not react. Typically used for non-hostile actors such as animals and critters.
+			/// </summary>
 			kDoesntAffectStealthMeter = 1 << 6,
 			kPCLevelMult = 1 << 7,
 			kUsesTemplate = 1 << 8,
 			kCalcForAllTemplates = 1 << 9,
+			/// <summary>
+			/// Protected Actors are treated as essential to all damage except that delivered by the Player. The Player is the only one allowed to kill a Protected Actor.
+			/// </summary>
 			kProtected = 1 << 11,
 			kNoRumors = 1 << 13,
+			/// <summary>
+			/// This Actor can be associated with a Summon Actor magic effect.
+			/// </summary>
 			kSummonable = 1 << 14,
+			/// <summary>
+			/// When the Actor is struck by a weapon, blood effects are disabled.
+			/// </summary>
 			kDoesntBleed = 1 << 16,
 			kBleedoutOverride = 1 << 18,
 			kOppositeGenderAnims = 1 << 19,
+			/// <summary>
+			/// Disables face animations and morphing. Also disables the Story Manager's Death and Assault events.
+			/// </summary>
 			kSimpleActor = 1 << 20,
 			kLoopedScript = 1 << 21,  // ?
 			kNoActivation = 1 << 23,
 			kLoopedAudio = 1 << 28,  // ?
+			/// <summary>
+			/// This Actor is immune to all damage, and all weapons pass through them without playing hit effects or triggering hit events.
+			/// </summary>
 			kIsGhost = 1 << 29,
+			/// <summary>
+			/// This Actor is immune to all damage, although weapons and projectiles appear to hit them normally.
+			/// </summary>
 			kInvulnerable = 1 << 31
 		};
 
