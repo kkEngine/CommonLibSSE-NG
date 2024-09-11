@@ -53,6 +53,7 @@ namespace RE
 			return *singleton;
 		}
 
+		// Fenix says that the correct signature is: bool PlayImpactEffect(TESObjectREFR* a_ref, BGSImpactDataSet* a_impactEffect, const char* a_nodeName, const NiPoint3& a_pickDirection, float a_pickLength, bool a_applyNodeRotation, bool a_useNodeLocalRotation)
 		bool PlayImpactEffect(TESObjectREFR* a_ref, BGSImpactDataSet* a_impactEffect, const BSFixedString& a_nodeName, NiPoint3& a_pickDirection, float a_pickLength, bool a_applyNodeRotation, bool a_useNodeLocalRotation)
 		{
 			using func_t = decltype(&BGSImpactManager::PlayImpactEffect);
