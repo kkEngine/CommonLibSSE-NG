@@ -1,5 +1,7 @@
 #pragma once
 
+#include "RE/B/BSTArray.h"
+
 namespace RE
 {
 	class BSFaceGenKeyframe
@@ -10,7 +12,7 @@ namespace RE
 		virtual ~BSFaceGenKeyframe();  // 00
 
 		// add
-		virtual bool               Unk_01(RE::BSTArray<BSFaceGenKeyframe*>& a_arr) = 0;                                            // 01
+		virtual bool               Unk_01(BSTArray<BSFaceGenKeyframe*>& a_arr) = 0;                                            // 01
 		virtual bool               Interpolate(BSFaceGenKeyframe* a_keyframe1, BSFaceGenKeyframe* a_keyframe2, float a_k) = 0;     // 02 - Linear interpolation between keyframes
 		virtual bool               Interpolate(BSFaceGenKeyframe* a_keyframe, float a_k, bool a_ignoreSmall, bool a_copyBig) = 0;  // 03 - Linear interpolation between keyframes
 		virtual void               Reset(bool a_initToZero) = 0;                                                                   // 04

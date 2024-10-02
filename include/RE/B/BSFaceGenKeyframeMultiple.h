@@ -109,7 +109,7 @@ namespace RE
 		virtual bool IsValueValid(std::uint32_t a_idx);                   // 0E - is value in range [0, 1]
 		virtual void Allocate(std::uint32_t a_count, bool a_initToZero);  // 0F
 
-		void SetValue(std::uint32_t a_idx, float a_value) noexcept;
+		void SetValue(std::uint32_t a_idx, float a_value);
 		void Reset();
 
 		// members
