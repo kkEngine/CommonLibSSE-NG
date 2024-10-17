@@ -97,11 +97,11 @@ namespace RE
 		public:
 			// members
 			float                                                  sightFOV;                        // 00
-			float                                                  unk04;                           // 04
+			float                                                  unk04;                           // 04 - most likely "fire rate"
 			float                                                  firingRumbleLeftMotorStrength;   // 08
 			float                                                  firingRumbleRightMotorStrength;  // 0C
 			float                                                  firingRumbleDuration;            // 10
-			stl::enumeration<WEAPON_RUMBLE_PATTERN, std::uint32_t> rumblePattern;                   // 14
+			stl::enumeration<WEAPON_RUMBLE_PATTERN, std::uint32_t> rumblePattern;                   // 14 - can be float with a default value of 0.0F, and is most likely "Attack Shots/Sec" from Fallout 3
 			std::int8_t                                            numProjectiles;                  // 18
 			std::uint8_t                                           pad19;                           // 19
 			std::uint16_t                                          pad1A;                           // 1A
@@ -170,7 +170,7 @@ namespace RE
 			float                                              minRange;             // 10
 			float                                              maxRange;             // 14
 			float                                              animationAttackMult;  // 18
-			float                                              unk1C;                // 1C
+			float                                              unk1C;                // 1C - most likely the "Damage to Weapon Mult" value from FO3
 			float                                              staggerValue;         // 20
 			stl::enumeration<WEAPONHITBEHAVIOR, std::uint32_t> hitBehavior;          // 24
 			stl::enumeration<ActorValue, std::uint32_t>        skill;                // 28
