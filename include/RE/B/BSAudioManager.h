@@ -2,7 +2,6 @@
 
 #include "RE/B/BSAudioManagerThread.h"
 #include "RE/B/BSFixedString.h"
-#include "RE/B/BSSoundMessage.h"
 #include "RE/B/BSTHashMap.h"
 #include "RE/N/NiTPointerList.h"
 
@@ -10,6 +9,7 @@ namespace RE
 {
 	class BSISoundDescriptor;
 	class BSXAudio2GameSound;
+	class BSSoundMessage;
 	struct BSSoundHandle;
 
 	namespace BSResource

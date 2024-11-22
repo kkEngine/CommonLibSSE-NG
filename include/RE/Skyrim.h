@@ -372,7 +372,6 @@
 #include "RE/B/BSSkyShaderProperty.h"
 #include "RE/B/BSSmallBlockAllocator.h"
 #include "RE/B/BSSoundHandle.h"
-#include "RE/B/BSSoundMessage.h"
 #include "RE/B/BSStorage.h"
 #include "RE/B/BSStream.h"
 #include "RE/B/BSString.h"
