@@ -25,4 +25,5 @@
 #include "REX/W32/OLE32.h"
 #include "REX/W32/USER32.h"
 #include "REX/W32/VERSION.h"
+#include "REX/W32/XAUDIO.h"
 #include "REX/W32/XINPUT.h"
