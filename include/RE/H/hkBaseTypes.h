@@ -1,5 +1,7 @@
 #pragma once
 
+#define hkSizeOf(A) int(sizeof(A))
+
 namespace RE
 {
 	using hkObjectIndex = std::uint16_t;
