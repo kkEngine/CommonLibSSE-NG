@@ -23,6 +23,18 @@ namespace RE
 			};
 		};
 
+		enum class BaseMoveType : uint32_t
+		{
+			Walk,
+			Run,
+			Swim,
+			Fly,
+			Sneak,
+			Sprint,
+
+			Total
+		};
+
 		~BGSMovementType() override;  // 00
 
 		// override (TESForm)

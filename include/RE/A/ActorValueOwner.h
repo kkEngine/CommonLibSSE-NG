@@ -13,7 +13,7 @@ namespace RE
 
 		// add
 		virtual float              GetActorValue(ActorValue a_akValue);                                                      // 01 - { return 0.0; }
-		virtual float              GetPermanentActorValue(ActorValue a_akValue);                                             // 02 - { return 0.0; }
+		virtual float              GetPermanentActorValue(ActorValue a_akValue);                                             // 02 - { return 0.0; } - GetActorValueMax?
 		virtual float              GetBaseActorValue(ActorValue a_akValue);                                                  // 03 - { return 0.0; }
 		virtual void               SetBaseActorValue(ActorValue a_akValue, float a_value);                                   // 04 - { return; }
 		virtual void               ModActorValue(ActorValue a_akValue, float a_value);                                       // 05 - { return; }

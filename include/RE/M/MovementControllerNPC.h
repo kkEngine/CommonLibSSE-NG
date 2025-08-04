@@ -120,6 +120,7 @@ namespace RE
 		bool                                   isHighLevel;                  // 1C9
 		bool                                   isStaticPath;                 // 1CA
 		bool                                   keepOffsetFromActor;          // 1CB
+		std::uint32_t                          unk1CC;                       // 1CC
 	};
 	static_assert(sizeof(MovementControllerNPC) == 0x1D0);
 }

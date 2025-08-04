@@ -209,7 +209,7 @@ namespace RE
 		float                                          unk2D0;                         // 2D0
 		float                                          deferredKillTimer;              // 2D4
 		float                                          killMoveTimer;                  // 2D8
-		float                                          unk2DC;                         // 2DC
+		float                                          StaggerTimer;                   // 2DC
 		std::uint32_t                                  unk2E0;                         // 2E0
 		std::uint32_t                                  unk2E4;                         // 2E4
 		std::uint32_t                                  currentFurnitureMarkerID;       // 2E8

@@ -17,6 +17,14 @@ namespace RE
 			kSaveLoadSharedPackage = 1 << 0
 		};
 
+		enum class PreferredSpeed : uint8_t
+		{
+			kWalk,
+			kFastWalk,
+			kJog,
+			kRun
+		};
+
 		// members
 		mutable BSSpinLock                                packageLock;            // 00
 		TESPackage*                                       package;                // 08
@@ -27,7 +35,7 @@ namespace RE
 		std::uint32_t                                     modifiedPackageFlag;    // 24
 		std::uint16_t                                     modifiedInterruptFlag;  // 28
 		stl::enumeration<ACTOR_PACKAGE_FLAG, std::int8_t> actorPackageFlags;      // 2A
-		std::int8_t                                       preferredSpeed;         // 2B
+		PreferredSpeed                                    preferredSpeed;         // 2B
 		std::uint32_t                                     pad2C;                  // 2C
 	};
 	static_assert(sizeof(ActorPackage) == 0x30);

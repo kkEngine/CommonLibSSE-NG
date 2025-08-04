@@ -24,7 +24,7 @@ namespace RE
 		~BGSAction() override;  // 00
 
 		// members
-		std::uint32_t index;  // 28
+		std::uint32_t index;  // 28 - in idle array
 		std::uint32_t pad2C;  // 2C
 	};
 	static_assert(sizeof(BGSAction) == 0x30);

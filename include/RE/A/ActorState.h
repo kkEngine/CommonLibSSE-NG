@@ -149,8 +149,8 @@ namespace RE
 		bool   Unk_08(std::uint32_t a_unk) override;   // 08 - { return 0; }
 
 		// add
-		virtual void Unk_14(void);  // 14
-		virtual void Unk_15(void);  // 15
+		virtual bool SetSitSleepState(SIT_SLEEP_STATE a_state);  // 14
+		virtual bool SetWeaponMagicDrawn(bool a_value);          // 15
 
 		[[nodiscard]] ATTACK_STATE_ENUM GetAttackState() const noexcept { return actorState1.meleeAttackState; }
 		[[nodiscard]] FLY_STATE         GetFlyState() const noexcept { return actorState1.flyState; }
