@@ -1735,6 +1735,7 @@
 #include "RE/T/TESOpenCloseEvent.h"
 #include "RE/T/TESPackage.h"
 #include "RE/T/TESPackageData.h"
+#include "RE/T/TESPackageEvent.h"
 #include "RE/T/TESPlayerBowShotEvent.h"
 #include "RE/T/TESProduceForm.h"
 #include "RE/T/TESQualityForm.h"
