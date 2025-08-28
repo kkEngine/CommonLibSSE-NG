@@ -366,6 +366,7 @@ namespace RE
 		SKYRIM_REL_VR_VIRTUAL bool                         Unk_A0(NiAVObject* a_node, float& a_angleX, float& a_angleZ, NiPoint3& a_pos);        // A0
 		SKYRIM_REL_VR_VIRTUAL void                         UnequipItem(std::uint64_t a_arg1, TESBoundObject* a_object);                          // A1 - { return; }
 
+		static ObjectRefHandle          CreateReference(ObjectRefHandle& a_handleOut, FormType a_formType, bool a_addActorToProcessList);
 		static NiPointer<TESObjectREFR> LookupByHandle(RefHandle a_refHandle);
 		static bool                     LookupByHandle(RefHandle a_refHandle, NiPointer<TESObjectREFR>& a_refrOut);
 		static TESObjectREFR*           FindReferenceFor3D(NiAVObject* a_object3D);

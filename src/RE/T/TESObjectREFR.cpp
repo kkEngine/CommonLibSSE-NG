@@ -30,6 +30,13 @@
 
 namespace RE
 {
+	ObjectRefHandle TESObjectREFR::CreateReference(ObjectRefHandle& a_handleOut, FormType a_formType, bool a_addActorToProcessList)
+	{
+		using func_t = decltype(&TESObjectREFR::CreateReference);
+		static REL::Relocation<func_t> func{ RELOCATION_ID(19142, 19544) };
+		return func(a_handleOut, a_formType, a_addActorToProcessList);
+	}
+
 	NiPointer<TESObjectREFR> TESObjectREFR::LookupByHandle(RefHandle a_refHandle)
 	{
 		NiPointer<TESObjectREFR> ref;
