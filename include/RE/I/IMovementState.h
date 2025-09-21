@@ -1,7 +1,10 @@
 #pragma once
 
+#include "RE/B/BSPathing.h"
 #include "RE/I/IMovementInterface.h"
+#include "RE/M/Movement.h"
 #include "RE/M/MovementParameters.h"
+#include "RE/P/PathingPoint.h"
 
 namespace RE
 {
@@ -12,28 +15,46 @@ namespace RE
 	public:
 		inline static constexpr auto RTTI = RTTI_IMovementState;
 
+		// same as hkpCharacterStateType
+		enum CHARACTER_STATE : uint32_t
+		{
+			ON_GROUND = 0,
+			JUMPING = 1,
+			IN_AIR = 2,
+			CLIMBING = 3,
+			FLYING = 4,
+			USER_STATE_0 = 5,
+			USER_STATE_1 = 6,
+			USER_STATE_2 = 7,
+			USER_STATE_3 = 8,
+			USER_STATE_4 = 9,
+			USER_STATE_5 = 10,
+
+			MAX_STATE_ID = 11,
+		};
+
 		~IMovementState() override;  // 00
 
 		// add
-		virtual FormID              Unk_01(void) = 0;                                 // 01
-		virtual void                Unk_02(void) = 0;                                 // 02
-		virtual void                GetPosition(NiPoint3* a_out) = 0;                 // 03
-		virtual void                GetRotation(NiPoint3* a_out) = 0;                 // 04
-		virtual float               DoGetMovementSpeed() = 0;                         // 05
-		virtual float               DoGetRotationSpeed() = 0;                         // 06
-		virtual void                Unk_07(NiPoint3* a_out) = 0;                      // 07 - used by IsMoving; possibly a velocity getter?
-		virtual bool                Unk_08(std::uint32_t a_unk) = 0;                  // 08
-		virtual float               DoGetMovementRotation(NiPoint3& a_rotation) = 0;  // 09
-		virtual void                Unk_0A(void) = 0;                                 // 0A
-		virtual void                Unk_0B(void) = 0;                                 // 0B
-		virtual float               GetComputedHeight() = 0;                          // 0C
-		virtual float               Unk_0D(void) = 0;                                 // 0D - returns computed height * 0.75
-		virtual bool                Unk_0E(MovementParameters* a_newParams) = 0;      // 0E - decrements the refcount on p, and then replaces it with a new MovementParameters*
-		virtual MovementParameters* Unk_0F(void) = 0;                                 // 0F
-		virtual void                Unk_10(void) = 0;                                 // 10
-		virtual void                Unk_11(void) = 0;                                 // 11
-		virtual void                Unk_12(void) = 0;                                 // 12
-		virtual bool                Unk_13(void) = 0;                                 // 13 - checks flags in the actor's race
+		virtual std::uint32_t       DoGetNumericID() const = 0;                                            // 01
+		virtual void                DoGetPathingLocation(BSPathingLocation& a_pathLoc) const = 0;          // 02
+		virtual void                DoGetLocation(NiPoint3& a_pos) const = 0;                              // 03
+		virtual void                DoGetEulerAngles(NiPoint3& a_angles) const = 0;                        // 04
+		virtual float               DoGetMovementSpeed() const = 0;                                        // 05
+		virtual float               DoGetRotationSpeed() const = 0;                                        // 06
+		virtual void                DoGetMovementRotation(NiPoint3& a_rotation) const = 0;                 // 07
+		virtual bool                DoGetCurrentMaxSpeeds(Movement::MaxSpeeds& a_maxSpeeds) const = 0;     // 08
+		virtual float               DoGetMovementRadius() const = 0;                                       // 09
+		virtual float               DoGetMovementWidth() const = 0;                                        // 0A
+		virtual float               DoGetMovementLength() const = 0;                                       // 0B
+		virtual float               DoGetMovementHeight() const = 0;                                       // 0C
+		virtual float               DoGetLookingHeight() const = 0;                                        // 0D
+		virtual bool                DoMakeDefaultMovementParameters(MovementParameters& a_newParams) = 0;  // 0E
+		virtual MovementParameters* DoGetDefaultMovementParameters() const = 0;                            // 0F
+		virtual bool                DoGetCurSpeeds(Movement::CurrentSpeeds& a_curSpeed) const = 0;         // 10
+		virtual CHARACTER_STATE     DoGetCharacterState() const = 0;                                       // 11
+		virtual bool                IsRiddenByPlayer() const = 0;                                          // 12
+		virtual bool                DoGetUseVelocityObstacles() const = 0;                                 // 13
 	};
 	static_assert(sizeof(IMovementState) == 0x8);
 }

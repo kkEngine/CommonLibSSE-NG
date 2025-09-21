@@ -36,8 +36,8 @@ namespace RE
 		uint32_t                                detailedPathFirstPointIndex;  // 88
 		uint32_t                                detailedPathLastPointIndex;   // 8C
 		BSTArray<DetailedPathingPoint>          detailedPath;                 // 90
-		uint8_t                                 unkA8;                        // A8
-		uint8_t                                 unkA9;                        // A9
+		bool                                    bIncompletePath;              // A8
+		bool                                    bRequestGoalUnused;           // A9
 	};
 	static_assert(sizeof(BSPathingSolution) == 0xB0);
 

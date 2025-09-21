@@ -139,14 +139,14 @@ namespace RE
 		~ActorState() override;  // 00
 
 		// override (IMovementState)
-		FormID Unk_01(void) override;                  // 01 - { return 0; }
-		void   Unk_02(void) override;                  // 02 - { return; }
-		void   GetPosition(NiPoint3* a_out) override;  // 03 - { return; }
-		void   GetRotation(NiPoint3* a_out) override;  // 04 - { return; }
-		float  DoGetMovementSpeed() override;          // 05 - { return 0.0; }
-		float  DoGetRotationSpeed() override;          // 06 - { return 0.0; }
-		void   Unk_07(NiPoint3* a_out) override;       // 07 - { return; }
-		bool   Unk_08(std::uint32_t a_unk) override;   // 08 - { return 0; }
+		std::uint32_t DoGetNumericID() const override;                                         // 01 - { return 0; }
+		void          DoGetPathingLocation(BSPathingLocation& a_pathLoc) const override;       // 02 - { return; }
+		void          DoGetLocation(NiPoint3& a_pos) const override;                           // 03 - { return; }
+		void          DoGetEulerAngles(NiPoint3& a_angles) const override;                     // 04 - { return; }
+		float         DoGetMovementSpeed() const override;                                     // 05 - { return 0.0; }
+		float         DoGetRotationSpeed() const override;                                     // 06 - { return 0.0; }
+		void          DoGetMovementRotation(NiPoint3& a_rotation) const override;              // 07 - { return; }
+		bool          DoGetCurrentMaxSpeeds(Movement::MaxSpeeds& a_maxSpeeds) const override;  // 08 - { return 0; }
 
 		// add
 		virtual bool SetSitSleepState(SIT_SLEEP_STATE a_state);  // 14
