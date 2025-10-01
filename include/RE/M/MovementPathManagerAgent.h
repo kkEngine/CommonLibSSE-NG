@@ -14,7 +14,7 @@ namespace RE
 		~MovementPathManagerAgent() override;  // 00
 
 		// override (MovementAgent)
-		IMovementInterface* GetInterfaceByName(BSFixedString* name) override;  // 03
+		IPipelineStageInterface* GetPipelineStageInterface(const BSFixedString& stage) override;  // 03
 
 		// override (IMovementPathManagerAgent)
 		const BSFixedString& GetPathManagerAgentName() override;                                                // 01

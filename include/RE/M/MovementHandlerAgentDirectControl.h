@@ -25,7 +25,7 @@ namespace RE
 		void                 RemoveMovementController() override;                               // 0A
 
 		// override (IMovementHandlerAgent)
-		const BSFixedString& GetHandlerAgentName() override;                    // 01
+		const BSFixedString& GetHandlerAgentName() const override;              // 01
 		void                 HandleMovement(HandlerContext& context) override;  // 02
 		void                 HandleMovementVirtual(float* deltaTime) override;  // 03
 

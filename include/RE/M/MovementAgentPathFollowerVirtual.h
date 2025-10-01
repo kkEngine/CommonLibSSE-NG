@@ -30,15 +30,15 @@ namespace RE
 		~MovementAgentPathFollowerVirtual() override;  // 00
 
 		// override (MovementAgent)
-		const BSFixedString& GetName() const override;                                            // 01
-		MovementAgentType    GetType() override;                                                  // 02
-		IMovementInterface*  GetInterfaceByName(BSFixedString* a_name) override;                  // 03
-		void                 SetMovementController(MovementControllerAI* a_controller) override;  // 04
-		void                 Activate() override;                                                 // 06
-		void                 Initialize(BSPathingStreamSimpleBufferRead* a_buffer) override;      // 07
-		void                 RemoveMovementController() override;                                 // 0A
-		void                 OnSaveGame(BSPathingStreamWrite* a_a2) override;                     // 0B
-		void                 OnLoadGame(BSPathingStreamRead* a_a2) override;                      // 0C
+		const BSFixedString&     GetName() const override;                                            // 01
+		MovementAgentType        GetType() override;                                                  // 02
+		IPipelineStageInterface* GetPipelineStageInterface(const BSFixedString& stage) override;      // 03
+		void                     SetMovementController(MovementControllerAI* a_controller) override;  // 04
+		void                     Activate() override;                                                 // 06
+		void                     Initialize(BSPathingStreamSimpleBufferRead* a_buffer) override;      // 07
+		void                     RemoveMovementController() override;                                 // 0A
+		void                     OnSaveGame(BSPathingStreamWrite* a_a2) override;                     // 0B
+		void                     OnLoadGame(BSPathingStreamRead* a_a2) override;                      // 0C
 
 		// override (IMovementPlannerAgent)
 		const BSFixedString& GetPlannerAgentName() override;                                        // 01

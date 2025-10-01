@@ -11,6 +11,7 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_IMovementHandlerAgent;
+		inline static constexpr auto VTABLE = VTABLE_IMovementHandlerAgent;
 
 		struct HandlerContext
 		{
@@ -19,10 +20,14 @@ namespace RE
 		};
 		static_assert(sizeof(HandlerContext) == 0x10);
 
-		~IMovementHandlerAgent() override;  // 00
+		static const BSFixedString& QPipelineStage();
+
+		IMovementHandlerAgent();
+
+		~IMovementHandlerAgent() override = default;  // 00
 
 		// add
-		virtual const BSFixedString& GetHandlerAgentName() = 0;                    // 01
+		virtual const BSFixedString& GetHandlerAgentName() const = 0;              // 01
 		virtual void                 HandleMovement(HandlerContext& context) = 0;  // 02
 		virtual void                 HandleMovementVirtual(float* deltaTime) = 0;  // 03 - empty in all implementations
 	};

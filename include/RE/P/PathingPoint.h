@@ -8,6 +8,7 @@ namespace RE
 {
 	class PathingCell;
 	struct BSNavmeshInfo;
+	class NiAVObject;
 
 	struct PathingPoint
 	{

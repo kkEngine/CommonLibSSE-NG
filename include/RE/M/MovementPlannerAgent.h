@@ -14,7 +14,7 @@ namespace RE
 		~MovementPlannerAgent() override;  // 00
 
 		// override (MovementAgent)
-		IMovementInterface* GetInterfaceByName(BSFixedString* name) override;  // 03
+		IPipelineStageInterface* GetPipelineStageInterface(const BSFixedString& a_stage) override;  // 03
 
 		// override (IMovementPlannerAgent)
 		const BSFixedString& GetPlannerAgentName() override;  // 01

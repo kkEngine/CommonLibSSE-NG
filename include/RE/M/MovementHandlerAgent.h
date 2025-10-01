@@ -11,14 +11,17 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_MovementHandlerAgent;
+		inline static constexpr auto VTABLE = VTABLE_MovementHandlerAgent;
 
-		~MovementHandlerAgent() override;  // 00
+		MovementHandlerAgent();
+
+		~MovementHandlerAgent() override = default;  // 00
 
 		// override (MovementAgent)
-		IMovementInterface* GetInterfaceByName(BSFixedString* name) override;  // 03
+		IPipelineStageInterface* GetPipelineStageInterface(const BSFixedString& a_stage) override;  // 03
 
 		// override (IMovementHandlerAgent)
-		const BSFixedString& GetHandlerAgentName() override;  // 01
+		const BSFixedString& GetHandlerAgentName() const override;  // 01
 	};
 	static_assert(sizeof(MovementHandlerAgent) == 0x20);
 }

@@ -33,28 +33,28 @@ namespace RE
 			MAX_STATE_ID = 11,
 		};
 
-		~IMovementState() override;  // 00
+		~IMovementState() override = default;  // 00
 
 		// add
-		virtual std::uint32_t       DoGetNumericID() const = 0;                                            // 01
-		virtual void                DoGetPathingLocation(BSPathingLocation& a_pathLoc) const = 0;          // 02
-		virtual void                DoGetLocation(NiPoint3& a_pos) const = 0;                              // 03
-		virtual void                DoGetEulerAngles(NiPoint3& a_angles) const = 0;                        // 04
-		virtual float               DoGetMovementSpeed() const = 0;                                        // 05
-		virtual float               DoGetRotationSpeed() const = 0;                                        // 06
-		virtual void                DoGetMovementRotation(NiPoint3& a_rotation) const = 0;                 // 07
-		virtual bool                DoGetCurrentMaxSpeeds(Movement::MaxSpeeds& a_maxSpeeds) const = 0;     // 08
-		virtual float               DoGetMovementRadius() const = 0;                                       // 09
-		virtual float               DoGetMovementWidth() const = 0;                                        // 0A
-		virtual float               DoGetMovementLength() const = 0;                                       // 0B
-		virtual float               DoGetMovementHeight() const = 0;                                       // 0C
-		virtual float               DoGetLookingHeight() const = 0;                                        // 0D
-		virtual bool                DoMakeDefaultMovementParameters(MovementParameters& a_newParams) = 0;  // 0E
-		virtual MovementParameters* DoGetDefaultMovementParameters() const = 0;                            // 0F
-		virtual bool                DoGetCurSpeeds(Movement::CurrentSpeeds& a_curSpeed) const = 0;         // 10
-		virtual CHARACTER_STATE     DoGetCharacterState() const = 0;                                       // 11
-		virtual bool                IsRiddenByPlayer() const = 0;                                          // 12
-		virtual bool                DoGetUseVelocityObstacles() const = 0;                                 // 13
+		virtual std::uint32_t        DoGetNumericID() const = 0;                                            // 01
+		virtual void                 DoGetPathingLocation(BSPathingLocation& a_pathLoc) const = 0;          // 02
+		virtual void                 DoGetLocation(NiPoint3& a_pos) const = 0;                              // 03
+		virtual void                 DoGetEulerAngles(NiPoint3& a_angles) const = 0;                        // 04
+		virtual float                DoGetMovementSpeed() const = 0;                                        // 05
+		virtual float                DoGetRotationSpeed() const = 0;                                        // 06
+		virtual void                 DoGetMovementRotation(NiPoint3& a_rotation) const = 0;                 // 07
+		virtual bool                 DoGetCurrentMaxSpeeds(Movement::MaxSpeeds& a_maxSpeeds) const = 0;     // 08
+		virtual float                DoGetMovementRadius() const = 0;                                       // 09
+		virtual float                DoGetMovementWidth() const = 0;                                        // 0A
+		virtual float                DoGetMovementLength() const = 0;                                       // 0B
+		virtual float                DoGetMovementHeight() const = 0;                                       // 0C
+		virtual float                DoGetLookingHeight() const = 0;                                        // 0D
+		virtual bool                 DoMakeDefaultMovementParameters(MovementParameters& a_newParams) = 0;  // 0E
+		virtual IMovementParameters* DoGetDefaultMovementParameters() const = 0;                            // 0F
+		virtual bool                 DoGetCurSpeeds(Movement::CurrentSpeeds& a_curSpeed) const = 0;         // 10
+		virtual CHARACTER_STATE      DoGetCharacterState() const = 0;                                       // 11
+		virtual bool                 IsRiddenByPlayer() const = 0;                                          // 12
+		virtual bool                 DoGetUseVelocityObstacles() const = 0;                                 // 13
 	};
 	static_assert(sizeof(IMovementState) == 0x8);
 }

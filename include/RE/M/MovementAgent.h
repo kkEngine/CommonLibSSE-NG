@@ -2,6 +2,8 @@
 
 #include "RE/B/BSFixedString.h"
 #include "RE/B/BSIntrusiveRefCounted.h"
+#include "RE/I/IPipelineStageInterface.h"
+#include "RE/N/NullMovementState.h"
 
 namespace RE
 {
@@ -11,6 +13,7 @@ namespace RE
 	class IMovementInterface;
 	class IMovementState;
 	class MovementControllerAI;
+	class IMovementDebugRenderingInterface;
 
 	enum class MovementAgentType : uint8_t
 	{
@@ -47,27 +50,29 @@ namespace RE
 		MovementTweenerAgentNodeFollower = 0x8A,
 	};
 
-	class MovementAgent :
-		public BSIntrusiveRefCounted  // 000
+	class MovementAgent : public BSIntrusiveRefCounted  // 000
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_MovementAgent;
+		inline static constexpr auto VTABLE = VTABLE_MovementAgent;
 
-		virtual ~MovementAgent();  // 00
+		MovementAgent();
+
+		virtual ~MovementAgent() = default;  // 00
 
 		// add
-		virtual const BSFixedString& GetName() const = 0;                                        // 01
-		virtual MovementAgentType    GetType() = 0;                                              // 02
-		virtual IMovementInterface*  GetInterfaceByName(BSFixedString* a_name) = 0;              // 03
-		virtual void                 SetMovementController(MovementControllerAI* a_controller);  // 04
-		virtual bool                 Unk_05();                                                   // 05
-		virtual void                 Activate();                                                 // 06
-		virtual void                 Initialize(BSPathingStreamSimpleBufferRead* a_buffer);      // 07
-		virtual void                 ResetOwner();                                               // 08
-		virtual void                 Deactivate();                                               // 09
-		virtual void                 RemoveMovementController();                                 // 0A
-		virtual void                 OnSaveGame(BSPathingStreamWrite* a_a2);                     // 0B
-		virtual void                 OnLoadGame(BSPathingStreamRead* a_a2);                      // 0C
+		virtual const BSFixedString&              GetName() const = 0;                                           // 01
+		virtual MovementAgentType                 GetType() = 0;                                                 // 02
+		virtual IPipelineStageInterface*          GetPipelineStageInterface(const BSFixedString& a_stage) = 0;   // 03
+		virtual void                              SetMovementController(MovementControllerAI* a_controller) {};  // 04
+		virtual IMovementDebugRenderingInterface* GetDebugRenderingInterface() { return nullptr; };              // 05
+		virtual void                              Activate() {};                                                 // 06
+		virtual void                              Initialize(BSPathingStreamSimpleBufferRead* a_buffer) {};      // 07
+		virtual void                              ResetOwner() {};                                               // 08 - Kill?
+		virtual void                              Deactivate() {};                                               // 09
+		virtual void                              RemoveMovementController() {};                                 // 0A
+		virtual void                              OnSaveGame(BSPathingStreamWrite* a_a2) {};                     // 0B
+		virtual void                              OnLoadGame(BSPathingStreamRead* a_a2) {};                      // 0C
 
 		// members
 		IMovementState* managedMovementState;  // 10
