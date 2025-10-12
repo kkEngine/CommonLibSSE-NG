@@ -43,7 +43,8 @@ namespace RE
 		BSTSmallArray<MovementPtr<MovementAgent>>                        movementAgents;    // 030
 		BSTSmallArray<std::pair<BSFixedString, IMovementInterface*>, 11> interfaces;        // 048
 		BSReadWriteLock                                                  interfacesLock;    // 108
-		std::uint64_t                                                    unk110;            // 110
+		FormID                                                           formID;            // 110
+		std::uint32_t                                                    pad114;            // 114
 		IMovementControllerDataTracker*                                  dataTracker;       // 118
 	};
 	static_assert(sizeof(MovementControllerAI) == 0x120);
