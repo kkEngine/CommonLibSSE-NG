@@ -5,9 +5,8 @@
 
 namespace RE
 {
-	class MovementHandlerAgent :
-		public MovementAgent,         // 000
-		public IMovementHandlerAgent  // 001
+	class MovementHandlerAgent : public MovementAgent,         // 000
+								 public IMovementHandlerAgent  // 001
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_MovementHandlerAgent;

@@ -4,11 +4,14 @@
 #include "RE/I/IMovementInterface.h"
 #include "RE/M/Movement.h"
 #include "RE/M/MovementParameters.h"
+#include "RE/N/NiMatrix3.h"
 #include "RE/P/PathingPoint.h"
 
 namespace RE
 {
+	class NiMatrix3;
 	class NiPoint3;
+	class NiTransform;
 
 	class IMovementState : public IMovementInterface
 	{
@@ -55,6 +58,26 @@ namespace RE
 		virtual CHARACTER_STATE      DoGetCharacterState() const = 0;                                       // 11
 		virtual bool                 IsRiddenByPlayer() const = 0;                                          // 12
 		virtual bool                 DoGetUseVelocityObstacles() const = 0;                                 // 13
+
+		bool  CanStrafe() const;
+		void  GetCCRotation(NiMatrix3& ans) const;
+		void  GetCCTransform(NiTransform& ans) const;
+		bool  GetCurrentWalkRunPercent(float& ans_walk, float& ans_run) const;  // 88497
+		void  GetDirectionAngles(NiPoint3& ans) const;
+		void  GetDirectionVector(NiPoint3& ans, bool anglesHeadingOnly = false) const;
+		float GetMaxSpeed() const;
+		float GetMinSpeed() const;
+		float GetMovementHeading() const;
+		float DenormalizeAcceleration(float acc_norm) const;
+		float DenormalizeAngleAcceleration(float angle_accel_norm) const;
+		float DenormalizeRotateWhileMoving(float speed_norm) const;
+		float DenormalizeRotationSpeed(float rotspeed_norm) const;
+		float DenormalizeSpeed(float speed_norm) const;
+		float NormalizeAcceleration(float acc_denorm) const;
+		float NormalizeAngleAcceleration(float angle_accel_denorm) const;
+		float NormalizeRotateWhileMoving(float speed_denorm) const;
+		float NormalizeRotationSpeed(float rotspeed_denorm) const;
+		float NormalizeSpeed(float speed_denorm) const;
 	};
 	static_assert(sizeof(IMovementState) == 0x8);
 }

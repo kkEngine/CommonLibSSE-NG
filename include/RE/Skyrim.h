@@ -1355,6 +1355,7 @@
 #include "RE/M/MovementPlannerAgentDirectControl.h"
 #include "RE/M/MovementPlannerArbiter.h"
 #include "RE/M/MovementTarget.h"
+#include "RE/M/MovementUtils.h"
 #include "RE/M/MovementVector.h"
 #include "RE/M/MoviePlayer.h"
 #include "RE/M/MultiBoundMarkerData.h"

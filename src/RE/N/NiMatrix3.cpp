@@ -55,6 +55,31 @@ namespace RE
 		}
 	}
 
+	bool NiMatrix3::ToEulerAnglesZXY(NiPoint3& a_angle) const
+	{
+		return ToEulerAnglesZXY(a_angle.z, a_angle.x, a_angle.y);
+	}
+
+	bool NiMatrix3::ToEulerAnglesZXY(float& a_zAngle, float& a_xAngle, float& a_yAngle) const
+	{
+		a_xAngle = -NiASin(entry[2][1]);
+		if (a_xAngle >= NI_HALF_PI) {
+			a_zAngle = -NiFastATan2(entry[0][2], entry[0][0]);
+			a_yAngle = 0;
+			return false;
+		} else {
+			if (a_xAngle > -NI_HALF_PI) {
+				a_zAngle = -NiFastATan2(-entry[0][1], entry[1][1]);
+				a_yAngle = -NiFastATan2(-entry[2][0], entry[2][2]);
+				return true;
+			} else {
+				a_zAngle = NiFastATan2(entry[0][2], entry[0][0]);
+				a_yAngle = 0;
+				return false;
+			}
+		}
+	}
+
 	void NiMatrix3::EulerAnglesToAxesZXY(const NiPoint3& a_angle)
 	{
 		EulerAnglesToAxesZXY(a_angle.x, a_angle.y, a_angle.z);

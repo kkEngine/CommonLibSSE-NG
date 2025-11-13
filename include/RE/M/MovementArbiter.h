@@ -67,3 +67,4 @@ namespace RE
 	};
 	static_assert(sizeof(MovementArbiter) == 0x18);
 }
+
