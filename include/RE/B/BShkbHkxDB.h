@@ -46,16 +46,10 @@ namespace RE
 			uint64_t                       unk58;                       // 58
 			uint64_t                       unk60;                       // 60
 			uint32_t                       unk68;                       // 68
-			BSTHashMap<BSFixedString, int> variables;                   // 70
-			BSTHashMap<BSFixedString, int> events;                      // A0
-			uint64_t                       unkD0;                       // D0
-			uint32_t                       unkD8;                       // D8
-			uint32_t                       padDC;                       // DC
-			uint32_t                       unkE0;                       // E0
-			uint64_t                       unkE8;                       // E8
-			uint32_t                       unkF0;                       // F0
-			uint32_t                       padF4;                       // F4
-			uint64_t                       unkF8;                       // F8
+			BSTHashMap<BSFixedString, int> variables;                   // 70 - variable name -> event id
+			BSTHashMap<BSFixedString, int> events;                      // A0 - event name -> event id
+			BSTArray<char*>                eventNames;                  // 0D0 - all anim events (~2000 total)
+			BSTArray<BSFixedString>        array;                       // 0E8 - state names?
 			BSTSet<BSFixedString>          synchronizedClipGenerators;  // 100
 			uint64_t                       unk130;                      // 130
 			uint32_t                       unk138;                      // 138

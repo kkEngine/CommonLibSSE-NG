@@ -12,6 +12,13 @@ namespace RE
 		inline static constexpr auto RTTI = RTTI_ActionInput;
 		inline static constexpr auto VTABLE = VTABLE_ActionInput;
 
+		enum class Priority : uint32_t
+		{
+			Priority_0,
+			Priority_1,
+			Priority_2,
+		};
+
 		virtual ~ActionInput();  // 00
 
 		// add
@@ -20,10 +27,10 @@ namespace RE
 		virtual BGSAnimationSequencer* GetSourceSequencer() const;   // 03 - { return nullptr; }
 
 		// members
-		NiPointer<TESObjectREFR> source;  // 08
-		NiPointer<TESObjectREFR> target;  // 10
-		BGSAction*               action;  // 18
-		uint32_t                 unk20;   // 20
+		NiPointer<TESObjectREFR> source;    // 08
+		NiPointer<TESObjectREFR> target;    // 10
+		BGSAction*               action;    // 18
+		Priority                 priority;  // 20
 	};
 	static_assert(sizeof(ActionInput) == 0x28);
 }

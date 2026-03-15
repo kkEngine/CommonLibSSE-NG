@@ -17,10 +17,10 @@ namespace RE
 		NiPoint3*                           optionalEyePosition{ nullptr };  // 18
 		IPostAnimationChannelUpdateFunctor* updateFunctor{ nullptr };        // 20
 		uint16_t                            flags;                           // 28
-		bool                                unk2A;                           // 2A
+		bool                                unk2A;                           // 2A - forces animation update (hkbGenerator::generate()) without skipping frames
 		bool                                unk2B;                           // 2B
 		bool                                unk2C;                           // 2C
-		bool                                unk2D;                           // 2D
+		bool                                unk2D;                           // 2D - if 0, call generate(). If not 0, do something else?
 		bool                                unk2E;                           // 2E
 		bool                                unk2F;                           // 2F
 	};

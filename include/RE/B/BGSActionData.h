@@ -13,6 +13,20 @@ namespace RE
 		inline static constexpr auto RTTI = RTTI_BGSActionData;
 		inline static constexpr auto VTABLE = VTABLE_BGSActionData;
 
+		// From Fenix RE
+		enum class Flag : uint32_t
+		{
+			OnlyGet = 1 << 0,
+			OnlyRun = 1 << 1,
+		};
+
+		// From Tilted RE
+		enum class Flag2 : uint32_t
+		{
+			kTransitionNoAnimation = 1,
+			kSkip = 2
+		};
+
 		virtual ~BGSActionData() override;  // 00
 
 		// add
