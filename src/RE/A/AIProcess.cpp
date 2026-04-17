@@ -108,7 +108,7 @@ namespace RE
 			if (a_biped) {
 				return a_biped->root->GetObjectByName(FixedStrings::GetSingleton()->weapon);
 			} else {
-				return middleHigh->unk148;
+				return middleHigh->weaponBone1;
 			}
 		} else {
 			return nullptr;

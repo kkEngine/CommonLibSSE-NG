@@ -65,18 +65,18 @@ namespace RE
 	{
 	public:
 		// members
-		ExtraDataList*      extraDataList;    // 00
-		std::int32_t        count;            // 08
-		std::uint32_t       pad0C;            // 0C
-		const BGSEquipSlot* equipSlot;        // 10
-		void*               unk18;            // 18
-		bool                playEquipSounds;  // 20
-		bool                forceEquip;       // 21
-		bool                showMessage;      // 22
-		bool                unk23;            // 23
-		bool                unk24;            // 24
-		std::uint8_t        pad25;            // 25
-		std::uint16_t       pad26;            // 26
+		ExtraDataList* extraDataList;    // 00
+		std::int32_t   count;            // 08
+		std::uint32_t  pad0C;            // 0C
+		BGSEquipSlot*  equipSlot;        // 10
+		void*          unk18;            // 18
+		bool           playEquipSounds;  // 20
+		bool           forceEquip;       // 21
+		bool           showMessage;      // 22
+		bool           unk23;            // 23
+		bool           unk24;            // 24
+		std::uint8_t   pad25;            // 25
+		std::uint16_t  pad26;            // 26
 	};
 	static_assert(sizeof(ObjectEquipParams) == 0x28);
 
@@ -140,16 +140,16 @@ namespace RE
 		NiPoint3                                       rotation;                       // 0B0
 		NiPoint3                                       rotationSpeed;                  // 0BC
 		NiPoint3                                       actorMountPosition;             // 0C8
-		NiPoint3                                       furniturePathPoint;             // 0D4
+		NiPoint3                                       furnitureEntryPosition;         // 0D4 - furniturePathPoint
 		NiPoint3                                       lastSeenPosition;               // 0E0
 		std::uint32_t                                  bleedoutAttacker;               // 0EC
 		MagicSystem::WardState                         wardState;                      // 0F0
 		std::uint32_t                                  pad0F4;                         // 0F4
 		BSTSmartPointer<AnimResponse>                  animResponse;                   // 0F8
 		BSTArray<CommandedActorData>                   commandedActors;                // 100
-		NiNode*                                        damageRootNode[6];              // 118
-		NiAVObject*                                    unk148;                         // 148
-		NiNode*                                        weaponBone;                     // 150
+		NiNode*                                        damageRootNode[6];              // 118 - BGSBodyPartDefs::LIMB_ENUM
+		NiAVObject*                                    weaponBone1;                    // 148
+		NiAVObject*                                    weaponBone2;                    // 150
 		NiAVObject*                                    headNode;                       // 158
 		NiAVObject*                                    torsoNode;                      // 160
 		NiAVObject*                                    faceTargetSourceNode;           // 168
@@ -162,96 +162,100 @@ namespace RE
 		BSSimpleList<ActiveEffect*>*                   activeEffects;                  // 1A0
 		BSTSmartPointer<BSAnimationGraphManager>       animationGraphManager;          // 1A8
 		BSAnimationGraphVariableCache*                 animationVariableCache;         // 1B0
-		BSTArray<void*>                                unk1B8;                         // 1B8
-		BSTArray<void*>                                unk1D0;                         // 1D0
+		BSTArray<void*>                                animationInfo1;                 // 1B8
+		BSTArray<void*>                                animationInfo2;                 // 1D0
 		mutable BSSpinLock                             unk1E8;                         // 1E8
 		BSTSmartPointer<WeaponAnimationLoadedCallback> weaponAnimationLoadedCallback;  // 1F0
 		std::uint16_t                                  leftHandType;                   // 1F8
 		std::uint16_t                                  rightHandType;                  // 1FA
 		float                                          weaponChangeClearTimer;         // 1FC
-		std::uint32_t                                  unk200;                         // 200
+		float                                          idleChangeClearTime;            // 200
 		float                                          headHeightOffset;               // 204
 		ObjectRefHandle                                occupiedFurniture;              // 208
-		std::uint32_t                                  unk20C;                         // 20C
-		std::uint64_t                                  unk210;                         // 210
+		ObjectRefHandle                                occupiedFurnitureRefHandle;     // 20C
+		TESIdleForm*                                   someIdle;                       // 210
 		ActorHandle                                    commandingActor;                // 218
 		std::uint32_t                                  pad21C;                         // 21C
 		InventoryEntryData*                            leftHand;                       // 220
 		TESIdleForm*                                   furnitureIdle;                  // 228
-		BSTSmartPointer<InstantInteractionCallback>    instantInteractionCallback;     // 230
+		BSTSmartPointer<InstantInteractionCallback>    instantInteractionCallback;     // 230 - animationSetCallback?
 		BSFaceGenAnimationData*                        faceAnimationData;              // 238
 		MagicItem*                                     currentPackageSpell;            // 240
-		std::uint64_t                                  unk248;                         // 248
+		TESObjectWEAP*                                 lastBoundWeapon;                // 248
 		NiPointer<bhkCharacterController>              charController;                 // 250
 		BSTSmartPointer<bhkRagdollPenetrationUtil>     penetrationDetectUtil;          // 258
 		InventoryEntryData*                            rightHand;                      // 260
-		InventoryEntryData*                            bothHands;                      // 268
+		InventoryEntryData*                            bothHands;                      // 268 - currentAmmo?
 		NiPointer<QueuedFile>                          bodyPartPreload;                // 270
-		void*                                          unk278;                         // 278
+		void*                                          BSCloneReserver;                // 278
 		TESIdleForm*                                   lastIdlePlayed;                 // 280
 		AIPerkData*                                    perkData;                       // 288
 		std::uint32_t                                  unk290;                         // 290
-		std::uint32_t                                  currentFurnitureSubgraphID;     // 294
+		std::uint32_t                                  currentFurnitureSubgraphID;     // 294 - float furnitureEntryAngle?
 		float                                          unk298;                         // 298
 		float                                          unk29C;                         // 29C
 		float                                          unk2A0;                         // 2A0
-		float                                          unk2A4;                         // 2A4
-		float                                          currentMovementSpeed;           // 2A8
-		float                                          forwardSpeed;                   // 2AC
-		float                                          unk2B0;                         // 2B0
+		float                                          numProjsInv;                    // 2A4
+		float                                          currentMovementSpeed;           // 2A8 - desiredSpeed?
+		float                                          forwardSpeed;                   // 2AC - animationSpeed?
+		float                                          bleedoutTimer;                  // 2B0
 		float                                          bleedoutRate;                   // 2B4
-		float                                          unk2B8;                         // 2B8
+		float                                          bleedoutMaxHealth;              // 2B8
 		float                                          maximumWardPower;               // 2BC
 		float                                          unk2C0;                         // 2C0
 		float                                          torchEvaluationTimer;           // 2C4
 		float                                          alphaMult;                      // 2C8
 		float                                          scriptRefractPower;             // 2CC
-		float                                          unk2D0;                         // 2D0
+		float                                          sleepingTimer;                  // 2D0
 		float                                          deferredKillTimer;              // 2D4
 		float                                          killMoveTimer;                  // 2D8
 		float                                          StaggerTimer;                   // 2DC
 		std::uint32_t                                  unk2E0;                         // 2E0
-		std::uint32_t                                  unk2E4;                         // 2E4
-		std::uint32_t                                  currentFurnitureMarkerID;       // 2E8
+		std::uint32_t                                  some_marker;                    // 2E4
+		std::uint32_t                                  currentFurnitureMarkerID;       // 2E8 - furnitureIndex
 		std::uint32_t                                  unk2EC;                         // 2EC
-		std::uint64_t                                  unk2F0;                         // 2F0
-		std::uint32_t                                  unk2F8;                         // 2F8
+		std::uint64_t                                  nextExtraArrow3DUpdate;         // 2F0
+		std::uint32_t                                  deferredKills;                  // 2F8
 		std::uint32_t                                  unk2FC;                         // 2FC
 		std::uint32_t                                  unk300;                         // 300
 		std::uint16_t                                  unk304;                         // 304
 		std::uint16_t                                  unk306;                         // 306
-		std::uint64_t                                  unk308;                         // 308
+		std::uint16_t                                  animActionSuccess;              // 308
+		std::uint16_t                                  unk30A;                         // 30A
+		std::uint16_t                                  unk30C;                         // 30C
+		std::uint16_t                                  unk30E;                         // 30E
 		std::uint8_t                                   unk310;                         // 310
 		stl::enumeration<RESET_3D_FLAGS, std::uint8_t> update3DModel;                  // 311
 		std::uint16_t                                  unk312;                         // 312
-		std::uint16_t                                  unk314;                         // 314
+		std::uint8_t                                   unk314;                         // 314
+		bool                                           idleDoneOnce;                   // 315
 		bool                                           unk316;                         // 316
 		bool                                           unk317;                         // 317
 		bool                                           unk318;                         // 318
 		bool                                           unk319;                         // 319
-		bool                                           unk31A;                         // 31A
+		std::uint8_t                                   refreshFlareFlags;              // 31A
 		bool                                           pickPocketed;                   // 31B
 		bool                                           summonedCreature;               // 31C
 		bool                                           forceNextUpdate;                // 31D
-		bool                                           unk31E;                         // 31E
-		bool                                           unk31F;                         // 31F
+		bool                                           beginIdlesPlayed;               // 31E
+		bool                                           endIdlesPlayed;                 // 31F
 		bool                                           unk320;                         // 320
 		bool                                           unk321;                         // 321
 		bool                                           beenAttacked;                   // 322
 		bool                                           alwaysHit;                      // 323
 		bool                                           doNoDamage;                     // 324
 		bool                                           soulTrapped;                    // 325
-		bool                                           unk326;                         // 326
-		bool                                           unk327;                         // 327
-		bool                                           unk328;                         // 328
+		bool                                           lookAt;                         // 326
+		bool                                           eating;                         // 327
+		bool                                           shouldCalculateLight;           // 328
 		bool                                           preventCombat;                  // 329
-		bool                                           unk32A;                         // 32A
+		bool                                           dyingFromBleedout;              // 32A
 		bool                                           isFleeing;                      // 32B
 		bool                                           unk32C;                         // 32C
 		bool                                           hostileGuard;                   // 32D
 		bool                                           unk32E;                         // 32E
 		bool                                           unk32F;                         // 32F
-		bool                                           unk330;                         // 330
+		bool                                           requiresIdleStop;               // 330
 		bool                                           killQueued;                     // 331
 		bool                                           inDeferredKill;                 // 332
 		bool                                           pad333;                         // 333
