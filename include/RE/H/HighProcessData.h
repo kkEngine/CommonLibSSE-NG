@@ -159,7 +159,7 @@ namespace RE
 		float                                                 magickaRegenDelay;                         // 024
 		IAIWorldLocation*                                     sandboxLocation;                           // 028
 		BSTArray<ActorHandle>                                 lastSpokenToArray;                         // 030
-		std::uint64_t                                         unk048;                                    // 048 - lock
+		BSSpinLock                                            lock1;                                     // 048
 		BGSAnimationSequencer                                 animSequencer;                             // 050
 		NiPoint3                                              pathingCurrentMovementSpeed;               // 088
 		NiPoint3                                              pathingCurrentRotationSpeed;               // 094
@@ -189,11 +189,11 @@ namespace RE
 		ObjectRefHandle                                       pathLookAtTarget;                          // 17C
 		BSTSmartPointer<BSPathingRequest>                     unk180;                                    // 180 - smart ptr
 		BSTSmartPointer<BSPathingRequest>                     unk188;                                    // 188 - smart ptr
-		BSTSmartPointer<BSPathingSolutionsContainer>          unk190;                                    // 190
-		BSTSmartPointer<BSPathingSolutionsContainer>          unk198;                                    // 198
-		PathingPoint                                          unk1A0;                                    // 1A0
+		BSTSmartPointer<BSPathingSolutionsContainer>          unk190;                                    // 190 - pathingMsgQueue1
+		BSTSmartPointer<BSPathingSolutionsContainer>          unk198;                                    // 198 - pathingMsgQueue2
+		PathingPoint                                          pathingLocation;                           // 1A0
 		BSNavmesh*                                            navmesh;                                   // 1D0
-		BSSpinLock                                            unk1D8;                                    // 1D8
+		BSSpinLock                                            lock2;                                     // 1D8
 		float                                                 unk1E0;                                    // 1E0
 		float                                                 cachedActorHeight;                         // 1E4
 		NiPointer<NiRefObject>                                phantom;                                   // 1E8 - NiPointer<bhkSimpleShapePhantom>?
@@ -223,10 +223,10 @@ namespace RE
 		float                                                 searchChatterTimer;                        // 298
 		float                                                 clearTalkToListTimer;                      // 29C - lastSpokenToTimer
 		float                                                 maxAlpha;                                  // 2A0
-		float                                                 unk2A4;                                    // 2A4
+		float                                                 evalTimer;                                 // 2A4
 		std::uint32_t                                         unk2A8;                                    // 2A8
 		float                                                 procedureEvalTimer;                        // 2AC
-		float                                                 checkToTalkTimer;                          // 2B0 - fAISocialTimerForConversationsMin
+		float                                                 checkToTalkTimer;                          // 2B0 - fAISocialTimerForConversationsMin - socialTalkTimer
 		std::uint32_t                                         eventID;                                   // 2B4
 		std::uint64_t                                         unk2B8;                                    // 2B8
 		float                                                 delayTimer;                                // 2C0
@@ -237,7 +237,7 @@ namespace RE
 		std::uint32_t                                         animAction;                                // 2D8
 		NiPoint3                                              leftWeaponLastPos;                         // 2DC
 		NiPoint3                                              rightWeaponLastPos;                        // 2E8
-		ObjectRefHandle                                       greetActor;                                // 2F4
+		ObjectRefHandle                                       greetActor;                                // 2F4 - lastGreeted
 		float                                                 soundDelay;                                // 2F8
 		BSSoundHandle                                         soundHandles[2];                           // 2FC
 		float                                                 greetingTimer;                             // 314
@@ -285,7 +285,7 @@ namespace RE
 		std::uint16_t                                         replacedLeftHandItemType;                  // 3F8
 		std::uint16_t                                         replacedRightHandItemType;                 // 3FA
 		std::uint32_t                                         unk3FC;                                    // 3FC
-		BSTSmallArray<DEFAULT_OBJECT, 2>                      movementActionsQueue;                      // 400
+		BSTSmallArray<DEFAULT_OBJECT, 2>                      movementActionsQueue;                      // 400 - animationActions
 		NiPoint3                                              animationDelta;                            // 418
 		NiPoint3                                              animationAngleMod;                         // 424
 		BSTSmartPointer<RunActionAnimationLoadedCallback>     runActionAnimationLoadedCallback;          // 430
@@ -308,9 +308,9 @@ namespace RE
 		bool                                                  animationActive;                           // 45B
 		bool                                                  movementStopped;                           // 45C
 		bool                                                  unk45D;                                    // 45D
-		bool                                                  isInLoadingMenu;                           // 45E
+		bool                                                  isInLoadingMenu;                           // 45E - allowForceReadyWeapon
 		bool                                                  isDualCasting;                             // 45F
-		bool                                                  getPlantedExplosive;                       // 460
+		bool                                                  plantedExplosive;                          // 460
 		bool                                                  approachingAutoTeleportDoor;               // 461
 		bool                                                  arrested;                                  // 462
 		bool                                                  unk463;                                    // 463
