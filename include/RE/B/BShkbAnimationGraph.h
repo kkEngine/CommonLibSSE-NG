@@ -125,7 +125,7 @@ namespace RE
 		BSTArray<BShkFloatController*> fadeControllers;              // 178
 		BSTArray<void*>                unk190;                       // 190
 		BSTSmallArray<void*>           unk1A8;                       // 1A8
-		BSTSmallArray<std::uint8_t>    unk1C0;                       // 1C0
+		BSTSmallArray<std::uint8_t>    unk1C0;                       // 1C0 - iStates?
 		std::uint64_t                  unk1D8;                       // 1D8
 		std::uint64_t                  unk1E0;                       // 1E0
 		float                          interpolationTimeOffsets[2];  // 1E8
@@ -133,7 +133,7 @@ namespace RE
 		BSResource::ID*                unk1F8;                       // 1F8
 		BShkbHkxDB::ProjectDBData*     projectDBData;                // 200
 		hkbBehaviorGraph*              behaviorGraph;                // 208
-		Actor*                         holder;                       // 210
+		TESObjectREFR*                 holder;                       // 210
 		BSFadeNode*                    rootNode;                     // 218
 		hkbGeneratorOutput*            generatorOutputs[2];          // 220
 		float                          interpolationAmounts[2];      // 230

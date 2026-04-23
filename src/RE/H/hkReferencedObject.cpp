@@ -2,12 +2,6 @@
 
 namespace RE
 {
-	hkReferencedObject::hkReferencedObject() :
-		memSizeAndFlags(0),
-		referenceCount(1),
-		pad0C(0)
-	{}
-
 	const hkClass* hkReferencedObject::GetClassType() const
 	{
 		return nullptr;

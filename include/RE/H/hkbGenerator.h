@@ -4,23 +4,27 @@
 
 namespace RE
 {
+	struct hkbGeneratorOutput;
+	struct hkbNodeInfo;
+
 	class hkbGenerator : public hkbNode
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_hkbGenerator;
 		inline static constexpr auto VTABLE = VTABLE_hkbGenerator;
 
-		~hkbGenerator() override;  // 00
+		hkbGenerator() { stl::emplace_vtable(this); }
+		~hkbGenerator() override = default;  // 00
 
 		// override (hkbNode)
-		bool IsGenerator() const override;  // 15 - { return 1; }
+		bool IsGenerator() const override { return 1; };  // 15 - { return 1; }
 
 		// add
-		virtual void Generate(const hkbContext& a_context, const hkbGeneratorOutput** activeChildrenOutput, hkbGeneratorOutput& output) = 0;  // 17
-		virtual bool CanRecycleOutput();                                                                                                      // 18 - { return 0; }
-		virtual void UpdateSync(const hkbContext& a_context);                                                                                 // 19
-		virtual void StartEcho(float echoDuration);                                                                                           // 1A - { return; }
-		virtual void PreUpdate(const hkbContext& context, float timestep);                                                                    // 1B - { return; }
+		virtual void Generate(const hkbContext& a_context, const hkbGeneratorOutput** activeChildrenOutput, hkbGeneratorOutput& output, float timeOffset = 0.0f) const = 0;  // 17
+		virtual bool CanRecycleOutput() const { return false; }                                                                                                              // 18
+		virtual void UpdateSync(const hkbContext& a_context, hkbNodeInfo& info) = 0;                                                                                         // 19
+		virtual void SetLocalTime([[maybe_unused]] float time) {};                                                                                                           // 1A
+		virtual void StartEcho() {};                                                                                                                                         // 1B
 	};
 	static_assert(sizeof(hkbGenerator) == 0x48);
 }

@@ -8,6 +8,10 @@ namespace RE
 		inline static constexpr auto RTTI = RTTI_hkBaseObject;
 		inline static constexpr auto VTABLE = VTABLE_hkBaseObject;
 
+		hkBaseObject()
+		{
+			stl::emplace_vtable(this);
+		}
 		virtual ~hkBaseObject() = default;  // 00
 	};
 	static_assert(sizeof(hkBaseObject) == 0x8);

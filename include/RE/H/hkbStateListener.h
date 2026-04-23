@@ -20,4 +20,5 @@ namespace RE
 		virtual void              onExitImplementation(const hkbContext& context, hkbStateMachine& sm) {}                    // 05
 		virtual hkbStateListener* clone() { return nullptr; }                                                                // 06
 	};
+	static_assert(sizeof(hkbStateListener) == 0x10);
 }
