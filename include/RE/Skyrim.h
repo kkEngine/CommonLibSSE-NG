@@ -429,6 +429,7 @@
 #include "RE/B/BSXFlags.h"
 #include "RE/B/BShkbAnimationGraph.h"
 #include "RE/B/BShkbHkxDB.h"
+#include "RE/B/BShkbUtils.h"
 #include "RE/B/BanishEffect.h"
 #include "RE/B/BarrierProjectile.h"
 #include "RE/B/BarterMenu.h"

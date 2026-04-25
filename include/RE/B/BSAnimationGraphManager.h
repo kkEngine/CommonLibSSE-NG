@@ -124,18 +124,18 @@ namespace RE
 			return REL::RelocateMemberIfNewer<RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x98, 0xA0);
 		}
 
-		bool QueryAnimations(const BSScrapArray<BSFixedString>& events, int activeGraph_ind, BSFixedString& projectName, BSScrapArray<ClipData>& clips)
-		{
-			using func_t = bool(BSAnimationGraphManager*, const BSScrapArray<BSFixedString>&, int, BSFixedString&, BSScrapArray<ClipData>&);
-			REL::Relocation<func_t> func{ RELOCATION_ID(62432, 63374) };
-			return func(this, events, activeGraph_ind, projectName, clips);
-		}
-
 		bool QueryAnimations(float mb_from_time, BSFixedString& projectName, BSScrapArray<ClipData>& array, int activeGraph_ind)
 		{
 			using func_t = bool(BSAnimationGraphManager*, float, BSFixedString&, BSScrapArray<ClipData>&, int);
 			REL::Relocation<func_t> func{ RELOCATION_ID(62431, 63373) };
 			return func(this, mb_from_time, projectName, array, activeGraph_ind);
+		}
+
+		bool QueryAnimations(const BSScrapArray<BSFixedString>& events, int activeGraph_ind, BSFixedString& projectName, BSScrapArray<ClipData>& clips)
+		{
+			using func_t = bool(BSAnimationGraphManager*, const BSScrapArray<BSFixedString>&, int, BSFixedString&, BSScrapArray<ClipData>&);
+			REL::Relocation<func_t> func{ RELOCATION_ID(62432, 63374) };
+			return func(this, events, activeGraph_ind, projectName, clips);
 		}
 
 		// members

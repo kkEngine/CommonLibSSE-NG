@@ -12,12 +12,6 @@ namespace RE
 		struct DBTraits;
 	}
 
-	namespace BShkbHkxDB
-	{
-		struct DBTraits;
-		class DBData;
-	}
-
 	namespace BSResource
 	{
 		template <class T_Entry, class T_EntryDB>
