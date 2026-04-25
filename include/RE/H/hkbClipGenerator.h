@@ -26,7 +26,10 @@ namespace RE
 		inline static constexpr auto RTTI = RTTI_hkbClipTriggerArray;
 		inline static constexpr auto VTABLE = VTABLE_hkbClipTriggerArray;
 
+		hkbClipTriggerArray() { stl::emplace_vtable(this); }
 		~hkbClipTriggerArray() override;  // 00
+
+		HK_HEAP_REDEFINE_NEW();
 
 		// members
 		hkArray<hkClipTrigger> triggers;  // 10
@@ -66,7 +69,7 @@ namespace RE
 		hkbClipGenerator();
 		~hkbClipGenerator() override = default;  // 00
 
-		// HK_HEAP_REDEFINE_NEW();
+		HK_HEAP_REDEFINE_NEW();
 
 		// override (hkReferencedObject)
 		const hkClass* GetClassType() const override;                                                                     // 01

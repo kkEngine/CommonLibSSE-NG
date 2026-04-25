@@ -44,6 +44,7 @@ namespace RE
 			// will be ignored (along with all of their descendants).
 			kIgnoreReferencedBehaviour = 1 << 2
 		};
+		using GET_CHILDREN_FLAGS = stl::enumeration<GetChildrenFlagBits, int32_t>;
 
 		enum class CloneState
 		{
@@ -70,6 +71,8 @@ namespace RE
 		hkbNode() { stl::emplace_vtable(this); }
 		~hkbNode() override = default;  // 00
 
+		HK_HEAP_REDEFINE_NEW();
+
 		// add
 		virtual void                Activate(const hkbContext& a_context);                                                                                                                                       // 04 - { return; }
 		virtual void                Update(const hkbContext& a_context, float a_timestep);                                                                                                                       // 05 - { userData |= 1; }
@@ -90,8 +93,6 @@ namespace RE
 		virtual void                GetActiveVariablesSpecial(hkPointerMap<int, bool>& activeVariables) const;                                                                                                   // 14 - { return; }
 		virtual bool                IsGenerator() const;                                                                                                                                                         // 15 - { return 0; }
 		virtual bool                IsBehaviorGraph() const;
-
-		// HK_HEAP_REDEFINE_NEW();
 
 		// members
 		std::uint64_t                              userData{ 0 };                       // 30

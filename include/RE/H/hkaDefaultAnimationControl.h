@@ -24,6 +24,8 @@ namespace RE
 
 		~hkaDefaultAnimationControl() override;  // 00
 
+		HK_HEAP_REDEFINE_NEW();
+
 		// override (hkaAnimationControl)
 		void                Update(float a_stepDelta) override;                                                                                                                                                                  // 03
 		void                GetFutureTime(float a_stepDelta, float& a_localTimeOut, std::int32_t& a_loopsOut) const override;                                                                                                    // 04

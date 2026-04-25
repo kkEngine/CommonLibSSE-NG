@@ -54,6 +54,8 @@ namespace RE
 		hkbVariableBindingSet() { stl::emplace_vtable(this); }
 		~hkbVariableBindingSet() override = default;  // 00
 
+		HK_HEAP_REDEFINE_NEW();
+
 		// Properties
 		hkArray<Binding> bindings;                // 10
 		int32_t          indexOfBindingToEnable;  // 20

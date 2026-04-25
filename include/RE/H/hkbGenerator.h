@@ -16,6 +16,8 @@ namespace RE
 		hkbGenerator() { stl::emplace_vtable(this); }
 		~hkbGenerator() override = default;  // 00
 
+		HK_HEAP_REDEFINE_NEW();
+
 		// override (hkbNode)
 		bool IsGenerator() const override { return 1; };  // 15 - { return 1; }
 

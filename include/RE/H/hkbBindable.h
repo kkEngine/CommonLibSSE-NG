@@ -27,10 +27,10 @@ namespace RE
 		hkbBindable() { stl::emplace_vtable(this); }
 		~hkbBindable() override = default;  // 00
 
+		HK_HEAP_REDEFINE_NEW();
+
 		// add
 		virtual void CollectBindables(hkbBindableCollector& collector) { collector.collectBindable(this); };  // 03
-
-		// HK_HEAP_REDEFINE_NEW();
 
 		// members
 		hkRefPtr<hkbVariableBindingSet> variableBindingSet;           // 10
