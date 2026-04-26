@@ -65,15 +65,15 @@ namespace RE
 		~hkbBehaviorGraph() override;  // 00
 
 		// override (hkbNode)
-		hkClass* GetClassType() const override;                                                                                    // 01
-		void     CalcContentStatistics(hkStatisticsCollector* a_collector, const hkClass* a_class) const override;                 // 02
-		void     Activate(const hkbContext& a_context) override;                                                                   // 04
-		void     Update(const hkbContext& a_context, float a_timestep) override;                                                   // 05
-		void     HandleEvent(const hkbContext& a_context, hkbEvent a_event) override;                                              // 06
-		void     Deactivate(const hkbContext& a_context) override;                                                                 // 07
-		void     GetChildren(stl::enumeration<GetChildrenFlagBits, std::int32_t> a_flags, ChildrenInfo& a_childrenInfo) override;  // 09
-		hkbNode* CloneNode(hkbBehaviorGraph& a_rootBehavior) const override;                                                       // 0C
-		bool     IsBehaviorGraph() const override;                                                                                 // 16 - { return 1; }
+		hkClass* GetClassType() const override;                                                                                        // 01
+		void     CalcContentStatistics(hkStatisticsCollector* a_collector, const hkClass* a_class) const override;                     // 02
+		void     Activate(const hkbContext& a_context) override;                                                                       // 04
+		void     Update(const hkbContext& a_context, float a_timestep) override;                                                       // 05
+		void     HandleEvent(const hkbContext& a_context, hkbEvent a_event) override;                                                  // 06
+		void     Deactivate(const hkbContext& a_context) override;                                                                     // 07
+		void     GetChildren(stl::enumeration<GetChildrenFlagBits, std::int32_t> a_flags, hkbNodeChildInfo& a_childrenInfo) override;  // 09
+		hkbNode* CloneNode(hkbBehaviorGraph& a_rootBehavior) const override;                                                           // 0C
+		bool     IsBehaviorGraph() const override;                                                                                     // 16 - { return 1; }
 
 		// override (hkbGenerator)
 		void Generate(const hkbContext& a_context, const hkbGeneratorOutput** activeChildrenOutput, hkbGeneratorOutput& output, float timeOffset = 0.0f) const override;  // 17

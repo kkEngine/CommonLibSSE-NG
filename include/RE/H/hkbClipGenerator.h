@@ -27,7 +27,7 @@ namespace RE
 		inline static constexpr auto VTABLE = VTABLE_hkbClipTriggerArray;
 
 		hkbClipTriggerArray() { stl::emplace_vtable(this); }
-		~hkbClipTriggerArray() override;  // 00
+		~hkbClipTriggerArray() override = default;  // 00
 
 		HK_HEAP_REDEFINE_NEW();
 

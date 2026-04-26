@@ -259,7 +259,7 @@ namespace RE
 		void                HandleEvent(const hkbContext& a_context, hkbEvent a_event) override;                                                                                                                        // 06
 		void                Deactivate(const hkbContext& a_context) override;                                                                                                                                           // 07
 		std::int32_t        GetMaxNumChildren(stl::enumeration<GetChildrenFlagBits, std::int32_t> a_flags) override;                                                                                                    // 08
-		void                GetChildren(stl::enumeration<GetChildrenFlagBits, std::int32_t> a_flags, ChildrenInfo& a_childrenInfo) override;                                                                            // 09
+		void                GetChildren(stl::enumeration<GetChildrenFlagBits, std::int32_t> a_flags, hkbNodeChildInfo& a_childrenInfo) override;                                                                        // 09
 		bool                IsValid(hkStringPtr& a_errorString) const override;                                                                                                                                         // 0A
 		hkbNode*            CloneNode(hkbBehaviorGraph& a_rootBehavior) const override;                                                                                                                                 // 0C
 		hkReferencedObject* CreateInternalState() override;                                                                                                                                                             // 0D

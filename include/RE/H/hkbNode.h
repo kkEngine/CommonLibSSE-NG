@@ -10,7 +10,7 @@ namespace RE
 {
 	class hkbNodeInternalStateInfo;
 
-	/// Stores returned info about a child of a node.
+	// Stores returned info about a child of a node.
 	struct hkbNodeChildInfo
 	{
 		hkbNodeChildInfo() = default;
@@ -54,20 +54,6 @@ namespace RE
 			kShareable = 3
 		};
 
-		struct ChildrenInfo
-		{
-			ChildrenInfo(hkArray<hkbNodeChildInfo>& a_childInfos) :
-				childInfos(a_childInfos) {}
-
-			hkArray<hkbNodeChildInfo>& childInfos;    // 00
-			bool                       ignoreEvents;  // 08
-			bool                       reset;         // 09
-			bool                       syncToParent;  // 0A
-			uint8_t                    unk0B;         // 0B
-			char                       pad0C[4];      // 0C
-		};
-		static_assert(sizeof(ChildrenInfo) == 0x10);
-
 		hkbNode() { stl::emplace_vtable(this); }
 		~hkbNode() override = default;  // 00
 
@@ -79,7 +65,7 @@ namespace RE
 		virtual void                HandleEvent(const hkbContext& a_context, hkbEvent event);                                                                                                                    // 06 - { return; }
 		virtual void                Deactivate(const hkbContext& a_context);                                                                                                                                     // 07 - { return; }
 		virtual int                 GetMaxNumChildren(stl::enumeration<GetChildrenFlagBits, std::int32_t> flags);                                                                                                // 08 - { return 2; }
-		virtual void                GetChildren(stl::enumeration<GetChildrenFlagBits, std::int32_t> flags, ChildrenInfo& childrenInfo);                                                                          // 09 - { return; }
+		virtual void                GetChildren(stl::enumeration<GetChildrenFlagBits, std::int32_t> flags, hkbNodeChildInfo& childrenInfo);                                                                      // 09 - { return; }
 		virtual bool                IsValid(hkStringPtr& err) const;                                                                                                                                             // 0A - { return 1; }
 		virtual void                Precompute(const hkbContext& context);                                                                                                                                       // 0B - { return; }
 		virtual hkbNode*            CloneNode(hkbBehaviorGraph& rootBehavior) const;                                                                                                                             // 0C
