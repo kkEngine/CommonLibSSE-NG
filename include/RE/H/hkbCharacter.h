@@ -40,10 +40,10 @@ namespace RE
 		hkRefPtr<hkbCharacterControllerDriver> characterControllerDriver;  // 38
 		hkRefPtr<hkbFootIkDriver>              footIkDriver;               // 40
 		hkRefPtr<hkbHandIkDriver>              handIkDriver;               // 48
-		hkRefPtr<hkbCharacterSetup>            setup;                      // 50
-		hkRefPtr<hkbBehaviorGraph>             behaviorGraph;              // 58
-		hkRefPtr<hkbProjectData>               projectData;                // 60
-		hkRefPtr<hkbAnimationBindingSet>       animationBindingSet;        // 68
+		hkRefPtr<hkbCharacterSetup>            setup;                      // 50 - The character rig and other shared data
+		hkRefPtr<hkbBehaviorGraph>             behaviorGraph;              // 58 - Behavior graph for the character
+		hkRefPtr<hkbProjectData>               projectData;                // 60 - Project for the character
+		hkRefPtr<hkbAnimationBindingSet>       animationBindingSet;        // 68 - The animation binding set for this character if it is different from the one in m_setup that is shared among all the characters of this type
 		hkRefVariant                           raycastInterface;           // 70
 		hkbWorld*                              world;                      // 78
 		hkbEventQueue*                         eventQueue;                 // 80
