@@ -143,7 +143,7 @@ namespace RE
 		BSTArray<BSTSmartPointer<BSAnimationGraphChannel>>  boundChannels;   // 10
 		BSTArray<BSTSmartPointer<BSAnimationGraphChannel>>  bumpedChannels;  // 28
 		BSTSmallArray<BSTSmartPointer<BShkbAnimationGraph>> graphs;          // 40
-		BSTArray<BSAnimationGraphManagerPtr>                subManagers;     // 58
+		BSTArray<BSAnimationGraphManager*>                  subManagers;     // 58
 		BSAnimationGraphVariableCache                       variableCache;   // 70
 
 #ifndef ENABLE_SKYRIM_AE
