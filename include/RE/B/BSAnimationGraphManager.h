@@ -138,6 +138,23 @@ namespace RE
 			return func(this, events, activeGraph_ind, projectName, clips);
 		}
 
+		// This func doesn't check bounds
+		inline BSAnimationGraphManager* GetBSAnimationGraphManagerByIndex(BSTArray<BSAnimationGraphManager*>::size_type a_index)
+		{
+			// Zero the last bit (or & 0xFFFFFFFFFFFFFFFEui64)
+			auto ptr = reinterpret_cast<std::uintptr_t>(subManagers[a_index]) & ~1;
+			return reinterpret_cast<BSAnimationGraphManager*>(ptr);
+		}
+
+		using SubManagersVisitFn = std::function<void(BSAnimationGraphManager*)>;
+		inline void VisitSubManagers(SubManagersVisitFn&& a_visitor)
+		{
+			RE::BSSpinLockGuard locker(GetRuntimeData().dependentManagerLock);
+			for (BSTArray<BSAnimationGraphManager*>::size_type i = 0; i < subManagers.size(); ++i) {
+				a_visitor(GetBSAnimationGraphManagerByIndex(i));
+			}
+		}
+
 		// members
 		std::uint32_t                                       pad0C;           // 0C
 		BSTArray<BSTSmartPointer<BSAnimationGraphChannel>>  boundChannels;   // 10
