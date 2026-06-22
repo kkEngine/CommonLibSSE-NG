@@ -7,7 +7,7 @@ namespace RE
 {
 	class BGSLoadGameBuffer;
 	class BGSSaveGameBuffer;
-	class CombatBehaviorTreeControl;
+	class CombatBehaviorThread;
 
 	class CombatBehaviorTreeNode
 	{
@@ -15,16 +15,17 @@ namespace RE
 		inline static constexpr auto RTTI = RTTI_CombatBehaviorTreeNode;
 		inline static constexpr auto VTABLE = VTABLE_CombatBehaviorTreeNode;
 
-		virtual ~CombatBehaviorTreeNode();                                                                                 // 00
-		virtual const char*                GetName() const;                                                                // 01
-		virtual CombatBehaviorTreeControl* Push(CombatBehaviorTreeControl* control) const;                                 // 02
-		virtual void                       Pop(CombatBehaviorTreeControl* control) const;                                  // 03
-		virtual void                       OnChildFailed(CombatBehaviorTreeControl* control) const;                        // 04
-		virtual void                       OnInterrupted(CombatBehaviorTreeControl* control) const;                        // 05
-		virtual void                       SaveGame(CombatBehaviorTreeControl* control, BGSSaveGameBuffer* buffer) const;  // 06
-		virtual void                       LoadGame(CombatBehaviorTreeControl* control, BGSLoadGameBuffer* buffer) const;  // 07
-		virtual bool                       Unk08(CombatBehaviorTreeControl* control) const;                                // 08
-		virtual BSFixedString*             Unk09() const = 0;                                                              // 09
+		virtual ~CombatBehaviorTreeNode() = default;  // 00
+
+		virtual const char*          GetName() const;                                      // 01
+		virtual void                 Enter(CombatBehaviorThread* a_thread);                // 02
+		virtual void                 Exit(CombatBehaviorThread*);                          // 03
+		virtual void                 Update(CombatBehaviorThread* thread);                 // 04
+		virtual void                 Abort(CombatBehaviorThread* thread);                  // 05
+		virtual void                 SaveGame(CombatBehaviorThread*, BGSSaveFormBuffer*);  // 06
+		virtual void                 LoadGame(CombatBehaviorThread*, BGSLoadFormBuffer*);  // 07
+		virtual bool                 Validate(CombatBehaviorTreeNode*) const;              // 08
+		virtual const BSFixedString& GetType() const;                                      // 09
 
 		// members
 		BSFixedString                          name;      // 08

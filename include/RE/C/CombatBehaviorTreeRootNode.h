@@ -11,14 +11,15 @@ namespace RE
 		inline static constexpr auto VTABLE = VTABLE_CombatBehaviorTreeRootNode;
 
 		// override (CombatBehaviorTreeNode)
-		~CombatBehaviorTreeRootNode() override;                                                                             // 00
-		CombatBehaviorTreeControl* Push(CombatBehaviorTreeControl* control) const override;                                 // 02
-		void                       OnChildFailed(CombatBehaviorTreeControl* control) const override;                        // 04
-		void                       OnInterrupted(CombatBehaviorTreeControl* control) const override;                        // 05
-		void                       SaveGame(CombatBehaviorTreeControl* control, BGSSaveGameBuffer* buffer) const override;  // 06
-		void                       LoadGame(CombatBehaviorTreeControl* control, BGSLoadGameBuffer* buffer) const override;  // 07
-		bool                       Unk08(CombatBehaviorTreeControl* control) const override;                                // 08
-		BSFixedString*             Unk09() const override;                                                                  // 09
+		~CombatBehaviorTreeRootNode() override = default;  // 00
+
+		void                 Enter(CombatBehaviorThread* thread) override;                             // 02
+		void                 Update(CombatBehaviorThread* thread) override;                            // 04
+		void                 Abort(CombatBehaviorThread* thread) override;                             // 05
+		void                 SaveGame(CombatBehaviorThread* thread, BGSSaveFormBuffer* buf) override;  // 06
+		void                 LoadGame(CombatBehaviorThread* thread, BGSLoadFormBuffer* buf) override;  // 07
+		bool                 Validate(CombatBehaviorTreeNode* node) const override;                    // 08
+		const BSFixedString& GetType() const override;                                                 // 09
 	};
 	static_assert(sizeof(CombatBehaviorTreeRootNode) == 0x28);
 }
