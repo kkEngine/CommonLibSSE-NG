@@ -78,7 +78,7 @@ namespace RE
 		kYouAreHere = 65,
 	};
 
-	class MapMarkerData
+	class MapMarkerData : public TESFullName
 	{
 	public:
 		enum class Flag
@@ -97,12 +97,18 @@ namespace RE
 		constexpr void SetHidden(bool a_value) noexcept { a_value ? flags.set(Flag::kShowAllHidden) : flags.reset(Flag::kShowAllHidden); }
 		constexpr void SetVisible(bool a_value) noexcept { a_value ? flags.set(Flag::kVisible) : flags.reset(Flag::kVisible); }
 
+		inline MapMarkerData* Ctor()
+		{
+			using func_t = decltype(&MapMarkerData::Ctor);
+			static REL::Relocation<func_t> func{ RELOCATION_ID(12814, 12945) };
+			return func(this);
+		}
+
 		// members
-		TESFullName                                  locationName;  // 00
-		stl::enumeration<Flag, std::uint8_t>         flags;         // 10
-		std::uint8_t                                 pad11;         // 11
-		stl::enumeration<MARKER_TYPE, std::uint16_t> type;          // 12
-		std::uint32_t                                pad14;         // 14
+		stl::enumeration<Flag, std::uint8_t>         flags;  // 10
+		std::uint8_t                                 pad11;  // 11
+		stl::enumeration<MARKER_TYPE, std::uint16_t> type;   // 12
+		std::uint32_t                                pad14;  // 14
 	};
 	static_assert(sizeof(MapMarkerData) == 0x18);
 
@@ -110,7 +116,44 @@ namespace RE
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_ExtraMapMarker;
+		inline static constexpr auto VTABLE = VTABLE_ExtraMapMarker;
 		inline static auto           EXTRADATATYPE = ExtraDataType::kMapMarker;
+
+		static inline ExtraMapMarker* Create()
+		{
+			auto extraMapMarker = malloc<RE::ExtraMapMarker>();
+			if (extraMapMarker)
+			{
+				auto data = malloc<RE::MapMarkerData>();
+				if (data)
+				{
+					data->Ctor();
+					extraMapMarker->Ctor2(data);
+				}
+				else
+				{
+					free(extraMapMarker);
+					extraMapMarker = nullptr;
+				}
+			}
+
+			return extraMapMarker;
+		}
+
+		// I am not sure about this constructor
+		inline ExtraMapMarker* Ctor()
+		{
+			using func_t = decltype(&ExtraMapMarker::Ctor);
+			static REL::Relocation<func_t> func{ RELOCATION_ID(12292, 12426) };
+			return func(this);
+		}
+
+		inline ExtraMapMarker* Ctor2(MapMarkerData* a_data)
+		{
+			using func_t = decltype(&ExtraMapMarker::Ctor2);
+			static REL::Relocation<func_t> func{ RELOCATION_ID(12291, 12425) };
+			return func(this, a_data);
+		}
 
 		~ExtraMapMarker() override;  // 00
 
