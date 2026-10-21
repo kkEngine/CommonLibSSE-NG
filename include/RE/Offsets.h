@@ -486,7 +486,7 @@ namespace RE::Offset
 
 	namespace Script
 	{
-		constexpr auto CompileAndRun = RELOCATION_ID(21416, 21890);
+		constexpr auto CompileAndRun = RELOCATION_ID(21416, 441582);
 		constexpr auto GetProcessScripts = RELOCATION_ID(21436, 21921);
 		constexpr auto SetProcessScripts = RELOCATION_ID(21435, 21920);
 	}
