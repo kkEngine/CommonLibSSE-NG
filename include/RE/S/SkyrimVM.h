@@ -35,6 +35,8 @@ namespace RE
 	struct TESActivateEvent;
 	struct TESActiveEffectApplyRemoveEvent;
 	struct TESActorLocationChangeEvent;
+	struct TESAmiiboForcedStopDetectionEvent;
+	struct TESAmiiboTouchEvent;
 	struct TESBookReadEvent;
 	struct TESCellAttachDetachEvent;
 	struct TESCellFullyLoadedEvent;
@@ -131,6 +133,11 @@ namespace RE
 		public BSTEventSink<TESTriggerLeaveEvent>,             // 0168
 		public BSTEventSink<TESUniqueIDChangeEvent>,           // 0170
 		public BSTEventSink<TESSwitchRaceCompleteEvent>,       // 0178
+#ifdef SKYRIM_AE_1799
+		// AE 1.7.99 inserted these two, every base and member below moved by 0x10
+		public BSTEventSink<TESAmiiboTouchEvent>,                // 0180
+		public BSTEventSink<TESAmiiboForcedStopDetectionEvent>,  // 0188
+#endif
 		public BSTEventSink<TESPlayerBowShotEvent>,            // 0180
 		public BSTEventSink<TESFastTravelEndEvent>,            // 0188
 		public BSTEventSink<PositionPlayerEvent>,              // 0190
@@ -215,7 +222,7 @@ namespace RE
 		void RelayEvent(VMHandle handle, BSFixedString* event, BSScript::IFunctionArguments* args, ISendEventFilter* optionalFilter);
 		void SendAndRelayEvent(VMHandle handle, BSFixedString* event, BSScript::IFunctionArguments* args, ISendEventFilter* optionalFilter);
 
-		// members
+		// members (offsets are pre-1.7.99, add 0x10 on AE 1.7.99+)
 		BSTSmartPointer<BSScript::IVirtualMachine>                            impl;                         // 0200
 		BSScript::IVMSaveLoadInterface*                                       saveLoadInterface;            // 0208
 		BSScript::IVMDebugInterface*                                          debugInterface;               // 0210
@@ -275,5 +282,10 @@ namespace RE
 		mutable BSSpinLock                                                    InventoryEventFilterMapLock;  // 8940
 		BSTHashMap<VMHandle, InventoryEventFilterLists*>                      InventoryEventFilterMap;      // 8948 - AddInventoryEventFilter()
 	};
+#ifdef SKYRIM_AE_1799
+	static_assert(offsetof(SkyrimVM, impl) == 0x210);
+	static_assert(sizeof(SkyrimVM) == 0x8988);
+#else
 	static_assert(sizeof(SkyrimVM) == 0x8978);
+#endif
 }

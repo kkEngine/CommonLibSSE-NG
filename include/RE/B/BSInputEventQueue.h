@@ -7,6 +7,11 @@
 #include "RE/K/KinectEvent.h"
 #include "RE/M/MouseMoveEvent.h"
 #include "RE/T/ThumbstickEvent.h"
+#ifdef SKYRIM_AE_1799
+#	include "RE/A/AmiiboEvent.h"
+#	include "RE/M/MotionGestureEvent.h"
+#	include "RE/S/SixaxisEvent.h"
+#endif
 
 namespace RE
 {
@@ -19,6 +24,11 @@ namespace RE
 		inline static constexpr std::uint8_t MAX_THUMBSTICK_EVENTS = 2;
 		inline static constexpr std::uint8_t MAX_CONNECT_EVENTS = 1;
 		inline static constexpr std::uint8_t MAX_KINECT_EVENTS = 1;
+#ifdef SKYRIM_AE_1799
+		inline static constexpr std::uint8_t MAX_SIXAXIS_EVENTS = 2;
+		inline static constexpr std::uint8_t MAX_MOTION_GESTURE_EVENTS = 2;
+		inline static constexpr std::uint8_t MAX_AMIIBO_EVENTS = 1;
+#endif
 
 		static BSInputEventQueue* GetSingleton();
 
@@ -40,6 +50,23 @@ namespace RE
 		std::uint32_t      thumbstickEventCount;                     // 010
 		std::uint32_t      connectEventCount;                        // 014
 		std::uint32_t      kinectEventCount;                         // 018
+#ifdef SKYRIM_AE_1799
+		// AE 1.7.99 added three event queues, the arrays below moved by 8
+		std::uint32_t      sixaxisEventCount;                        // 01C
+		std::uint32_t      motionGestureEventCount;                  // 020
+		std::uint32_t      amiiboEventCount;                         // 024
+		ButtonEvent        buttonEvents[MAX_BUTTON_EVENTS];          // 028
+		CharEvent          charEvents[MAX_CHAR_EVENTS];              // 208
+		MouseMoveEvent     mouseEvents[MAX_MOUSE_EVENTS];            // 2A8
+		ThumbstickEvent    thumbstickEvents[MAX_THUMBSTICK_EVENTS];  // 2D8
+		DeviceConnectEvent connectEvents[MAX_CONNECT_EVENTS];        // 338
+		KinectEvent        kinectEvents[MAX_KINECT_EVENTS];          // 358
+		SixaxisEvent       sixaxisEvents[MAX_SIXAXIS_EVENTS];        // 388
+		MotionGestureEvent motionGestureEvents[MAX_MOTION_GESTURE_EVENTS];  // 4A8
+		AmiiboEvent        amiiboEvents[MAX_AMIIBO_EVENTS];          // 518
+		InputEvent*        queueHead;                                // 558
+		InputEvent*        queueTail;                                // 560
+#else
 		std::uint32_t      pad01C;                                   // 01C
 		ButtonEvent        buttonEvents[MAX_BUTTON_EVENTS];          // 020
 		CharEvent          charEvents[MAX_CHAR_EVENTS];              // 200
@@ -49,6 +76,12 @@ namespace RE
 		KinectEvent        kinectEvents[MAX_KINECT_EVENTS];          // 350
 		InputEvent*        queueHead;                                // 380
 		InputEvent*        queueTail;                                // 388
+#endif
 	};
+#ifdef SKYRIM_AE_1799
+	static_assert(offsetof(BSInputEventQueue, queueHead) == 0x558);
+	static_assert(sizeof(BSInputEventQueue) == 0x568);
+#else
 	static_assert(sizeof(BSInputEventQueue) == 0x390);
+#endif
 }

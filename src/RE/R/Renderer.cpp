@@ -85,7 +85,8 @@ namespace RE
 		void Renderer::RequestWindowResize(std::uint32_t a_width, std::uint32_t a_height)
 		{
 			using func_t = decltype(&Renderer::RequestWindowResize);
-			REL::Relocation<func_t> func{ RELOCATION_ID(75450, 77235) };
+			// renumbered in AE 1.7.99
+			REL::Relocation<func_t> func{ RELOCATION_ID(75450, REL::Module::IsAtLeast(SKSE::RUNTIME_SSE_1_7_99) ? 524254 : 77235) };
 			return func(this, a_width, a_height);
 		}
 

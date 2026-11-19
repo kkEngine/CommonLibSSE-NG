@@ -62,6 +62,8 @@ namespace RE
 		};
 #ifdef ENABLE_SKYRIM_VR
 		static_assert(sizeof(InputContext) == 0xA8);
+#elif defined(SKYRIM_AE_1799)
+		static_assert(sizeof(InputContext) == 0x90);
 #else
 		static_assert(sizeof(InputContext) == 0x60);
 #endif

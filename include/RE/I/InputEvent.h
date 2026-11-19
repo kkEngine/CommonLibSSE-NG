@@ -12,13 +12,20 @@ namespace RE
 		kChar,
 		kThumbstick,
 		kDeviceConnect,
-		kKinect
+		kKinect,
+		// AE 1.7.99+ only
+		kSixaxis,
+		kMotionGesture,
+		kAmiibo
 	};
 
+	class AmiiboEvent;
 	class ButtonEvent;
 	class CharEvent;
 	class IDEvent;
+	class MotionGestureEvent;
 	class MouseMoveEvent;
+	class SixaxisEvent;
 	class ThumbstickEvent;
 
 	class InputEvent
@@ -48,6 +55,16 @@ namespace RE
 
 		[[nodiscard]] ThumbstickEvent*       AsThumbstickEvent();
 		[[nodiscard]] const ThumbstickEvent* AsThumbstickEvent() const;
+
+		// AE 1.7.99+ event types; always nullptr on older runtimes
+		[[nodiscard]] AmiiboEvent*       AsAmiiboEvent();
+		[[nodiscard]] const AmiiboEvent* AsAmiiboEvent() const;
+
+		[[nodiscard]] MotionGestureEvent*       AsMotionGestureEvent();
+		[[nodiscard]] const MotionGestureEvent* AsMotionGestureEvent() const;
+
+		[[nodiscard]] SixaxisEvent*       AsSixaxisEvent();
+		[[nodiscard]] const SixaxisEvent* AsSixaxisEvent() const;
 
 		// members
 		stl::enumeration<INPUT_DEVICE, std::uint32_t>     device;     // 08

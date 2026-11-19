@@ -2677,6 +2677,10 @@ namespace RE
 	constexpr REL::VariantID RTTI_LookHandler(687052, 394901, 0x1f0b510);
 	constexpr REL::VariantID RTTI_MovementHandler(687051, 394900, 0x1f0b4e8);
 	constexpr REL::VariantID RTTI_SprintHandler(687053, 394902, 0x1f0b538);
+	// AE 1.7.99+ only classes, no SE/VR counterpart
+	constexpr REL::VariantID RTTI_AmiiboEvent(0, 564083, 0);
+	constexpr REL::VariantID RTTI_MotionGestureEvent(0, 564082, 0);
+	constexpr REL::VariantID RTTI_SixaxisEvent(0, 564068, 0);
 	constexpr REL::VariantID RTTI_AttackBlockHandler(687060, 394909, 0x1f0b658);
 	constexpr REL::VariantID RTTI_ReadyWeaponHandler(687054, 394903, 0x1f0b560);
 	constexpr REL::VariantID RTTI_ActivateHandler(687057, 394906, 0x1f0b5e0);

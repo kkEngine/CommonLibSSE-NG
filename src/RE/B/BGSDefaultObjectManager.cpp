@@ -19,18 +19,17 @@ namespace RE
 			} else {
 				result = 0x0000FFFF & a_idx;
 			}
-			return result ? result : kInvalid;
+			return result ? BGSDefaultObjectManager::ToRuntimeIndex(result) : kInvalid;
 		}
 	}
 
 	TESForm** BGSDefaultObjectManager::GetObject(DefaultObjectID a_object) noexcept
 	{
-		assert(std::to_underlying(a_object) < Relocate(364, 364, 369));
 		auto idx = MapIndex(std::to_underlying(a_object));
 		if (idx == kInvalid) {
 			return nullptr;
 		}
-		return (&RelocateMember<bool>(this, 0xB80, 0xBA8))[idx] ?
+		return IsObjectInitialized(idx) ?
                    &RelocateMember<TESForm**>(this, 0x20, 0x20)[idx] :
                    nullptr;
 	}

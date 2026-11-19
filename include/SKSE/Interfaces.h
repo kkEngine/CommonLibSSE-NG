@@ -388,6 +388,7 @@ namespace SKSE
 		constexpr void HasNoStructUse(bool a_value = true) noexcept { noStructUse = a_value; }
 		constexpr void UsesNoStructs(bool a_value = true) noexcept { noStructUse = a_value; }
 		constexpr void UsesAddressLibrary(bool a_value = true) noexcept { addressLibrary = a_value; }
+		constexpr void UsesAddressLibraryV5(bool a_value = true) noexcept { addressLibraryV5 = a_value; }
 		constexpr void UsesSigScanning(bool a_value = true) noexcept { sigScanning = a_value; }
 		constexpr void UsesStructsPost629(bool a_value = true) noexcept { structsPost629 = a_value; }
 
@@ -397,7 +398,12 @@ namespace SKSE
 		char                author[256] = {};
 		char                supportEmail[252] = {};
 		bool                noStructUse : 1 = false;
-		std::uint8_t        padding1 : 7 = 0;
+#ifdef SKYRIM_AE_1799
+		bool                addressLibraryV5 : 1 = true;  // kVersionIndependentEx_AddressLibraryV5 (SKSE 2.3.1 loads plugins without it too)
+#else
+		bool                addressLibraryV5 : 1 = false;  // this build has the pre-1.7.99 layouts, see ENABLE_SKYRIM_AE_1799
+#endif
+		std::uint8_t        padding1 : 6 = 0;
 		std::uint8_t        padding2 = 0;
 		std::uint16_t       padding3 = 0;
 		bool                addressLibrary: 1 = false;
