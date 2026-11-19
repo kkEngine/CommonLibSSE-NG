@@ -117,7 +117,9 @@ namespace RE
 	{
 		for (std::uint32_t i = 0; i < INPUT_DEVICE::kTotal; i++) {
 			devices[i] = BSInputDeviceFactory::CreateInputDevice(static_cast<INPUT_DEVICE>(i));
-			devices[i]->Initialize();
+			if (devices[i]) {  // the factory creates no device for some slots (AE 1.7.99+ on PC: 3 and 4)
+				devices[i]->Initialize();
+			}
 		}
 	}
 

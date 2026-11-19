@@ -79,7 +79,7 @@ namespace RE
 		std::uint16_t   pad5A;       // 5A
 		std::uint32_t   pad5C;       // 5C
 #ifdef SKYRIM_AE_1799
-		BSIInputDevice* devices[6];  // 60 - [4] and [5] were added in AE 1.7.99 and stay null on PC
+		BSIInputDevice* devices[INPUT_DEVICE::kTotal];  // 60 - 6 on AE 1.7.99+: [3] and [4] are null on PC, [5] is the virtual keyboard
 #else
 		BSIInputDevice* devices[4];  // 60
 #endif
