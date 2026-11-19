@@ -49,13 +49,9 @@ namespace RE
 
 		void Renderer::End()
 		{
-			// the engine reads two more arguments (VR and AE 1.7: skip HMD submit, submit flags)
-			constexpr bool          kSkipHMDSubmit = false;
-			constexpr std::uint32_t kDefaultSubmitFlags = 0;
-
-			using func_t = void (*)(Renderer*, bool, std::uint32_t);
+			using func_t = decltype(&Renderer::End);
 			REL::Relocation<func_t> func{ RELOCATION_ID(75461, 77246) };
-			return func(this, kSkipHMDSubmit, kDefaultSubmitFlags);
+			return func(this);
 		}
 
 		void Renderer::KillWindow(std::uint32_t a_windowID)
