@@ -4,6 +4,7 @@ option(SKSE_SUPPORT_XBYAK "Enables trampoline support for Xbyak." OFF)
 option(ENABLE_SKYRIM_SE "Enable support for Skyrim SE in the dynamic runtime feature." ON)
 option(ENABLE_SKYRIM_AE "Enable support for Skyrim AE in the dynamic runtime feature." ON)
 option(ENABLE_SKYRIM_VR "Enable support for Skyrim VR in the dynamic runtime feature." ON)
+option(ENABLE_SKYRIM_AE_1799 "Use the Skyrim AE 1.7.99+ virtual table layouts (input handlers gained vfuncs). Such a build only runs on 1.7.99+, a build without it only below 1.7.99." OFF)
 option(BUILD_TESTS "Enable building of the unit tests." ON)
 message("Options:")
 message("\tEnable Xbyak: ${SKSE_SUPPORT_XBYAK}")
@@ -14,6 +15,10 @@ message("\tBuild Tests: ${BUILD_TESTS}")
 
 if(NOT ENABLE_SKYRIM_SE AND NOT ENABLE_SKYRIM_AE AND NOT ENABLE_SKYRIM_VR)
 	message(FATAL_ERROR "At least one Skyrim runtime must be supported by the CommonLibSSE build.")
+endif()
+
+if(ENABLE_SKYRIM_AE_1799 AND (ENABLE_SKYRIM_SE OR ENABLE_SKYRIM_VR OR NOT ENABLE_SKYRIM_AE))
+	message(FATAL_ERROR "ENABLE_SKYRIM_AE_1799 requires an AE-only build: the 1.7.99+ virtual layouts can't be selected at runtime.")
 endif()
 
 project(
@@ -67,6 +72,7 @@ target_compile_definitions(
 		"$<$<BOOL:${ENABLE_SKYRIM_SE}>:ENABLE_SKYRIM_SE=1>"
 		"$<$<BOOL:${ENABLE_SKYRIM_AE}>:ENABLE_SKYRIM_AE=1>"
 		"$<$<BOOL:${ENABLE_SKYRIM_VR}>:ENABLE_SKYRIM_VR=1>"
+		"$<$<BOOL:${ENABLE_SKYRIM_AE_1799}>:SKYRIM_AE_1799=1>"
 		HAS_SKYRIM_MULTI_TARGETING=1
 )
 

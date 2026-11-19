@@ -84,7 +84,7 @@ namespace RE
         if SKYRIM_REL_CONSTEXPR (REL::Module::IsVR()) {
             return REL::RelocateMember<ActorHandle>(this, 0, 0xE8C).get();
         } else {
-            return REL::RelocateMemberIfNewer<ActorHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x894, 0x89C).get();
+            return REL::RelocateMemberIfNewer<ActorHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x894, AE1799Shift(0x89C)).get();
         }
 	}
 
@@ -107,7 +107,7 @@ namespace RE
 		if SKYRIM_REL_CONSTEXPR (Module::IsVR()) {
 			return nullptr;
 		} else {
-			return REL::RelocateMemberIfNewer<ObjectRefHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x8C8, 0x8D0).get();
+			return REL::RelocateMemberIfNewer<ObjectRefHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x8C8, AE1799Shift(0x8D0)).get();
 		}
 	}
 
@@ -130,12 +130,12 @@ namespace RE
 		if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
 			return nullptr;
 		} else {
-			auto* tryOverlayTintMasks = REL::RelocateMemberIfNewer<BSTArray<TintMask*>*>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB28, 0xB30);
+			auto* tryOverlayTintMasks = REL::RelocateMemberIfNewer<BSTArray<TintMask*>*>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB28, AE1799Shift(0xB30));
 			if (!tryOverlayTintMasks) {
 				return nullptr;
 			}
 
-			auto& tintMasksValue = REL::RelocateMemberIfNewer<BSTArray<TintMask*>>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB10, 0xB18);
+			auto& tintMasksValue = REL::RelocateMemberIfNewer<BSTArray<TintMask*>>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB10, AE1799Shift(0xB18));
 			for (std::uint32_t i = 0; i < tintMasksValue.size(); ++i) {
 				if (tintMasksValue[i] == a_original) {
 					return i < tryOverlayTintMasks->size() ? (*tryOverlayTintMasks)[i] : nullptr;
@@ -151,8 +151,8 @@ namespace RE
 		if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
 			return nullptr;
 		} else {
-			auto* tryOverlayTintMasks = REL::RelocateMemberIfNewer<BSTArray<TintMask*>*>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB28, 0xB30);
-			return tryOverlayTintMasks ? tryOverlayTintMasks : &REL::RelocateMemberIfNewer<BSTArray<TintMask*>>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB10, 0xB18);
+			auto* tryOverlayTintMasks = REL::RelocateMemberIfNewer<BSTArray<TintMask*>*>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB28, AE1799Shift(0xB30));
+			return tryOverlayTintMasks ? tryOverlayTintMasks : &REL::RelocateMemberIfNewer<BSTArray<TintMask*>>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB10, AE1799Shift(0xB18));
 		}
 	}
 
@@ -173,7 +173,7 @@ namespace RE
             return static_cast<bool>(REL::RelocateMember<ActorHandle>(this, 0, 0xE8C));
         }
         else {
-            return static_cast<bool>(REL::RelocateMemberIfNewer<ActorHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x894, 0x89C));
+            return static_cast<bool>(REL::RelocateMemberIfNewer<ActorHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x894, AE1799Shift(0x89C)));
         }
 	}
 
@@ -182,7 +182,7 @@ namespace RE
 		if SKYRIM_REL_CONSTEXPR (Module::IsVR()) {
 			return false;
 		} else {
-			return static_cast<bool>(REL::RelocateMemberIfNewer<ObjectRefHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x8C8, 0x8D0));
+			return static_cast<bool>(REL::RelocateMemberIfNewer<ObjectRefHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x8C8, AE1799Shift(0x8D0)));
 		}
 	}
 

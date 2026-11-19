@@ -1,6 +1,7 @@
 #pragma once
 
 #include "REL/Version.h"
+#include "SKSE/Version.h"
 
 #include "REX/W32/ADVAPI32.h"
 #include "REX/W32/KERNEL32.h"
@@ -164,15 +165,13 @@ namespace REL
 			_instance._filename = _instance._filePath = a_filename.data();
 			_instance._version = a_version;
 			if (a_runtime == Runtime::Unknown) {
-				switch (a_version[1]) {
-					case 4:
-						_instance._runtime = Runtime::VR;
-						break;
-					case 6:
-						_instance._runtime = Runtime::AE;
-						break;
-					default:
-						_instance._runtime = Runtime::SE;
+				// Minor version 4 = VR, 5 = SE, 6+ = AE (1.7.99 bumped the minor version).
+				if (a_version[1] == 4) {
+					_instance._runtime = Runtime::VR;
+				} else if (a_version[1] >= 6) {
+					_instance._runtime = Runtime::AE;
+				} else {
+					_instance._runtime = Runtime::SE;
 				}
 			} else {
 				_instance._runtime = a_runtime;
@@ -238,6 +237,14 @@ namespace REL
 		[[nodiscard]] static SKYRIM_REL bool IsAE() noexcept
 		{
 			return GetRuntime() == Runtime::AE;
+		}
+
+		/**
+		 * Returns whether the current Skyrim runtime is an Anniversary Edition release at or above the given version.
+		 */
+		[[nodiscard]] static bool IsAtLeast(Version a_version) noexcept
+		{
+			return IsAE() && get().version() >= a_version;
 		}
 
 		/**
@@ -335,15 +342,13 @@ namespace REL
 			const auto version = GetFileVersion(_filePath);
 			if (version) {
 				_version = *version;
-				switch (_version[1]) {
-					case 4:
-						_runtime = Runtime::VR;
-						break;
-					case 6:
-						_runtime = Runtime::AE;
-						break;
-					default:
-						_runtime = Runtime::SE;
+				// Minor version 4 = VR, 5 = SE, 6+ = AE (1.7.99 bumped the minor version).
+				if (_version[1] == 4) {
+					_runtime = Runtime::VR;
+				} else if (_version[1] >= 6) {
+					_runtime = Runtime::AE;
+				} else {
+					_runtime = Runtime::SE;
 				}
 				return true;
 			}

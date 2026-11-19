@@ -32,6 +32,19 @@ namespace RE
 		inline static constexpr auto      VTABLE = VTABLE_LockpickingMenu;
 		constexpr static std::string_view MENU_NAME = "Lockpicking Menu";
 
+#ifdef SKYRIM_AE_1799
+		// AE 1.7.99 inserted 0x14 bytes after pickBreakSeconds (seen in the ctor)
+#	define LOCKPICKING_AE1799_CONTENT \
+		std::uint32_t unkA4;           \
+		std::uint32_t unkA8;           \
+		std::uint16_t unkAC;           \
+		std::uint8_t  unkAE;           \
+		std::uint8_t  padAF;           \
+		std::uint64_t unkB0;
+#else
+#	define LOCKPICKING_AE1799_CONTENT
+#endif
+
 		struct RUNTIME_DATA
 		{
 #define RUNTIME_DATA_CONTENT                            \
@@ -55,7 +68,8 @@ namespace RE
 	float                 lockAngle;           /* 98 */ \
 	float                 damagePickAngle;     /* 9C */ \
 	float                 pickBreakSeconds;    /* A0 */ \
-	BSSoundHandle         pickTensionSound;    /* A4 */ \
+	LOCKPICKING_AE1799_CONTENT                 /* A4 */ \
+	BSSoundHandle         pickTensionSound;    /* A4, B8 on AE 1.7.99+ (all below + 0x14) */ \
 	float                 unk0F8;              /* B0 */ \
 	float                 sweetSpotAngle;      /* B4 */ \
 	float                 partialPickAngle;    /* B8 */ \
@@ -71,7 +85,11 @@ namespace RE
 
 			RUNTIME_DATA_CONTENT
 		};
+		#ifdef SKYRIM_AE_1799
+		static_assert(sizeof(RUNTIME_DATA) == 0xE0);
+#else
 		static_assert(sizeof(RUNTIME_DATA) == 0xC8);
+#endif
 
 		~LockpickingMenu() override;  // 00
 
@@ -126,10 +144,13 @@ namespace RE
 		RUNTIME_DATA_CONTENT  // 48, 58
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if defined(SKYRIM_AE_1799)
+	static_assert(sizeof(LockpickingMenu) == 0x128);
+#elif !defined(ENABLE_SKYRIM_VR)
 	static_assert(sizeof(LockpickingMenu) == 0x110);
 #elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 	static_assert(sizeof(LockpickingMenu) == 0x120);
 #endif
 }
 #undef RUNTIME_DATA_CONTENT
+#undef LOCKPICKING_AE1799_CONTENT

@@ -18,7 +18,8 @@ namespace RE
 	bool BSScaleformManager::IsValidName(const char* a_name)
 	{
 		using func_t = decltype(&BSScaleformManager::IsValidName);
-		REL::Relocation<func_t> func{ RELOCATION_ID(80307, 82331) };
+		// AE 1.7.99 renumbered it: 82331 is missing from the 1.7 address library, 524270 from the 1.6 ones
+		REL::Relocation<func_t> func{ RELOCATION_ID(80307, REL::Module::IsAtLeast(SKSE::RUNTIME_SSE_1_7_99) ? 524270 : 82331) };
 		return func(this, a_name);
 	}
 

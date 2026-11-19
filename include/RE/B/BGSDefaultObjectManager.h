@@ -1013,21 +1013,45 @@ namespace RE
 			return func();
 		}
 
+		// DEFAULT_OBJECTS (non-VR) and DefaultObjectID use the SE numbering. AE 1.6 put two forms before
+		// kModsHelpFormList; AE 1.7.99 also inserted kHelpManualNX at 188 and five help forms after
+		// kHelpAttackTarget. Converts an SE-numbered index into the index of the running AE game.
+		[[nodiscard]] static std::size_t ToRuntimeIndex(std::size_t a_seIndex) noexcept
+		{
+			if SKYRIM_REL_CONSTEXPR (!REL::Module::IsAE()) {
+				return a_seIndex;
+			} else {
+				constexpr std::size_t kKeywordTypeAmmo = 188;
+				constexpr std::size_t kImagespaceLoadscreen = 263;
+				constexpr std::size_t kModsHelpFormList = 363;
+				if (REL::Module::IsAtLeast(SKSE::RUNTIME_SSE_1_7_99)) {
+					if (a_seIndex == kModsHelpFormList) {
+						return 371;
+					}
+					if (a_seIndex >= kImagespaceLoadscreen) {
+						return a_seIndex + 6;
+					}
+					return a_seIndex >= kKeywordTypeAmmo ? a_seIndex + 1 : a_seIndex;
+				}
+				return a_seIndex == kModsHelpFormList ? 365 : a_seIndex;
+			}
+		}
+
 		[[nodiscard]] TESForm* GetObject(DefaultObject a_object) const noexcept
 		{
-			return GetObject(std::to_underlying(a_object));
+			return GetObject(ToRuntimeIndex(std::to_underlying(a_object)));
 		}
 
 		template <class T>
 		[[nodiscard]] T* GetObject(DefaultObject a_object) const noexcept
 		{
-			return GetObject<T>(std::to_underlying(a_object));
+			return GetObject<T>(ToRuntimeIndex(std::to_underlying(a_object)));
 		}
 
+		// a_idx is the index of the running game, see ToRuntimeIndex
 		[[nodiscard]] TESForm* GetObject(std::size_t a_idx) const noexcept
 		{
-			assert(a_idx < std::to_underlying(DefaultObject::kTotal));
-			return IsObjectInitialized(a_idx) ? objects[a_idx] : nullptr;
+			return IsObjectInitialized(a_idx) ? (&objects[0])[a_idx] : nullptr;
 		}
 
 		template <class T>
@@ -1048,14 +1072,25 @@ namespace RE
 
 		[[nodiscard]] bool IsObjectInitialized(DEFAULT_OBJECT a_object) const noexcept
 		{
-			return IsObjectInitialized(std::to_underlying(a_object));
+			return IsObjectInitialized(ToRuntimeIndex(std::to_underlying(a_object)));
 		}
 
 		[[nodiscard]] bool IsObjectInitialized(DefaultObjectID a_object) const noexcept;
 
+		// a_idx is the index of the running game, see ToRuntimeIndex
 		[[nodiscard]] bool IsObjectInitialized(std::size_t a_idx) const noexcept
 		{
-			return (&REL::RelocateMember<bool>(this, 0xB80, 0xBA8))[a_idx];
+			return (&REL::RelocateMember<bool>(this, ObjectInitOffset(), 0xBA8))[a_idx];
+		}
+
+		// objectInit follows objects[kTotal]: SE 364 forms, AE 1.6 366, AE 1.7.99+ 372
+		[[nodiscard]] static std::ptrdiff_t ObjectInitOffset() noexcept
+		{
+			if SKYRIM_REL_CONSTEXPR (!REL::Module::IsAE()) {
+				return 0xB80;
+			} else {
+				return REL::Module::IsAtLeast(SKSE::RUNTIME_SSE_1_7_99) ? 0xBC0 : 0xB90;
+			}
 		}
 
 		[[nodiscard]] static bool SupportsVR(DefaultObjectID a_object) noexcept;

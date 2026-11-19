@@ -22,9 +22,12 @@ namespace RE
 
 	void UI3DSceneManager::DetachChild(NiAVObject* a_obj)
 	{
-		using func_t = decltype(&UI3DSceneManager::DetachChild);
+		// the engine takes a third bool, the game's callers pass false
+		constexpr bool kGameCallersPass = false;
+
+		using func_t = void (*)(UI3DSceneManager*, NiAVObject*, bool);
 		REL::Relocation<func_t> func{ RELOCATION_ID(51861, 52733) };
-		return func(this, a_obj);
+		return func(this, a_obj, kGameCallersPass);
 	}
 
 	void UI3DSceneManager::SetCameraFOV(float a_fov)

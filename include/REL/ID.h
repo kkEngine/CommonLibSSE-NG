@@ -65,7 +65,8 @@ namespace REL
         {
             SSEv1,
             SSEv2,
-            VR
+            VR,
+            SSEv5  // AE 1.7.99+: dense uint32 array indexed by id
         };
 
         class Offset2ID
@@ -153,6 +154,8 @@ namespace REL
                     return _instance.load_file(a_filePath.data(), a_version, 1, false);
                 case Format::SSEv2:
                     return _instance.load_file(a_filePath.data(), a_version, 2, false);
+                case Format::SSEv5:
+                    return _instance.load_file(a_filePath.data(), a_version, 5, false);
 #ifdef ENABLE_SKYRIM_VR
                 case Format::VR:
                     return _instance.load_csv(a_filePath.data(), a_version, false);
@@ -180,14 +183,9 @@ namespace REL
                         return a_lhs.id < a_rhs.id;
                     });
 
-            bool failed = false;
-            if (it == _id2offset.end()) {
-                failed = true;
-            } else if SKYRIM_REL_VR_CONSTEXPR (Module::IsVR()) {
-                if (it->id != a_id) {
-                    failed = true;
-                }
-            }
+            // An id missing from the library must not silently resolve to its neighbour:
+            // AE 1.7.99 retired many ids, so a stale id would otherwise patch random code.
+            const bool failed = it == _id2offset.end() || it->id != a_id;
             if (failed) {
                 stl::report_and_fail(
                     std::format(
@@ -228,6 +226,12 @@ namespace REL
             inline void readin(T &a_val)
             {
                 _stream.read(reinterpret_cast<char *>(std::addressof(a_val)), sizeof(T));
+            }
+
+            template<class T>
+            inline void readin_n(T *a_vals, std::size_t a_count)
+            {
+                _stream.read(reinterpret_cast<char *>(a_vals), static_cast<std::streamsize>(a_count * sizeof(T)));
             }
 
             template<
@@ -289,6 +293,37 @@ namespace REL
             std::int32_t _addressCount{0};
         };
 
+        // Header of format 5 (AE 1.7.99+): fixed 64-byte name, pointer size,
+        // reserved data format and the element count of the dense offset array.
+        class header_v5_t
+        {
+        public:
+            void read(istream_t &a_in)
+            {
+                std::uint32_t version[4]{};
+                char          name[64]{};
+                a_in.readin(version);
+                a_in.readin(name);
+                a_in.readin(_pointerSize);
+                a_in.readin(_dataFormat);
+                a_in.readin(_offsetCount);
+
+                for (std::size_t i = 0; i < std::extent_v<decltype(version)>; ++i) {
+                    _version[i] = static_cast<std::uint16_t>(version[i]);
+                }
+            }
+
+            [[nodiscard]] std::size_t offset_count() const noexcept { return static_cast<std::size_t>(_offsetCount); }
+
+            [[nodiscard]] Version version() const noexcept { return _version; }
+
+        private:
+            Version      _version;
+            std::int32_t _pointerSize{0};
+            std::int32_t _dataFormat{0};
+            std::int32_t _offsetCount{0};
+        };
+
         IDDatabase() = default;
         IDDatabase(const IDDatabase&) = delete;
         IDDatabase(IDDatabase&&) = delete;
@@ -316,13 +351,16 @@ namespace REL
                                 std::format("Data/SKSE/Plugins/versionlib-{}.bin"sv, version.string()) :
                                 std::format("Data/SKSE/Plugins/version-{}.bin"sv, version.string()))
                                 .value_or(L"<unknown filename>"s);
-                load_file(filename, version, Module::IsAE() ? 2 : 1, true);
+                // AE 1.7.99+ ships format 5, older AE format 2, SE format 1.
+                load_file(filename, version, Module::IsAE() ? (version >= Version(1, 7, 99, 0) ? 5 : 2) : 1, true);
 #ifdef ENABLE_SKYRIM_VR
             }
 #endif
         }
 
         bool load_file(stl::zwstring a_filename, Version a_version, std::uint8_t a_formatVersion, bool a_failOnError);
+
+        bool load_v5(istream_t &a_in, Version a_version, bool a_failOnError);
 
 #ifdef ENABLE_SKYRIM_VR
         bool load_csv(stl::zwstring a_filename, Version a_version, bool a_failOnError);

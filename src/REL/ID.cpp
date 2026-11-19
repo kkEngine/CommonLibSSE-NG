@@ -97,6 +97,9 @@ namespace REL
 	{
 		try {
 			istream_t in(a_filename.data(), std::ios::in | std::ios::binary);
+			if (a_formatVersion == 5) {
+				return load_v5(in, a_version, a_failOnError);
+			}
 			header_t header;
 			header.read(in, a_formatVersion);
 			if (header.version() != a_version) {
@@ -127,6 +130,59 @@ namespace REL
 							"address library has not yet added support for this version of the game."sv,
 							stl::utf16_to_utf8(a_filename).value_or("<unknown filename>"s)), a_failOnError);
 			return false;
+		}
+
+		return true;
+	}
+
+	bool IDDatabase::load_v5(istream_t& a_in, Version a_version, bool a_failOnError)
+	{
+		std::int32_t format{};
+		a_in.readin(format);
+		if (format != 5) {
+			return stl::report_and_error(
+				std::format(
+					"Unsupported address library format: {}\n"
+					"This means this script extender plugin is incompatible with the address "
+					"library available for this version of the game, and thus does not "
+					"support it."sv,
+					format),
+				a_failOnError);
+		}
+
+		header_v5_t header;
+		header.read(a_in);
+		if (header.version() != a_version) {
+			return stl::report_and_error("version mismatch"sv, a_failOnError);
+		}
+
+		// The file is a dense array (index = id, value = offset, 0 = no entry).
+		// Repack it into the sorted sparse table the rest of IDDatabase uses,
+		// so lookups and Offset2ID work unchanged.
+		std::vector<std::uint32_t> dense(header.offset_count());
+		a_in.readin_n(dense.data(), dense.size());
+
+		std::size_t count = 0;
+		for (const auto offset : dense) {
+			count += offset != 0;
+		}
+
+		// Distinct mapping name: the layout differs from what format-2 loaders share under "v2".
+		auto mapname = L"CommonLibSSEOffsets-v5-"s;
+		mapname += a_version.wstring();
+		const auto byteSize = count * sizeof(mapping_t);
+		if (_mmap.open(mapname, byteSize)) {
+			_id2offset = { static_cast<mapping_t*>(_mmap.data()), count };
+		} else if (_mmap.create(mapname, byteSize)) {
+			_id2offset = { static_cast<mapping_t*>(_mmap.data()), count };
+			std::size_t i = 0;
+			for (std::size_t id = 0; id < dense.size(); ++id) {
+				if (dense[id] != 0) {
+					_id2offset[i++] = { id, dense[id] };
+				}
+			}
+		} else {
+			return stl::report_and_error("failed to create shared mapping"sv, a_failOnError);
 		}
 
 		return true;

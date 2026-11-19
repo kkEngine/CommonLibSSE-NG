@@ -63,32 +63,39 @@ namespace RE
 		void                          DestroyInputDevices();
 		void                          PollInputDevices(float a_secsSinceLastFrame);
 
+		// AE 1.7.99 grew devices[] by two (unused on PC), moving the runtime data from 0x80 to 0x90
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x80, 0x98);
+			return REL::RelocateMember<RUNTIME_DATA>(this, REL::Module::IsAtLeast(SKSE::RUNTIME_SSE_1_7_99) ? 0x90 : 0x80, 0x98);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x80, 0x98);
+			return const_cast<BSInputDeviceManager*>(this)->GetRuntimeData();
 		}
 
 		// members
 		std::uint8_t    pad59;       // 59
 		std::uint16_t   pad5A;       // 5A
 		std::uint32_t   pad5C;       // 5C
+#ifdef SKYRIM_AE_1799
+		BSIInputDevice* devices[6];  // 60 - [4] and [5] were added in AE 1.7.99 and stay null on PC
+#else
 		BSIInputDevice* devices[4];  // 60
+#endif
 #ifndef SKYRIM_CROSS_VR
 #	if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 		BSTrackedControllerDevice* unkDevice;     // 80
 		BSTrackedControllerDevice* vrDevices[2];  // 88
 		RUNTIME_DATA_CONTENT                      // 98
 #	elif !defined(ENABLE_SKYRIM_VR)
-		RUNTIME_DATA_CONTENT  // 80
+		RUNTIME_DATA_CONTENT  // 80, 90 on AE 1.7.99+
 #	endif
 #endif
 	};
-#ifndef ENABLE_SKYRIM_VR
+#if defined(SKYRIM_AE_1799)
+	static_assert(sizeof(BSInputDeviceManager) == 0x100);
+#elif !defined(ENABLE_SKYRIM_VR)
 	static_assert(sizeof(BSInputDeviceManager) == 0xF0);
 #elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
 	static_assert(sizeof(BSInputDeviceManager) == 0x108);

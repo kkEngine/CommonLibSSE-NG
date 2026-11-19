@@ -118,7 +118,7 @@ namespace RE::Offset
 
 	namespace BSScaleformTranslator
 	{
-		constexpr auto GetCachedString = RELOCATION_ID(67844, 69188);
+		constexpr auto GetCachedString = RELOCATION_ID(67844, 443410);  // 69188 never existed in the AE libraries
 	}
 
 	namespace BSScript
