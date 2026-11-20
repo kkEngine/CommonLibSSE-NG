@@ -16,7 +16,7 @@ namespace RE
 		static const BSTHashMap<BSFixedString, CombatBehaviorTree*>& GetStorage()
 		{
 			using func_t = decltype(&CombatBehaviorTree::GetStorage);
-			REL::Relocation<func_t> func{ RELOCATION_ID(32551, 33306) };
+			REL::Relocation<func_t> func{ REL::ID(33306) };
 			return func();
 		}
 

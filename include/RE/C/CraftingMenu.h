@@ -27,12 +27,12 @@ namespace RE
 
 		[[nodiscard]] inline CraftingSubMenus::CraftingSubMenu* GetCraftingSubMenu() const noexcept
 		{
-			return REL::RelocateMember<CraftingSubMenus::CraftingSubMenu*>(this, 0x30, 0x40);
+			return REL::RelocateMember<CraftingSubMenus::CraftingSubMenu*>(this, 0x30);
 		}
 
 		inline void SetCraftingSubMenu(CraftingSubMenus::CraftingSubMenu* craftingSubMenu) noexcept
 		{
-			REL::RelocateMember<CraftingSubMenus::CraftingSubMenu*>(this, 0x30, 0x40) = craftingSubMenu;
+			REL::RelocateMember<CraftingSubMenus::CraftingSubMenu*>(this, 0x30) = craftingSubMenu;
 		}
 
 		// members

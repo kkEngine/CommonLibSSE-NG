@@ -693,60 +693,60 @@ namespace RE
 
 		[[nodiscard]] inline ACTOR_RUNTIME_DATA& GetActorRuntimeData() noexcept
 		{
-			return REL::RelocateMemberIfNewer<ACTOR_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0xE0, 0xE8);
+			return REL::RelocateMember<ACTOR_RUNTIME_DATA>(this, 0xE8);
 		}
 
 		[[nodiscard]] inline const ACTOR_RUNTIME_DATA& GetActorRuntimeData() const noexcept
 		{
-			return REL::RelocateMemberIfNewer<ACTOR_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0xE0, 0xE8);
+			return REL::RelocateMember<ACTOR_RUNTIME_DATA>(this, 0xE8);
 		}
 
 		[[nodiscard]] inline MagicTarget* AsMagicTarget() noexcept {
-			return &REL::RelocateMemberIfNewer<MagicTarget>(SKSE::RUNTIME_SSE_1_6_629, this, 0x98, 0xA0);
+			return &REL::RelocateMember<MagicTarget>(this, 0xA0);
 		}
 
 		[[nodiscard]] inline const MagicTarget* AsMagicTarget() const noexcept {
-			return &REL::RelocateMemberIfNewer<MagicTarget>(SKSE::RUNTIME_SSE_1_6_629, this, 0x98, 0xA0);
+			return &REL::RelocateMember<MagicTarget>(this, 0xA0);
 		}
 
 		[[nodiscard]] inline ActorValueOwner* AsActorValueOwner() noexcept {
-			return &REL::RelocateMemberIfNewer<ActorValueOwner>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB0, 0xB8);
+			return &REL::RelocateMember<ActorValueOwner>(this, 0xB8);
 		}
 
 		[[nodiscard]] inline const ActorValueOwner* AsActorValueOwner() const noexcept {
-			return &REL::RelocateMemberIfNewer<ActorValueOwner>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB0, 0xB8);
+			return &REL::RelocateMember<ActorValueOwner>(this, 0xB8);
 		}
 
 		[[nodiscard]] inline ActorState* AsActorState() noexcept {
-			return &REL::RelocateMemberIfNewer<ActorState>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB8, 0xC0);
+			return &REL::RelocateMember<ActorState>(this, 0xC0);
 		}
 
 		[[nodiscard]] inline const ActorState* AsActorState() const noexcept {
-			return &REL::RelocateMemberIfNewer<ActorState>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB8, 0xC0);
+			return &REL::RelocateMember<ActorState>(this, 0xC0);
 		}
 
 		[[nodiscard]] inline BSTEventSink<BSTransformDeltaEvent>* AsBSTransformDeltaEventSink() noexcept {
-			return &REL::RelocateMemberIfNewer<BSTEventSink<BSTransformDeltaEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0xC8, 0xD0);
+			return &REL::RelocateMember<BSTEventSink<BSTransformDeltaEvent>>(this, 0xD0);
 		}
 
 		[[nodiscard]] inline const BSTEventSink<BSTransformDeltaEvent>* AsBSTransformDeltaEventSink() const noexcept {
-			return &REL::RelocateMemberIfNewer<BSTEventSink<BSTransformDeltaEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0xC8, 0xD0);
+			return &REL::RelocateMember<BSTEventSink<BSTransformDeltaEvent>>(this, 0xD0);
 		}
 
 		[[nodiscard]] inline BSTEventSink<bhkCharacterMoveFinishEvent>* AsCharacterMoveFinishEventSink() noexcept {
-			return &REL::RelocateMemberIfNewer<BSTEventSink<bhkCharacterMoveFinishEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0xD0, 0xD8);
+			return &REL::RelocateMember<BSTEventSink<bhkCharacterMoveFinishEvent>>(this, 0xD8);
 		}
 
 		[[nodiscard]] inline const BSTEventSink<bhkCharacterMoveFinishEvent>* AsCharacterMoveFinishEventSink() const noexcept {
-			return &REL::RelocateMemberIfNewer<BSTEventSink<bhkCharacterMoveFinishEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0xD0, 0xD8);
+			return &REL::RelocateMember<BSTEventSink<bhkCharacterMoveFinishEvent>>(this, 0xD8);
 		}
 
 		[[nodiscard]] inline IPostAnimationChannelUpdateFunctor* AsIPostAnimationChannelUpdateFunctor() noexcept {
-			return &REL::RelocateMemberIfNewer<IPostAnimationChannelUpdateFunctor>(SKSE::RUNTIME_SSE_1_6_629, this, 0xD8, 0xE0);
+			return &REL::RelocateMember<IPostAnimationChannelUpdateFunctor>(this, 0xE0);
 		}
 
 		[[nodiscard]] inline const IPostAnimationChannelUpdateFunctor* AsIPostAnimationChannelUpdateFunctor() const noexcept {
-			return &REL::RelocateMemberIfNewer<IPostAnimationChannelUpdateFunctor>(SKSE::RUNTIME_SSE_1_6_629, this, 0xD8, 0xE0);
+			return &REL::RelocateMember<IPostAnimationChannelUpdateFunctor>(this, 0xE0);
 		}
 
 		// members

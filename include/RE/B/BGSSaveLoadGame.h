@@ -68,14 +68,14 @@ namespace RE
 
 		static BGSSaveLoadGame* GetSingleton()
 		{
-			REL::Relocation<BGSSaveLoadGame**> singleton{ RELOCATION_ID(516851, 403330) };
+			REL::Relocation<BGSSaveLoadGame**> singleton{ REL::ID(403330) };
 			return *singleton;
 		}
 
 		bool GetChange(TESForm* a_form, std::uint32_t a_changes)
 		{
 			using func_t = decltype(&BGSSaveLoadGame::GetChange);
-			REL::Relocation<func_t> func{ RELOCATION_ID(34655, 35577) };
+			REL::Relocation<func_t> func{ REL::ID(35577) };
 			return func(this, a_form, a_changes);
 		}
 

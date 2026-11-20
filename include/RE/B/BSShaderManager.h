@@ -30,7 +30,7 @@ namespace RE
 		public:
 			static BSShaderManager::State& GetSingleton()
 			{
-				REL::Relocation<BSShaderManager::State*> singleton{ RELOCATION_ID(513211, 390951) };
+				REL::Relocation<BSShaderManager::State*> singleton{ REL::ID(390951) };
 				return *singleton;
 			}
 
@@ -79,19 +79,19 @@ namespace RE
 		static void GetTexture(const char* a_path, bool a_demand, NiPointer<NiTexture>& a_textureOut, bool a_isHeightMap)
 		{
 			using func_t = decltype(&BSShaderManager::GetTexture);
-			REL::Relocation<func_t> func{ RELOCATION_ID(98986, 105640) };
+			REL::Relocation<func_t> func{ REL::ID(105640) };
 			return func(a_path, a_demand, a_textureOut, a_isHeightMap);
 		}
 
 		static BSShaderAccumulator* GetCurrentAccumulator()
 		{
-			REL::Relocation<BSShaderAccumulator**> accumulator{ RELOCATION_ID(527650, 414600) };
+			REL::Relocation<BSShaderAccumulator**> accumulator{ REL::ID(414600) };
 			return *accumulator;
 		}
 
 		static RenderMode GetCurrentRenderMode()
 		{
-			REL::Relocation<RenderMode*> renderMode{ RELOCATION_ID(527601, 414601) };
+			REL::Relocation<RenderMode*> renderMode{ REL::ID(414601) };
 			return *renderMode;
 		}
 	};

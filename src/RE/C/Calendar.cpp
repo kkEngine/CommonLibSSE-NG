@@ -72,7 +72,7 @@ namespace RE
 	void Calendar::GetTimeDateString(char* a_dest, std::uint32_t a_max, bool a_showYear) const
 	{
 		using func_t = decltype(&Calendar::GetTimeDateString);
-		REL::Relocation<func_t> func{ RELOCATION_ID(35413, 36311) };
+		REL::Relocation<func_t> func{ REL::ID(36311) };
 		return func(this, a_dest, a_max, a_showYear);
 	}
 
@@ -88,7 +88,7 @@ namespace RE
 
 	float Calendar::GetHoursPerDay()
 	{
-		REL::Relocation<float*> hours{ RELOCATION_ID(241610, 195681) };
+		REL::Relocation<float*> hours{ REL::ID(195681) };
 		return *hours;
 	}
 

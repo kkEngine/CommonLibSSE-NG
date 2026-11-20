@@ -7,7 +7,7 @@ namespace RE
 	BSWindModifier* BSWindModifier::Ctor()
 	{
 		using func_t = decltype(&BSWindModifier::Ctor);
-		REL::Relocation<func_t> func{ RELOCATION_ID(74377, 76100) };
+		REL::Relocation<func_t> func{ REL::ID(76100) };
 		return func(this);
 	}
 

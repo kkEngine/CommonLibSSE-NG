@@ -31,7 +31,7 @@ namespace RE
 
 		static BSSkyShader* GetSingleton()
 		{
-			REL::Relocation<BSSkyShader**> singleton{ RELOCATION_ID(528198, 415143) };
+			REL::Relocation<BSSkyShader**> singleton{ REL::ID(415143) };
 			return *singleton;
 		}
 

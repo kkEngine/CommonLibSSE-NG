@@ -53,7 +53,7 @@ namespace RE
 
 		[[nodiscard]] BSTEventSink<BSSystemEvent>* AsBSSystemEventSink() noexcept
 		{
-			return &REL::RelocateMember<BSTEventSink<BSSystemEvent>>(this, 0x30, 0x40);
+			return &REL::RelocateMember<BSTEventSink<BSSystemEvent>>(this, 0x30);
 		}
 
 		[[nodiscard]] const BSTEventSink<BSSystemEvent>* AsBSSystemEventSink() const noexcept
@@ -63,7 +63,7 @@ namespace RE
 
 		[[nodiscard]] BSTEventSink<BSGamerProfileEvent>* AsBSGamerProfileEventSink() noexcept
 		{
-			return &REL::RelocateMember<BSTEventSink<BSGamerProfileEvent>>(this, 0x38, 0x48);
+			return &REL::RelocateMember<BSTEventSink<BSGamerProfileEvent>>(this, 0x38);
 		}
 
 		[[nodiscard]] const BSTEventSink<BSGamerProfileEvent>* AsBSGamerProfileEventSink() const noexcept
@@ -73,7 +73,7 @@ namespace RE
 
 		[[nodiscard]] BSTEventSink<BGSSaveLoadManagerEvent>* AsBGSSaveLoadManagerEvent() noexcept
 		{
-			return &REL::RelocateMember<BSTEventSink<BGSSaveLoadManagerEvent>>(this, 0x40, 0x50);
+			return &REL::RelocateMember<BSTEventSink<BGSSaveLoadManagerEvent>>(this, 0x40);
 		}
 
 		[[nodiscard]] const BSTEventSink<BGSSaveLoadManagerEvent>* AsBGSSaveLoadManagerEvent() const noexcept
@@ -83,12 +83,12 @@ namespace RE
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x48, 0x58);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x48);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x48, 0x58);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x48);
 		}
 
 		// members

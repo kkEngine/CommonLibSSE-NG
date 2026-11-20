@@ -721,8 +721,6 @@ namespace REL
 	namespace stl = SKSE::stl;
 }
 
-#define RELOCATION_ID(a_se, a_ae) REL::RelocationID(a_se, a_ae)
-
 #include "REL/REL.h"
 
 #include "RE/Offsets.h"

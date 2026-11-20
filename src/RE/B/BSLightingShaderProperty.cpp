@@ -351,7 +351,7 @@ namespace RE
 
 		bool GetUnkConstant0()
 		{
-			REL::Relocation<bool*> seconds{ RELOCATION_ID(513204, 390933) };
+			REL::Relocation<bool*> seconds{ REL::ID(390933) };
 			return *seconds;
 		}
 	}

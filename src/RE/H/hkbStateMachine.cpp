@@ -21,7 +21,7 @@ namespace RE
 
 	void hkbStateMachine::AddState(int32_t stateId, hkbGenerator* generator, char const* stateName)
 	{
-		REL::Relocation<void(hkbStateMachine*, int32_t, hkbGenerator*, char const*)> func(RELOCATION_ID(58706, 59367));
+		REL::Relocation<void(hkbStateMachine*, int32_t, hkbGenerator*, char const*)> func(REL::ID(59367));
 		return func(this, stateId, generator, stateName);
 	}
 

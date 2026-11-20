@@ -5,7 +5,7 @@ namespace RE
 	bool TESFile::CloseTES(bool a_force)
 	{
 		using func_t = decltype(&TESFile::CloseTES);
-		REL::Relocation<func_t> func{ RELOCATION_ID(13857, 13933) };
+		REL::Relocation<func_t> func{ REL::ID(13933) };
 		return func(this, a_force);
 	}
 
@@ -44,7 +44,7 @@ namespace RE
 	bool TESFile::OpenTES(NiFile::OpenMode a_accessMode, bool a_lock)
 	{
 		using func_t = decltype(&TESFile::OpenTES);
-		REL::Relocation<func_t> func{ RELOCATION_ID(13855, 13931) };
+		REL::Relocation<func_t> func{ REL::ID(13931) };
 		return func(this, a_accessMode, a_lock);
 	}
 
@@ -68,7 +68,7 @@ namespace RE
 		constexpr bool kSkipFirstSubrecordRead = false;
 
 		using func_t = bool (*)(TESFile*, bool, bool);
-		REL::Relocation<func_t> func{ RELOCATION_ID(13894, 13979) };
+		REL::Relocation<func_t> func{ REL::ID(13979) };
 		return func(this, a_skipIgnored, kSkipFirstSubrecordRead);
 	}
 

@@ -45,12 +45,12 @@ namespace RE
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x128, 0x150);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x128);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x128, 0x150);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x128);
 		}
 
 		// members

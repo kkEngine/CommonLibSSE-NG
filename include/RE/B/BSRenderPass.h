@@ -46,14 +46,14 @@ namespace RE
 			uint32_t technique, uint8_t numLights, BSLight** lights)
 		{
 			using func_t = decltype(&BSRenderPass::Make);
-			REL::Relocation<func_t> func{ RELOCATION_ID(100717, 107497) };
+			REL::Relocation<func_t> func{ REL::ID(107497) };
 			return func(shader, property, geometry, technique, numLights, lights);
 		}
 
 		void Clear()
 		{
 			using func_t = decltype(&BSRenderPass::Clear);
-			REL::Relocation<func_t> func{ RELOCATION_ID(100718, 107498) };
+			REL::Relocation<func_t> func{ REL::ID(107498) };
 			func(this);
 		}
 

@@ -54,12 +54,12 @@ namespace RE
 
 		[[nodiscard]] inline BARRIER_RUNTIME_DATA& GetBarrierRuntimeData() noexcept
 		{
-			return REL::RelocateMemberIfNewer<BARRIER_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x1D8, 0x1E0);
+			return REL::RelocateMember<BARRIER_RUNTIME_DATA>(this, 0x1E0);
 		}
 
 		[[nodiscard]] inline const BARRIER_RUNTIME_DATA& GetBarrierRuntimeData() const noexcept
 		{
-			return REL::RelocateMemberIfNewer<BARRIER_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x1D8, 0x1E0);
+			return REL::RelocateMember<BARRIER_RUNTIME_DATA>(this, 0x1E0);
 		}
 
 		// members

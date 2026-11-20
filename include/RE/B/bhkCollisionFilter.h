@@ -13,7 +13,7 @@ namespace RE
 
 		[[nodiscard]] static bhkCollisionFilter* GetSingleton()
 		{
-			REL::Relocation<bhkCollisionFilter**> singleton{ RELOCATION_ID(514415, 400562) };
+			REL::Relocation<bhkCollisionFilter**> singleton{ REL::ID(400562) };
 			return *singleton;
 		}
 

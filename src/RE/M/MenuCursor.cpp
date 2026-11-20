@@ -5,7 +5,7 @@ namespace RE
 {
 	MenuCursor* MenuCursor::GetSingleton()
 	{
-		REL::Relocation<MenuCursor**> singleton{ RELOCATION_ID(517043, 403551) };
+		REL::Relocation<MenuCursor**> singleton{ REL::ID(403551) };
 		return *singleton;
 	}
 

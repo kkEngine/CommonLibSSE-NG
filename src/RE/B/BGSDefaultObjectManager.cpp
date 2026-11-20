@@ -13,12 +13,8 @@ namespace RE
 			if (a_idx <= std::to_underlying(DefaultObjectID::kKeywordActivatorFurnitureNoPlayer)) {
 				return a_idx;
 			}
-			std::size_t result;
-			if constexpr (Module::IsVR()) {
-				result = (0xFFFF0000 & a_idx) >> 16;
-			} else {
-				result = 0x0000FFFF & a_idx;
-			}
+			// the low 16 bits hold the SE index, 0 for forms the flat runtimes don't have
+			const std::size_t result = 0x0000FFFF & a_idx;
 			return result ? BGSDefaultObjectManager::ToRuntimeIndex(result) : kInvalid;
 		}
 	}
@@ -30,24 +26,13 @@ namespace RE
 			return nullptr;
 		}
 		return IsObjectInitialized(idx) ?
-                   &RelocateMember<TESForm**>(this, 0x20, 0x20)[idx] :
+                   &RelocateMember<TESForm**>(this, 0x20)[idx] :
                    nullptr;
 	}
 
 	bool BGSDefaultObjectManager::IsObjectInitialized(DefaultObjectID a_object) const noexcept
 	{
 		return IsObjectInitialized(MapIndex(std::to_underlying(a_object)));
-	}
-
-	bool BGSDefaultObjectManager::SupportsVR(DefaultObjectID a_object) noexcept
-	{
-		auto idx = std::to_underlying(a_object);
-		return idx <= std::to_underlying(DefaultObjectID::kKeywordActivatorFurnitureNoPlayer) || idx & 0xFFFF0000;
-	}
-
-	bool BGSDefaultObjectManager::SupportsSE(DefaultObjectID a_object) noexcept
-	{
-		return (std::to_underlying(a_object) & 0x0000FFFF) || a_object != DefaultObjectID::kWerewolfSpell;
 	}
 
 	bool BGSDefaultObjectManager::SupportsCurrentRuntime(DefaultObjectID a_object) noexcept

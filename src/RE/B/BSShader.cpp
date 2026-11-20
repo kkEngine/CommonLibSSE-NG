@@ -6,7 +6,7 @@ namespace RE
 		bool skipPixelShader)
 	{
 		using func_t = decltype(&BSShader::BeginTechnique);
-		REL::Relocation<func_t> func{ RELOCATION_ID(101341, 108328) };
+		REL::Relocation<func_t> func{ REL::ID(108328) };
 		return func(this, vertexDescriptor, pixelDescriptor, skipPixelShader);
 	}
 

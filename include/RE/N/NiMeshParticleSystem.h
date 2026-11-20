@@ -40,12 +40,12 @@ namespace RE
 
 		[[nodiscard]] inline MESH_PARTICLE_SYSTEM_RUNTIME_DATA& GetMeshParticleSystemRuntimeData() noexcept
 		{
-			return REL::RelocateMember<MESH_PARTICLE_SYSTEM_RUNTIME_DATA>(this, 0x198, 0x1C0);
+			return REL::RelocateMember<MESH_PARTICLE_SYSTEM_RUNTIME_DATA>(this, 0x198);
 		}
 
 		[[nodiscard]] inline const MESH_PARTICLE_SYSTEM_RUNTIME_DATA& GetMeshParticleSystemRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<MESH_PARTICLE_SYSTEM_RUNTIME_DATA>(this, 0x198, 0x1C0);
+			return REL::RelocateMember<MESH_PARTICLE_SYSTEM_RUNTIME_DATA>(this, 0x198);
 		}
 
 		// members

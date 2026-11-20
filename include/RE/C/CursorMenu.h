@@ -28,7 +28,7 @@ namespace RE
 
 		[[nodiscard]] MenuEventHandler* AsMenuEventHandler() noexcept
 		{
-			return &REL::RelocateMember<MenuEventHandler>(this, 0x30, 0x40);
+			return &REL::RelocateMember<MenuEventHandler>(this, 0x30);
 		}
 
 		[[nodiscard]] const MenuEventHandler* AsMenuEventHandler() const noexcept

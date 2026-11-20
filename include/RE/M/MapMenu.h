@@ -9,7 +9,6 @@
 #include "RE/I/IMenu.h"
 #include "RE/L/LocalMapMenu.h"
 #include "RE/M/MapCamera.h"
-#include "RE/W/WorldSpaceMenu.h"
 
 namespace RE
 {
@@ -86,26 +85,13 @@ namespace RE
 		void PlaceMarker()
 		{
 			using func_t = decltype(&MapMenu::PlaceMarker);
-			REL::Relocation<func_t> func{ RELOCATION_ID(52226, 53113) };
+			REL::Relocation<func_t> func{ REL::ID(53113) };
 			return func(this);
-		}
-
-		[[nodiscard]] WorldSpaceMenu* AsWorldSpaceMenu() noexcept
-		{
-			if constexpr (!REL::Module::IsVR()) {
-				return nullptr;
-			}
-			return &REL::RelocateMember<WorldSpaceMenu>(this, 0, 0);
-		}
-
-		[[nodiscard]] const WorldSpaceMenu* AsWorldSpaceMenu() const noexcept
-		{
-			return const_cast<MapMenu*>(this)->AsWorldSpaceMenu();
 		}
 
 		[[nodiscard]] BSTEventSink<MenuOpenCloseEvent>* AsMenuOpenCloseEventSink() noexcept
 		{
-			return &REL::RelocateMember<BSTEventSink<MenuOpenCloseEvent>>(this, 0x30, 0x58);
+			return &REL::RelocateMember<BSTEventSink<MenuOpenCloseEvent>>(this, 0x30);
 		}
 
 		[[nodiscard]] const BSTEventSink<MenuOpenCloseEvent>* AsMenuOpenCloseEventSink() const noexcept
@@ -115,7 +101,7 @@ namespace RE
 
 		[[nodiscard]] IMapCameraCallbacks* AsIMapCameraCallbacks() noexcept
 		{
-			return &REL::RelocateMember<IMapCameraCallbacks>(this, 0x38, 0x60);
+			return &REL::RelocateMember<IMapCameraCallbacks>(this, 0x38);
 		}
 
 		[[nodiscard]] const IMapCameraCallbacks* AsIMapCameraCallbacks() const noexcept
@@ -125,22 +111,22 @@ namespace RE
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40, 0x68);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40, 0x68);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40);
 		}
 
 		[[nodiscard]] inline RUNTIME_DATA2& GetRuntimeData2() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA2>(this, 0x30460, 0x30508);
+			return REL::RelocateMember<RUNTIME_DATA2>(this, 0x30460);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA2& GetRuntimeData2() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA2>(this, 0x30460, 0x30508);
+			return REL::RelocateMember<RUNTIME_DATA2>(this, 0x30460);
 		}
 
 		// members

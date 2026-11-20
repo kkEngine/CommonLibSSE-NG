@@ -66,7 +66,7 @@ namespace RE
 		// AE 1.7.99 grew devices[] by two (unused on PC), moving the runtime data from 0x80 to 0x90
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, REL::Module::IsAtLeast(SKSE::RUNTIME_SSE_1_7_99) ? 0x90 : 0x80, 0x98);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x90);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept

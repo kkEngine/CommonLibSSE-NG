@@ -29,22 +29,18 @@ namespace RE
 	public:
 		[[nodiscard]] BSSpinLock* GetGraphLock() const noexcept
 		{
-			if constexpr (REL::Module::IsAE()) {
-				if (REL::Module::get().version() >= SKSE::RUNTIME_SSE_1_6_629) {
-					return &REL::RelocateMember<BSSpinLock>(this, 0x20);
-				}
-			}
+			return &REL::RelocateMember<BSSpinLock>(this, 0x20);
 			return nullptr;
 		}
 
 		[[nodiscard]] BSTSmartPointer<BShkbAnimationGraph>& GetAnimationGraph() noexcept
 		{
-			return REL::RelocateMemberIfNewer<BSTSmartPointer<BShkbAnimationGraph>>(SKSE::RUNTIME_SSE_1_6_629, this, 0x20, 0x28);
+			return REL::RelocateMember<BSTSmartPointer<BShkbAnimationGraph>>(this, 0x28);
 		}
 
 		[[nodiscard]] const BSTSmartPointer<BShkbAnimationGraph>& GetAnimationGraph() const noexcept
 		{
-			return REL::RelocateMemberIfNewer<BSTSmartPointer<BShkbAnimationGraph>>(SKSE::RUNTIME_SSE_1_6_629, this, 0x20, 0x28);
+			return REL::RelocateMember<BSTSmartPointer<BShkbAnimationGraph>>(this, 0x28);
 		}
 
 		// members
@@ -110,25 +106,25 @@ namespace RE
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
-			return REL::RelocateMemberIfNewer<RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x98, 0xA0);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0xA0);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
 		{
-			return REL::RelocateMemberIfNewer<RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x98, 0xA0);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0xA0);
 		}
 
 		bool QueryAnimations(float mb_from_time, BSFixedString& projectName, BSScrapArray<ClipData>& array, int activeGraph_ind)
 		{
 			using func_t = bool(BSAnimationGraphManager*, float, BSFixedString&, BSScrapArray<ClipData>&, int);
-			REL::Relocation<func_t> func{ RELOCATION_ID(62431, 63373) };
+			REL::Relocation<func_t> func{ REL::ID(63373) };
 			return func(this, mb_from_time, projectName, array, activeGraph_ind);
 		}
 
 		bool QueryAnimations(const BSScrapArray<BSFixedString>& events, int activeGraph_ind, BSFixedString& projectName, BSScrapArray<ClipData>& clips)
 		{
 			using func_t = bool(BSAnimationGraphManager*, const BSScrapArray<BSFixedString>&, int, BSFixedString&, BSScrapArray<ClipData>&);
-			REL::Relocation<func_t> func{ RELOCATION_ID(62432, 63374) };
+			REL::Relocation<func_t> func{ REL::ID(63374) };
 			return func(this, events, activeGraph_ind, projectName, clips);
 		}
 

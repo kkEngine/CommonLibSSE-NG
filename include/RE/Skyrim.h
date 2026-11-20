@@ -1843,6 +1843,5 @@
 #include "RE/W/WeatherType.h"
 #include "RE/W/WerewolfEffect.h"
 #include "RE/W/WerewolfFeedEffect.h"
-#include "RE/W/WorldSpaceMenu.h"
 #include "RE/Z/ZeroFunctionArguments.h"
 #include "RE/Z/ZeroOverheadHeap.h"

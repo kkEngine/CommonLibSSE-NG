@@ -39,7 +39,6 @@ namespace REL
 		_base = 0;
 		_filename.clear();
 		_filePath.clear();
-		_runtime = Runtime::AE;
 		_version = { 0, 0, 0, 0 };
 		for (auto& segment : _segments) {
 			segment = {};

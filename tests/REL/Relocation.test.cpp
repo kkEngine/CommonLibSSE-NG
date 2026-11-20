@@ -170,64 +170,42 @@ TEST_CASE("Version/Compare")
 	CHECK(REL::Version(1, 3, 0, 0).compare(REL::Version(0, 2, 0, 0)) == std::strong_ordering::greater);
 }
 
-#ifdef ENABLE_SKYRIM_SE
-TEST_CASE("Module/SupportsSkyrimSE")
+namespace
 {
-	SECTION("Runtime is mockable")
+	// Writes an address library in format 5: a dense offset array indexed by id
+	std::filesystem::path WriteVersionLib(REL::Version a_version, std::uint64_t a_id, std::uint32_t a_offset)
 	{
-		REQUIRE(REL::Module::mock(SKSE::RUNTIME_SSE_1_5_97, REL::Module::Runtime::SE, L"SkyrimSE.exe", 0x1000));
-	}
-	SECTION("Address Library format can be loaded")
-	{
-		CHECK(REL::IDDatabase::inject(
-			L"Data\\SKSE\\Plugins\\version-1-5-97-0.bin", REL::IDDatabase::Format::SSEv1, SKSE::RUNTIME_SSE_1_5_97));
-	}
-	SECTION("Lookup by ID returns the correct offset")
-	{
-		CHECK(REL::IDDatabase::get().id2offset(11483) == 0x10f5c0);
-	}
-	SECTION("REL::ID gets correct address and offset")
-	{
-		REL::ID id(11483);
-		CHECK(id.offset() == 0x10f5c0);
-		CHECK(id.address() == 0x1105c0);
-	}
-	SECTION("REL::RelocationID gets correct address and offset")
-	{
-		REL::RelocationID id(11483, 0);
-		CHECK(id.offset() == 0x10f5c0);
-		CHECK(id.address() == 0x1105c0);
-	}
-	SECTION("REL::VariantID gets correct address and offset")
-	{
-		REL::VariantID id(11483, 0, 0);
-		CHECK(id.offset() == 0x10f5c0);
-		CHECK(id.address() == 0x1105c0);
-	}
-	SECTION("REL::VariantOffset gets the correct address and offset")
-	{
-		REL::VariantOffset offset(0x10f5c0, 0, 0);
-		CHECK(offset.offset() == 0x10f5c0);
-		CHECK(offset.address() == 0x1105c0);
-	}
-	SECTION("ID database and module can be reset")
-	{
-		REL::Module::reset();
+		auto path = std::filesystem::temp_directory_path() / L"commonlibsse-test-versionlib.bin";
+		std::ofstream out(path, std::ios::binary | std::ios::trunc);
+		const auto write = [&](const auto& a_value) {
+			out.write(reinterpret_cast<const char*>(std::addressof(a_value)), sizeof(a_value));
+		};
+		write(std::int32_t{ 5 });
+		for (const auto part : a_version) {
+			write(static_cast<std::uint32_t>(part));
+		}
+		const char name[64]{ "SkyrimSE.exe" };
+		write(name);
+		write(std::int32_t{ 8 });  // pointer size
+		write(std::int32_t{ 0 });  // data format
+		write(static_cast<std::int32_t>(a_id + 1));
+		std::vector<std::uint32_t> dense(a_id + 1);
+		dense[a_id] = a_offset;
+		out.write(reinterpret_cast<const char*>(dense.data()), static_cast<std::streamsize>(dense.size() * sizeof(std::uint32_t)));
+		return path;
 	}
 }
-#endif
 
-#ifdef ENABLE_SKYRIM_AE
 TEST_CASE("Module/SupportsSkyrimAE")
 {
 	SECTION("Runtime is mockable")
 	{
-		REQUIRE(REL::Module::mock(SKSE::RUNTIME_SSE_1_6_353, REL::Module::Runtime::AE, L"SkyrimSE.exe", 0x1000));
+		REQUIRE(REL::Module::mock(SKSE::RUNTIME_SSE_1_7_104, L"SkyrimSE.exe", 0x1000));
 	}
 	SECTION("Address Library format can be loaded")
 	{
-		CHECK(REL::IDDatabase::inject(
-			L"Data\\SKSE\\Plugins\\versionlib-1-6-353-0.bin", REL::IDDatabase::Format::SSEv2, SKSE::RUNTIME_SSE_1_6_353));
+		const auto path = WriteVersionLib(SKSE::RUNTIME_SSE_1_7_104, 11483, 0x10f7a0);
+		CHECK(REL::IDDatabase::inject(path.wstring(), SKSE::RUNTIME_SSE_1_7_104));
 	}
 	SECTION("Lookup by ID returns the correct offset")
 	{
@@ -239,21 +217,9 @@ TEST_CASE("Module/SupportsSkyrimAE")
 		CHECK(id.offset() == 0x10f7a0);
 		CHECK(id.address() == 0x1107a0);
 	}
-	SECTION("REL::RelocationID gets correct address and offset")
+	SECTION("REL::Offset gets the correct address and offset")
 	{
-		REL::RelocationID id(0, 11483);
-		CHECK(id.offset() == 0x10f7a0);
-		CHECK(id.address() == 0x1107a0);
-	}
-	SECTION("REL::VariantID gets correct address and offset")
-	{
-		REL::VariantID id(0, 11483, 0);
-		CHECK(id.offset() == 0x10f7a0);
-		CHECK(id.address() == 0x1107a0);
-	}
-	SECTION("REL::VariantOffset gets the correct address and offset")
-	{
-		REL::VariantOffset offset(0, 0x10f7a0, 0);
+		REL::Offset offset(0x10f7a0);
 		CHECK(offset.offset() == 0x10f7a0);
 		CHECK(offset.address() == 0x1107a0);
 	}
@@ -262,61 +228,9 @@ TEST_CASE("Module/SupportsSkyrimAE")
 		REL::Module::reset();
 	}
 }
-#endif
-
-#ifdef ENABLE_SKYRIM_VR
-TEST_CASE("Module/SupportsSkyrimVR")
-{
-	SECTION("Runtime is mockable")
-	{
-		REQUIRE(REL::Module::mock(SKSE::RUNTIME_VR_1_4_15, REL::Module::Runtime::VR, L"SkyrimVR.exe", 0x1000));
-	}
-	SECTION("Address Library format can be loaded")
-	{
-		CHECK(REL::IDDatabase::inject(
-			L"Data\\SKSE\\Plugins\\version-1-4-15-0.csv", REL::IDDatabase::Format::VR, SKSE::RUNTIME_VR_1_4_15));
-	}
-	SECTION("Lookup by ID returns the correct offset")
-	{
-		CHECK(REL::IDDatabase::get().id2offset(11483) == 0x11fba0);
-	}
-	SECTION("REL::ID gets correct address and offset")
-	{
-		REL::ID id(11483);
-		CHECK(id.offset() == 0x11fba0);
-		CHECK(id.address() == 0x120ba0);
-	}
-	SECTION("REL::RelocationID gets correct address and offset")
-	{
-		REL::RelocationID id(11483, 0);
-		CHECK(id.offset() == 0x11fba0);
-		CHECK(id.address() == 0x120ba0);
-
-		id = REL::RelocationID(0, 0, 11483);
-		CHECK(id.offset() == 0x11fba0);
-		CHECK(id.address() == 0x120ba0);
-	}
-	SECTION("REL::VariantID gets correct address and offset")
-	{
-		REL::VariantID id(0, 0, 0x11fba0);
-		CHECK(id.offset() == 0x11fba0);
-		CHECK(id.address() == 0x120ba0);
-	}
-	SECTION("REL::VariantOffset gets the correct address and offset")
-	{
-		REL::VariantOffset offset(0, 0, 0x11fba0);
-		CHECK(offset.offset() == 0x11fba0);
-		CHECK(offset.address() == 0x120ba0);
-	}
-	SECTION("ID database and module can be reset")
-	{
-		REL::Module::reset();
-	}
-}
-#endif
 
 TEST_CASE("IDDatabase/FailedIDLookup")
 {
-	REQUIRE(REL::Module::mock(SKSE::RUNTIME_SSE_1_6_353, REL::Module::Runtime::AE, L"SkyrimSE.exe", 0x1000));
+	REQUIRE(REL::Module::mock(SKSE::RUNTIME_SSE_1_7_104, L"SkyrimSE.exe", 0x1000));
 	REQUIRE_THROWS(REL::IDDatabase::get().id2offset(0xFFFFFFFF));
 }

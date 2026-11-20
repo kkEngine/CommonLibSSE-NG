@@ -56,7 +56,7 @@ namespace RE
 		[[nodiscard]] ThumbstickEvent*       AsThumbstickEvent();
 		[[nodiscard]] const ThumbstickEvent* AsThumbstickEvent() const;
 
-		// AE 1.7.99+ event types; always nullptr on older runtimes
+		// event types added by AE 1.7.99
 		[[nodiscard]] AmiiboEvent*       AsAmiiboEvent();
 		[[nodiscard]] const AmiiboEvent* AsAmiiboEvent() const;
 

@@ -4,7 +4,6 @@
 #include "RE/B/BSTEvent.h"
 #include "RE/G/GFxValue.h"
 #include "RE/I/IMenu.h"
-#include "RE/W/WorldSpaceMenu.h"
 
 namespace RE
 {
@@ -56,22 +55,9 @@ namespace RE
 		// override (BSTEventSink<BSRemoteGamepadEvent>)
 		BSEventNotifyControl ProcessEvent(const BSRemoteGamepadEvent* a_event, BSTEventSource<BSRemoteGamepadEvent>* a_eventSource) override;  // 01
 
-		[[nodiscard]] WorldSpaceMenu* AsWorldSpaceMenu() noexcept
-		{
-			if constexpr (!REL::Module::IsVR()) {
-				return nullptr;
-			}
-			return &REL::RelocateMember<WorldSpaceMenu>(this, 0, 0);
-		}
-
-		[[nodiscard]] const WorldSpaceMenu* AsWorldSpaceMenu() const noexcept
-		{
-			return const_cast<HUDMenu*>(this)->AsWorldSpaceMenu();
-		}
-
 		[[nodiscard]] BSTEventSink<UserEventEnabledEvent>* AsUserEventEnabledEventSink() noexcept
 		{
-			return &REL::RelocateMember<BSTEventSink<UserEventEnabledEvent>>(this, 0x30, 0x58);
+			return &REL::RelocateMember<BSTEventSink<UserEventEnabledEvent>>(this, 0x30);
 		}
 
 		[[nodiscard]] const BSTEventSink<UserEventEnabledEvent>* AsUserEventEnabledEventSink() const noexcept
@@ -81,7 +67,7 @@ namespace RE
 
 		[[nodiscard]] BSTEventSink<BSRemoteGamepadEvent>* AsBSRemoteGamepadEventSink() noexcept
 		{
-			return &REL::RelocateMember<BSTEventSink<BSRemoteGamepadEvent>>(this, 0x38, 0x60);
+			return &REL::RelocateMember<BSTEventSink<BSRemoteGamepadEvent>>(this, 0x38);
 		}
 
 		[[nodiscard]] const BSTEventSink<BSRemoteGamepadEvent>* AsBSRemoteGamepadEventSink() const noexcept
@@ -91,25 +77,25 @@ namespace RE
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40, 0x70);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40, 0x70);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40);
 		}
 
 		static void FlashMeter(ActorValue a_actorValue)
 		{
 			using func_t = decltype(&HUDMenu::FlashMeter);
-			REL::Relocation<func_t> func{ RELOCATION_ID(51907, 52845) };
+			REL::Relocation<func_t> func{ REL::ID(52845) };
 			return func(a_actorValue);
 		}
 
 		static void UpdateCrosshairMagicTarget(bool a_valid)
 		{
 			using func_t = decltype(&HUDMenu::UpdateCrosshairMagicTarget);
-			REL::Relocation<func_t> func{ RELOCATION_ID(50738, 51633) };
+			REL::Relocation<func_t> func{ REL::ID(51633) };
 			return func(a_valid);
 		}
 

@@ -138,11 +138,7 @@ namespace RE
 
         inline BSTEventSource<TESFastTravelEndEvent>* AsTESFastTravelEndEventSource() noexcept
         {
-            if constexpr (REL::Module::IsVR()) {
-                return nullptr;
-            } else {
-                return &REL::RelocateMember<BSTEventSource<TESFastTravelEndEvent>>(this, 0x1238, 0);
-            }
+            return &REL::RelocateMember<BSTEventSource<TESFastTravelEndEvent>>(this, 0x1238);
         }
 
 		template <class T>

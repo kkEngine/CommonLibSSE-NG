@@ -271,7 +271,7 @@ namespace RE
 	bool ExtraDataList::HasQuestObjectAlias()
 	{
 		using func_t = decltype(&ExtraDataList::HasQuestObjectAlias);
-		REL::Relocation<func_t> func{ RELOCATION_ID(11913, 12052) };
+		REL::Relocation<func_t> func{ REL::ID(12052) };
 		return func(this);
 	}
 
@@ -358,31 +358,26 @@ namespace RE
 
 	BSReadWriteLock& ExtraDataList::GetLock() const noexcept
 	{
-		if constexpr (REL::Module::IsAE()) {
-			return *reinterpret_cast<BSReadWriteLock*>(reinterpret_cast<std::uintptr_t>(this) +
-													   (REL::Module::get().version().compare(SKSE::RUNTIME_SSE_1_6_629) == std::strong_ordering::less ? 0x10 : 0x18));
-		} else {
-			return *reinterpret_cast<BSReadWriteLock*>(reinterpret_cast<std::uintptr_t>(this) + 0x10);
-		}
+		return REL::RelocateMember<BSReadWriteLock>(const_cast<ExtraDataList*>(this), 0x18);
 	}
 
 	BSExtraData*& BaseExtraList::GetData() noexcept
 	{
-		return REL::RelocateMemberIfNewer<BSExtraData*>(SKSE::RUNTIME_SSE_1_6_629, this, 0x0, 0x8);
+		return REL::RelocateMember<BSExtraData*>(this, 0x8);
 	}
 
 	const BSExtraData*& BaseExtraList::GetData() const noexcept
 	{
-		return REL::RelocateMemberIfNewer<const BSExtraData*>(SKSE::RUNTIME_SSE_1_6_629, this, 0x0, 0x8);
+		return REL::RelocateMember<const BSExtraData*>(this, 0x8);
 	}
 
 	BaseExtraList::PresenceBitfield*& BaseExtraList::GetPresence() noexcept
 	{
-		return REL::RelocateMemberIfNewer<BaseExtraList::PresenceBitfield*>(SKSE::RUNTIME_SSE_1_6_629, this, 0x08, 0x10);
+		return REL::RelocateMember<BaseExtraList::PresenceBitfield*>(this, 0x10);
 	}
 
 	const BaseExtraList::PresenceBitfield*& BaseExtraList::GetPresence() const noexcept
 	{
-		return REL::RelocateMemberIfNewer<const BaseExtraList::PresenceBitfield*>(SKSE::RUNTIME_SSE_1_6_629, this, 0x08, 0x10);
+		return REL::RelocateMember<const BaseExtraList::PresenceBitfield*>(this, 0x10);
 	}
 }

@@ -14,7 +14,7 @@ namespace RE
 	bool TESDataHandler::AddFormToDataHandler(TESForm* a_form)
 	{
 		using func_t = decltype(&TESDataHandler::AddFormToDataHandler);
-		REL::Relocation<func_t> func{ RELOCATION_ID(13597, 13693) };
+		REL::Relocation<func_t> func{ REL::ID(13693) };
 		return func(this, a_form);
 	}
 
@@ -44,15 +44,10 @@ namespace RE
 			return 0;
 		}
 
-		if constexpr (REL::Module::IsVR()) {
-			// Use SkyrimVR lookup logic, ignore light plugin index which doesn't exist in VR
-			return (a_localFormID & 0xFFFFFF) | (file->compileIndex << 24);
-		} else {
-			FormID formID = file->compileIndex << (3 * 8);
-			formID += file->smallFileCompileIndex << ((1 * 8) + 4);
-			formID += a_localFormID;
-			return formID;
-		}
+		FormID formID = file->compileIndex << (3 * 8);
+		formID += file->smallFileCompileIndex << ((1 * 8) + 4);
+		formID += a_localFormID;
+		return formID;
 	}
 
 	FormID TESDataHandler::LookupFormIDRaw(FormID a_rawFormID, std::string_view a_modName)
@@ -63,29 +58,21 @@ namespace RE
 		}
 
 		auto rawIndex = (a_rawFormID & 0xFF000000) >> 24;
-		if constexpr (REL::Module::IsVR()) {
-			if (rawIndex >= file->masterCount) {
-				return 0;
-			}
-			auto* master = file->masterPtrs[rawIndex];
-			return (a_rawFormID & 0x00FFFFFF) | (master->compileIndex << 24);
-		} else {
-			bool isLight = rawIndex == 0xFE;
-			if (isLight) {
-				rawIndex = (a_rawFormID & 0x00FFF000) >> 12;
-			}
-			std::uint32_t index = 0;
-			for (std::uint32_t i = 0; i < file->masterCount; ++i) {
-				auto* master = file->masterPtrs[i];
-				if ((master->compileIndex == 0xFE) != isLight) {
-					continue;
-				}
-				if (index++ == rawIndex) {
-					return (a_rawFormID & 0x00FFFFFF) | (master->compileIndex << 24);
-				}
-			}
-			return 0;
+		bool isLight = rawIndex == 0xFE;
+		if (isLight) {
+			rawIndex = (a_rawFormID & 0x00FFF000) >> 12;
 		}
+		std::uint32_t index = 0;
+		for (std::uint32_t i = 0; i < file->masterCount; ++i) {
+			auto* master = file->masterPtrs[i];
+			if ((master->compileIndex == 0xFE) != isLight) {
+				continue;
+			}
+			if (index++ == rawIndex) {
+				return (a_rawFormID & 0x00FFFFFF) | (master->compileIndex << 24);
+			}
+		}
+		return 0;
 	}
 
 	const TESFile* TESDataHandler::LookupModByName(std::string_view a_modName)
@@ -180,7 +167,7 @@ namespace RE
 	ObjectRefHandle TESDataHandler::CreateReferenceAtLocation(TESBoundObject* a_base, const NiPoint3& a_location, const NiPoint3& a_rotation, TESObjectCELL* a_targetCell, TESWorldSpace* a_selfWorldSpace, TESObjectREFR* a_alreadyCreatedRef, BGSPrimitive* a_primitive, const ObjectRefHandle& a_linkedRoomRefHandle, bool a_forcePersist, bool a_arg11)
 	{
 		using func_t = decltype(&TESDataHandler::CreateReferenceAtLocation);
-		REL::Relocation<func_t> func{ RELOCATION_ID(13625, 13723) };
+		REL::Relocation<func_t> func{ REL::ID(13723) };
 		return func(this, a_base, a_location, a_rotation, a_targetCell, a_selfWorldSpace, a_alreadyCreatedRef, a_primitive, a_linkedRoomRefHandle, a_forcePersist, a_arg11);
 	}
 }

@@ -33,18 +33,18 @@ namespace RE
 
 		[[nodiscard]] inline DYNAMIC_TRISHAPE_RUNTIME_DATA& GetDynamicTrishapeRuntimeData() noexcept
 		{
-			return REL::RelocateMember<DYNAMIC_TRISHAPE_RUNTIME_DATA>(this, 0x160, 0x1A8);
+			return REL::RelocateMember<DYNAMIC_TRISHAPE_RUNTIME_DATA>(this, 0x160);
 		}
 
 		[[nodiscard]] inline const DYNAMIC_TRISHAPE_RUNTIME_DATA& GetDynamicTrishapeRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<DYNAMIC_TRISHAPE_RUNTIME_DATA>(this, 0x160, 0x1A8);
+			return REL::RelocateMember<DYNAMIC_TRISHAPE_RUNTIME_DATA>(this, 0x160);
 		}
 
 		BSDynamicTriShape* ctor()
 		{
 			using func_t = decltype(&BSDynamicTriShape::ctor);
-			REL::Relocation<func_t> func{ RELOCATION_ID(69564, 70948) };
+			REL::Relocation<func_t> func{ REL::ID(70948) };
 			return func(this);
 		}
 

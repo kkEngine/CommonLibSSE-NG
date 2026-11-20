@@ -10,22 +10,16 @@ namespace RE
 
 	bool PlayerCamera::ForceFirstPerson()
 	{
-		if (REL::Module::IsVR()) {
-			return false;
-		}
 		using func_t = decltype(&PlayerCamera::ForceFirstPerson);
-		REL::Relocation<func_t> func{ RELOCATION_ID(49858, 50790) };
+		REL::Relocation<func_t> func{ REL::ID(50790) };
 		func(this);
 		return true;
 	}
 
 	bool PlayerCamera::ForceThirdPerson()
 	{
-		if (REL::Module::IsVR()) {
-			return false;
-		}
 		using func_t = decltype(&PlayerCamera::ForceThirdPerson);
-		REL::Relocation<func_t> func{ RELOCATION_ID(49863, 50796) };
+		REL::Relocation<func_t> func{ REL::ID(50796) };
 		func(this);
 		return true;
 	}
@@ -58,7 +52,7 @@ namespace RE
 	void PlayerCamera::ToggleFreeCameraMode(bool a_freezeTime)
 	{
 		using func_t = decltype(&PlayerCamera::ToggleFreeCameraMode);
-		REL::Relocation<func_t> func{ RELOCATION_ID(49876, 50809) };
+		REL::Relocation<func_t> func{ REL::ID(50809) };
 		return func(this, a_freezeTime);
 	}
 

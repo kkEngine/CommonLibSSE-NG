@@ -7,7 +7,7 @@ namespace RE
 	NiStream* NiStream::ctor()
 	{
 		using func_t = decltype(&NiStream::ctor);
-		REL::Relocation<func_t> func{ RELOCATION_ID(68971, 70324) };
+		REL::Relocation<func_t> func{ REL::ID(70324) };
 		auto                    niStream = func(this);
 		stl::emplace_vtable<NiStream>(niStream);
 		return niStream;

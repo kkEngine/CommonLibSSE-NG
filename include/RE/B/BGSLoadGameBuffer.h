@@ -16,7 +16,7 @@ namespace RE
 		void LoadDataEndian(void* a_data, std::uint32_t a_offset, std::uint32_t a_size)
 		{
 			using func_t = decltype(&BGSLoadGameBuffer::LoadDataEndian);
-			REL::Relocation<func_t> func{ RELOCATION_ID(35112, 36005) };
+			REL::Relocation<func_t> func{ REL::ID(36005) };
 			return func(this, a_data, a_offset, a_size);
 		}
 

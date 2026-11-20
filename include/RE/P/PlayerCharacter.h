@@ -75,98 +75,6 @@ namespace RE
 		kInvalidMarker
 	};
 
-	struct VR_NODE_DATA
-	{
-#define VR_NODE_DATA_CONTENT                                                                                                                                                  \
-	NiPointer<NiNode>          PlayerWorldNode;                 /* 3F0 */                                                                                                     \
-	NiPointer<NiNode>          FollowNode;                      /* 3F8 */                                                                                                     \
-	NiPointer<NiNode>          FollowOffset;                    /* 400 */                                                                                                     \
-	NiPointer<NiNode>          HeightOffsetNode;                /* 408 */                                                                                                     \
-	NiPointer<NiNode>          SnapWalkOffsetNode;              /* 410 */                                                                                                     \
-	NiPointer<NiNode>          RoomNode;                        /* 418 */                                                                                                     \
-	NiPointer<NiNode>          BlackSphere;                     /* 420 */                                                                                                     \
-	NiPointer<NiNode>          uiNode;                          /* 428 */                                                                                                     \
-	NiPointer<BSTriShape>      InWorldUIQuadGeo;                /* 430 */                                                                                                     \
-	NiPointer<NiNode>          UIPointerNode;                   /* 438 */                                                                                                     \
-	NiPointer<BSTriShape>      UIPointerGeo;                    /* 440 */                                                                                                     \
-	NiPointer<NiNode>          DialogueUINode;                  /* 448 */                                                                                                     \
-	NiPointer<NiNode>          TeleportDestinationPreview;      /* 450 */                                                                                                     \
-	NiPointer<NiNode>          TeleportDestinationFail;         /* 458 */                                                                                                     \
-	NiPointer<NiNode>          TeleportSprintPreview;           /* 460 */                                                                                                     \
-	NiPointer<NiNode>          SpellOrigin;                     /* 468 */                                                                                                     \
-	NiPointer<NiNode>          SpellDestination;                /* 470 */                                                                                                     \
-	NiPointer<NiNode>          ArrowOrigin;                     /* 478 */                                                                                                     \
-	NiPointer<NiNode>          ArrowDestination;                /* 480 */                                                                                                     \
-	NiPointer<NiNode>          QuestMarker;                     /* 488 */                                                                                                     \
-	NiPointer<NiNode>          LeftWandNode;                    /* 490 */                                                                                                     \
-	NiPointer<NiNode>          LeftWandShakeNode;               /* 498 */                                                                                                     \
-	NiPointer<NiNode>          LeftValveIndexControllerNode;    /* 4A0 */                                                                                                     \
-	NiPointer<NiNode>          unkNode4A8;                      /* 4A8 */                                                                                                     \
-	NiPointer<NiNode>          LeftWeaponOffsetNode;            /* 4B0 */                                                                                                     \
-	NiPointer<NiNode>          LeftCrossbowOffsetNode;          /* 4B8 */                                                                                                     \
-	NiPointer<NiNode>          LeftMeleeWeaponOffsetNode;       /* 4C0 */                                                                                                     \
-	NiPointer<NiNode>          LeftStaffWeaponOffsetNode;       /* 4C8 */                                                                                                     \
-	NiPointer<NiNode>          LeftShieldOffsetNode;            /* 4D0 */                                                                                                     \
-	NiPointer<NiNode>          RightShieldOffsetNode;           /* 4D8 */                                                                                                     \
-	NiPointer<NiNode>          SecondaryMagicOffsetNode;        /* 4E0 */                                                                                                     \
-	NiPointer<NiNode>          SecondaryMagicAimNode;           /* 4E8 */                                                                                                     \
-	NiPointer<NiNode>          SecondaryStaffMagicOffsetNode;   /* 4F0 */                                                                                                     \
-	NiPointer<NiNode>          RightWandNode;                   /* 4F8 */                                                                                                     \
-	NiPointer<NiNode>          RightWandShakeNode;              /* 500 */                                                                                                     \
-	NiPointer<NiNode>          RightValveIndexControllerNode;   /* 508 */                                                                                                     \
-	NiPointer<NiNode>          unkNode510;                      /* 510 */                                                                                                     \
-	NiPointer<NiNode>          RightWeaponOffsetNode;           /* 518 */                                                                                                     \
-	NiPointer<NiNode>          RightCrossbowOffsetNode;         /* 520 */                                                                                                     \
-	NiPointer<NiNode>          RightMeleeWeaponOffsetNode;      /* 528 */                                                                                                     \
-	NiPointer<NiNode>          RightStaffWeaponOffsetNode;      /* 530 */                                                                                                     \
-	NiPointer<NiNode>          PrimaryMagicOffsetNode;          /* 538 */                                                                                                     \
-	NiPointer<NiNode>          PrimaryMagicAimNode;             /* 540 */                                                                                                     \
-	NiPointer<NiNode>          PrimaryStaffMagicOffsetNode;     /* 548 */                                                                                                     \
-	std::uint64_t              unk550;                          /* 550 */                                                                                                     \
-	NiPointer<NiBillboardNode> CrosshairParent;                 /* 558 */                                                                                                     \
-	NiPointer<NiBillboardNode> CrosshairSecondaryParent;        /* 560 */                                                                                                     \
-	NiPointer<NiBillboardNode> TargetLockParent;                /* 568 */                                                                                                     \
-	NiPointer<NiNode>          unkNode570;                      /* 570 */                                                                                                     \
-	NiPointer<NiNode>          LastSyncPos;                     /* 578 */                                                                                                     \
-	NiPointer<NiNode>          UprightHmdNode;                  /* 580 */                                                                                                     \
-	NiPointer<NiNode>          MapMarkers3D;                    /* 588 */                                                                                                     \
-	NiPointer<NiNode>          NPCLHnd;                         /* 590 */                                                                                                     \
-	NiPointer<NiNode>          NPCRHnd;                         /* 598 */                                                                                                     \
-	NiPointer<NiNode>          NPCLClv;                         /* 5A0 */                                                                                                     \
-	NiPointer<NiNode>          NPCRClv;                         /* 5A8 */                                                                                                     \
-	std::uint32_t              unk5B0;                          /* 5B0 */                                                                                                     \
-	std::uint32_t              unk5B4;                          /* 5B4 */                                                                                                     \
-	std::uint64_t              unk5B8;                          /* 5B8 */                                                                                                     \
-	std::uint64_t              unk5C0;                          /* 5C0 */                                                                                                     \
-	NiPointer<NiNode>          BowAimNode;                      /* 5C8 */                                                                                                     \
-	NiPointer<NiNode>          BowRotationNode;                 /* 5D0 */                                                                                                     \
-	NiPointer<NiNode>          ArrowSnapNode;                   /* 5D8 */                                                                                                     \
-	NiPointer<BSFadeNode>      ArrowNode;                       /* 5E0 */                                                                                                     \
-	NiPointer<BSFadeNode>      ArrowFireNode;                   /* 5E8 */                                                                                                     \
-	std::uint64_t              unk5F0;                          /* 5F0 */                                                                                                     \
-	NiPointer<NiNode>          ArrowHoldOffsetNode;             /* 5F8 */                                                                                                     \
-	NiPointer<NiNode>          ArrowHoldNode;                   /* 600 */                                                                                                     \
-	std::uint64_t              unk608;                          /* 608 */                                                                                                     \
-	float                      unkFloat610;                     /* 610 */                                                                                                     \
-	std::uint32_t              unk614;                          /* 614 */                                                                                                     \
-	std::uint64_t              unk618;                          /* 618 */                                                                                                     \
-	std::uint64_t              unk620;                          /* 620 */                                                                                                     \
-	std::uint64_t              unk628;                          /* 628 */                                                                                                     \
-	std::uint64_t              unk630;                          /* 630 */                                                                                                     \
-	void*                      QuestMarkerBillBoardsNodeArray;  /* 638    TODO - Make into proper data structure */                                                           \
-	void*                      TeleportNodeArray;               /* 640    TODO - Make into proper data structure */                                                           \
-	void*                      QuestMarkerBillBoardsNodeArray2; /* 648    TODO - Make into proper data structure -> points to same place as QuestMarkerBillBoardsNodeArray */ \
-	std::uint64_t              unk650;                          /* 650 */                                                                                                     \
-	void*                      TeleportNodeArray2;              /* 658    TODO - Make into proper data structure -> points to same place as TeleportNodeArray */              \
-	void*                      QuestMarkerBillBoardsNodeArray3; /* 660    TODO - Make into proper data structure -> points to same place as QuestMarkerBillBoardsNodeArray */ \
-	std::uint64_t              unk668;                          /* 668 */                                                                                                     \
-	float                      unkFloat670;                     /* 670 */                                                                                                     \
-	std::uint32_t              unk674;                          /* 674 */                                                                                                     \
-	void*                      TeleportNodeArray3;              /* 678    TODO - Make into proper data structure */
-
-		VR_NODE_DATA_CONTENT
-	};
-
 	struct CrimeGoldStruct
 	{
 	public:
@@ -559,14 +467,8 @@ namespace RE
 		void                     UpdateCrosshairs();
 
 		// AE 1.7.99 added BSTEventSink<BSSystemEvent> at 0x2D8, every member after it moved by 8
-		[[nodiscard]] static std::ptrdiff_t AE1799Shift(std::ptrdiff_t a_offset) noexcept
-		{
-			return REL::Module::IsAtLeast(SKSE::RUNTIME_SSE_1_7_99) ? a_offset + 0x8 : a_offset;
-		}
-
-		// nullptr before AE 1.7.99
 		[[nodiscard]] inline BSTEventSink<BSSystemEvent>* AsBSSystemEventSink() noexcept {
-			return REL::Module::IsAtLeast(SKSE::RUNTIME_SSE_1_7_99) ? &REL::RelocateMember<BSTEventSink<BSSystemEvent>>(this, 0x2D8) : nullptr;
+			return &REL::RelocateMember<BSTEventSink<BSSystemEvent>>(this, 0x2D8);
 		}
 
 		[[nodiscard]] inline const BSTEventSink<BSSystemEvent>* AsBSSystemEventSink() const noexcept {
@@ -574,59 +476,59 @@ namespace RE
 		}
 
 		[[nodiscard]] inline BSTEventSource<BGSActorCellEvent>* AsBGSActorCellEventSource() noexcept {
-			return &REL::RelocateMemberIfNewer<BSTEventSource<BGSActorCellEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0x2D0, AE1799Shift(0x2D8));
+			return &REL::RelocateMember<BSTEventSource<BGSActorCellEvent>>(this, 0x2E0);
 		}
 
 		[[nodiscard]] inline const BSTEventSource<BGSActorCellEvent>* AsBGSActorCellEventSource() const noexcept {
-			return &REL::RelocateMemberIfNewer<BSTEventSource<BGSActorCellEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0x2D0, AE1799Shift(0x2D8));
+			return &REL::RelocateMember<BSTEventSource<BGSActorCellEvent>>(this, 0x2E0);
 		}
 
 		[[nodiscard]] inline BSTEventSource<BGSActorDeathEvent>* AsBGSActorDeathEventSource() noexcept {
-			return &REL::RelocateMemberIfNewer<BSTEventSource<BGSActorDeathEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0x328, AE1799Shift(0x330));
+			return &REL::RelocateMember<BSTEventSource<BGSActorDeathEvent>>(this, 0x338);
 		}
 
 		[[nodiscard]] inline const BSTEventSource<BGSActorDeathEvent>* AsBGSActorDeathEventSource() const noexcept {
-			return &REL::RelocateMemberIfNewer<BSTEventSource<BGSActorDeathEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0x328, AE1799Shift(0x330));
+			return &REL::RelocateMember<BSTEventSource<BGSActorDeathEvent>>(this, 0x338);
 		}
 
 		[[nodiscard]] inline BSTEventSource<PositionPlayerEvent>* AsPositionPlayerEventSource() noexcept {
-			return &REL::RelocateMemberIfNewer<BSTEventSource<PositionPlayerEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0x380, AE1799Shift(0x388));
+			return &REL::RelocateMember<BSTEventSource<PositionPlayerEvent>>(this, 0x390);
 		}
 
 		[[nodiscard]] inline const BSTEventSource<PositionPlayerEvent>* AsPositionPlayerEventSource() const noexcept {
-			return &REL::RelocateMemberIfNewer<BSTEventSource<PositionPlayerEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0x380, AE1799Shift(0x388));
+			return &REL::RelocateMember<BSTEventSource<PositionPlayerEvent>>(this, 0x390);
 		}
 
 		[[nodiscard]] inline BSTEventSink<MenuOpenCloseEvent>* AsMenuOpenCloseEventSink() noexcept {
-			return &REL::RelocateMemberIfNewer<BSTEventSink<MenuOpenCloseEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0x2B0, 0x2B8);
+			return &REL::RelocateMember<BSTEventSink<MenuOpenCloseEvent>>(this, 0x2B8);
 		}
 
 		[[nodiscard]] inline const BSTEventSink<MenuOpenCloseEvent>* AsMenuOpenCloseEventSink() const noexcept {
-			return &REL::RelocateMemberIfNewer<BSTEventSink<MenuOpenCloseEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0x2B0, 0x2B8);
+			return &REL::RelocateMember<BSTEventSink<MenuOpenCloseEvent>>(this, 0x2B8);
 		}
 
 		[[nodiscard]] inline BSTEventSink<MenuModeChangeEvent>* AsMenuModeChangeEventSink() noexcept {
-			return &REL::RelocateMemberIfNewer<BSTEventSink<MenuModeChangeEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0x2B8, 0x2C0);
+			return &REL::RelocateMember<BSTEventSink<MenuModeChangeEvent>>(this, 0x2C0);
 		}
 
 		[[nodiscard]] inline const BSTEventSink<MenuModeChangeEvent>* AsMenuModeChangeEventSink() const noexcept {
-			return &REL::RelocateMemberIfNewer<BSTEventSink<MenuModeChangeEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0x2B8, 0x2C0);
+			return &REL::RelocateMember<BSTEventSink<MenuModeChangeEvent>>(this, 0x2C0);
 		}
 
 		[[nodiscard]] inline BSTEventSink<UserEventEnabledEvent>* AsUserEventEnabledEventSink() noexcept {
-			return &REL::RelocateMemberIfNewer<BSTEventSink<UserEventEnabledEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0x2C0, 0x2C8);
+			return &REL::RelocateMember<BSTEventSink<UserEventEnabledEvent>>(this, 0x2C8);
 		}
 
 		[[nodiscard]] inline const BSTEventSink<UserEventEnabledEvent>* AsUserEventEnabledEventSink() const noexcept {
-			return &REL::RelocateMemberIfNewer<BSTEventSink<UserEventEnabledEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0x2C0, 0x2C8);
+			return &REL::RelocateMember<BSTEventSink<UserEventEnabledEvent>>(this, 0x2C8);
 		}
 
 		[[nodiscard]] inline BSTEventSink<TESTrackedStatsEvent>* AsTESTrackedStatsEventSink() noexcept {
-			return &REL::RelocateMemberIfNewer<BSTEventSink<TESTrackedStatsEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0x2C8, 0x2D0);
+			return &REL::RelocateMember<BSTEventSink<TESTrackedStatsEvent>>(this, 0x2D0);
 		}
 
 		[[nodiscard]] inline const BSTEventSink<TESTrackedStatsEvent>* AsTESTrackedStatsEventSink() const noexcept {
-			return &REL::RelocateMemberIfNewer<BSTEventSink<TESTrackedStatsEvent>>(SKSE::RUNTIME_SSE_1_6_629, this, 0x2C8, 0x2D0);
+			return &REL::RelocateMember<BSTEventSink<TESTrackedStatsEvent>>(this, 0x2D0);
 		}
 
 		struct PLAYER_RUNTIME_DATA
@@ -738,110 +640,52 @@ namespace RE
 
 		[[nodiscard]] inline PLAYER_RUNTIME_DATA& GetPlayerRuntimeData() noexcept
 		{
-			return REL::RelocateMemberIfNewer<PLAYER_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x3D8, AE1799Shift(0x3E0));
+			return REL::RelocateMember<PLAYER_RUNTIME_DATA>(this, 0x3E8);
 		}
 
 		[[nodiscard]] inline const PLAYER_RUNTIME_DATA& GetPlayerRuntimeData() const noexcept
 		{
-			return REL::RelocateMemberIfNewer<PLAYER_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x3D8, AE1799Shift(0x3E0));
+			return REL::RelocateMember<PLAYER_RUNTIME_DATA>(this, 0x3E8);
 		}
 
 		[[nodiscard]] inline CrimeValue& GetCrimeValue() noexcept
 		{
-			if constexpr (REL::Module::IsAE()) {
-				if (REL::Module::get().version().compare(SKSE::RUNTIME_SSE_1_6_629) != std::strong_ordering::less) {
-					return REL::RelocateMember<CrimeValue>(this, AE1799Shift(0x3E8));
-				}
-			}
-			return REL::RelocateMember<CrimeValue>(this, 0x3E0, 0x9D0);
+			return REL::RelocateMember<CrimeValue>(this, 0x3F0);
 		}
 
 		[[nodiscard]] inline const CrimeValue& GetCrimeValue() const noexcept
 		{
-			if constexpr (REL::Module::IsAE()) {
-				if (REL::Module::get().version().compare(SKSE::RUNTIME_SSE_1_6_629) != std::strong_ordering::less) {
-					return REL::RelocateMember<CrimeValue>(this, AE1799Shift(0x3E8));
-				}
-			}
-			return REL::RelocateMember<CrimeValue>(this, 0x3E0, 0x9D0);
+			return REL::RelocateMember<CrimeValue>(this, 0x3F0);
 		}
 
 		[[nodiscard]] inline RaceData& GetRaceData() noexcept
 		{
-			if constexpr (REL::Module::IsAE()) {
-				if (REL::Module::get().version().compare(SKSE::RUNTIME_SSE_1_6_629) != std::strong_ordering::less) {
-					return REL::RelocateMember<RaceData>(this, AE1799Shift(0xB38));
-				}
-			}
-			return REL::RelocateMember<RaceData>(this, 0xB30, 0x1228);
+			return REL::RelocateMember<RaceData>(this, 0xB40);
 		}
 
 		[[nodiscard]] inline const RaceData& GetRaceData() const noexcept
 		{
-			if constexpr (REL::Module::IsAE()) {
-				if (REL::Module::get().version().compare(SKSE::RUNTIME_SSE_1_6_629) != std::strong_ordering::less) {
-					return REL::RelocateMember<RaceData>(this, AE1799Shift(0xB38));
-				}
-			}
-			return REL::RelocateMember<RaceData>(this, 0xB30, 0x1228);
+			return REL::RelocateMember<RaceData>(this, 0xB40);
 		}
 
 		[[nodiscard]] inline GameStateData& GetGameStatsData() noexcept
 		{
-			if constexpr (REL::Module::IsAE()) {
-				if (REL::Module::get().version().compare(SKSE::RUNTIME_SSE_1_6_629) != std::strong_ordering::less) {
-					return REL::RelocateMember<GameStateData>(this, AE1799Shift(0xB00));
-				}
-			}
-			return REL::RelocateMember<GameStateData>(this, 0xAF8, 0x11F4);
+			return REL::RelocateMember<GameStateData>(this, 0xB08);
 		}
 
 		[[nodiscard]] inline const GameStateData& GetGameStatsData() const noexcept
 		{
-			if constexpr (REL::Module::IsAE()) {
-				if (REL::Module::get().version().compare(SKSE::RUNTIME_SSE_1_6_629) != std::strong_ordering::less) {
-					return REL::RelocateMember<GameStateData>(this, AE1799Shift(0xB00));
-				}
-			}
-			return REL::RelocateMember<GameStateData>(this, 0xAF8, 0x11F4);
+			return REL::RelocateMember<GameStateData>(this, 0xB08);
 		}
 
 		[[nodiscard]] inline INFO_RUNTIME_DATA& GetInfoRuntimeData() noexcept
 		{
-			if constexpr (REL::Module::IsAE()) {
-				if (REL::Module::get().version().compare(SKSE::RUNTIME_SSE_1_6_629) != std::strong_ordering::less) {
-					return REL::RelocateMember<INFO_RUNTIME_DATA>(this, AE1799Shift(0x8D8));
-				}
-			}
-			return REL::RelocateMember<INFO_RUNTIME_DATA>(this, 0x8D0, 0xFD0);
+			return REL::RelocateMember<INFO_RUNTIME_DATA>(this, 0x8E0);
 		}
 
 		[[nodiscard]] inline const INFO_RUNTIME_DATA& GetInfoRuntimeData() const noexcept
 		{
-			if constexpr (REL::Module::IsAE()) {
-				if (REL::Module::get().version().compare(SKSE::RUNTIME_SSE_1_6_629) != std::strong_ordering::less) {
-					return REL::RelocateMember<INFO_RUNTIME_DATA>(this, AE1799Shift(0x8D8));
-				}
-			}
-			return REL::RelocateMember<INFO_RUNTIME_DATA>(this, 0x8D0, 0xFD0);
-		}
-
-		[[nodiscard]] VR_NODE_DATA* GetVRNodeData() noexcept
-		{
-			if constexpr (!REL::Module::IsVR()) {
-				return nullptr;
-			} else {
-				return &REL::RelocateMember<VR_NODE_DATA>(this, 0, 0x3F0);
-			}
-		}
-
-		[[nodiscard]] const VR_NODE_DATA* GetVRNodeData() const noexcept
-		{
-			if constexpr (!REL::Module::IsVR()) {
-				return nullptr;
-			} else {
-				return &REL::RelocateMember<VR_NODE_DATA>(this, 0, 0x3F0);
-			}
+			return REL::RelocateMember<INFO_RUNTIME_DATA>(this, 0x8E0);
 		}
 
 		// members
@@ -851,7 +695,6 @@ namespace RE
 	};
 }
 #undef PLAYER_RUNTIME_DATA_CONTENT
-#undef VR_NODE_DATA_CONTENT
 #undef INFO_RUNTIME_DATA_CONTENT
 #undef GAME_STATE_DATA_CONTENT
 #undef RACE_DATA_CONTENT

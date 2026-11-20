@@ -56,7 +56,7 @@ namespace RE
 
 		static BSLightingShader* GetSingleton()
 		{
-			REL::Relocation<BSLightingShader**> singleton{ RELOCATION_ID(528150, 415094) };
+			REL::Relocation<BSLightingShader**> singleton{ REL::ID(415094) };
 			return *singleton;
 		}
 

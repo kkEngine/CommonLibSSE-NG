@@ -32,7 +32,7 @@ namespace RE
 
 		static UIRenderManager* GetSingleton()
 		{
-			REL::Relocation<UIRenderManager**> singleton{ RELOCATION_ID(517052, 403350) };
+			REL::Relocation<UIRenderManager**> singleton{ REL::ID(403350) };
 			return *singleton;
 		}
 

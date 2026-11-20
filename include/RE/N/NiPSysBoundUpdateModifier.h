@@ -26,7 +26,7 @@ namespace RE
 		void SetUpdateSkip(uint16_t value)
 		{
 			using func_t = decltype(&NiPSysBoundUpdateModifier::SetUpdateSkip);
-			REL::Relocation<func_t> func{ RELOCATION_ID(73170, 74870) };
+			REL::Relocation<func_t> func{ REL::ID(74870) };
 			func(this, value);
 		}
 

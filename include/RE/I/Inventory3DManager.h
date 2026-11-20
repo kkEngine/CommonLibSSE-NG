@@ -61,12 +61,12 @@ namespace RE
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
-			return REL::RelocateMemberIfNewer<RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x58, 0x60);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x60);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
 		{
-			return REL::RelocateMemberIfNewer<RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x58, 0x60);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x60);
 		}
 
 		// members

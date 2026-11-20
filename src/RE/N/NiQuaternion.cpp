@@ -7,7 +7,7 @@ namespace RE
 	NiQuaternion::NiQuaternion(const NiMatrix3& matrix)
 	{
 		using func_t = void (*)(NiQuaternion*, const NiMatrix3&);
-		REL::Relocation<func_t> func{ RELOCATION_ID(69467, 70844) };
+		REL::Relocation<func_t> func{ REL::ID(70844) };
 		func(this, matrix);
 	}
 

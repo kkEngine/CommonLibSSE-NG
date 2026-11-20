@@ -28,7 +28,7 @@ namespace RE
 		void compile(const hkbContext& ctx)
 		{
 			using func_t = decltype(&hkbExpressionCondition::compile);
-			REL::Relocation<func_t> func{ RELOCATION_ID(58846, 59511) };
+			REL::Relocation<func_t> func{ REL::ID(59511) };
 			return func(this, ctx);
 		}
 

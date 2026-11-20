@@ -13,7 +13,7 @@ namespace
 		TrampolineFixture()
 		{
 			_successPtr = &_success;
-            REQUIRE(REL::Module::inject(REL::Module::Runtime::Unknown));
+            REQUIRE(REL::Module::inject());
 		}
 
 		~TrampolineFixture()
@@ -26,7 +26,7 @@ namespace
 		void TestTrampoline(SKSE::Trampoline& trampoline)
 		{
 			// Not necessarily the same function in each runtime, but bit-for-bit identical.
-			REL::VariantID FunctionID(102625, 110073, 0x0);
+			REL::ID FunctionID(110073);
 			REL::Relocation<std::uint64_t(void*)> Function(FunctionID);
 			REL::Relocation<void(void*)> Call(FunctionID, 0x4);
 			trampoline.write_call<6>(Call.address(), &TestHook);

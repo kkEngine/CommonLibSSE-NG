@@ -30,7 +30,7 @@ namespace RE
 	void CreateMessage(const char* a_message, IMessageBoxCallback* a_callback, std::uint32_t a_arg3, std::uint32_t a_arg4, std::uint32_t a_arg5, const char* a_buttonText, const char* a_secondaryButtonText)
 	{
 		using func_t = decltype(&CreateMessage);
-		REL::Relocation<func_t> func{ RELOCATION_ID(51420, 52269) };
+		REL::Relocation<func_t> func{ REL::ID(52269) };
 		return func(a_message, a_callback, a_arg3, a_arg4, a_arg5, a_buttonText, a_secondaryButtonText);
 	}
 
@@ -56,13 +56,13 @@ namespace RE
 	float GetArmorFinalRating(RE::InventoryEntryData* a_armorEntryData, float a_armorPerks, float a_skillMultiplier)
 	{
 		using func_t = decltype(&GetArmorFinalRating);
-		REL::Relocation<func_t> func{ RELOCATION_ID(15779, 16017) };
+		REL::Relocation<func_t> func{ REL::ID(16017) };
 		return func(a_armorEntryData, a_armorPerks, a_skillMultiplier);
 	}
 
 	std::uint32_t GetDurationOfApplicationRunTime()
 	{
-		REL::Relocation<std::uint32_t*> runtime{ RELOCATION_ID(523662, 410201) };
+		REL::Relocation<std::uint32_t*> runtime{ REL::ID(410201) };
 		return *runtime;
 	}
 
@@ -81,7 +81,7 @@ namespace RE
 
 	float GetSecondsSinceLastFrame()
 	{
-		REL::Relocation<float*> seconds{ RELOCATION_ID(523660, 410199) };
+		REL::Relocation<float*> seconds{ REL::ID(410199) };
 		return *seconds;
 	}
 
@@ -105,7 +105,7 @@ namespace RE
 	void ShakeCamera(float a_strength, const NiPoint3& a_position, float a_duration)
 	{
 		using func_t = decltype(&ShakeCamera);
-		REL::Relocation<func_t> func{ RELOCATION_ID(32275, 33012) };
+		REL::Relocation<func_t> func{ REL::ID(33012) };
 		return func(a_strength, a_position, a_duration);
 	}
 

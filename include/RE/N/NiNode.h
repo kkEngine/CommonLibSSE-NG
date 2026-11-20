@@ -54,12 +54,12 @@ namespace RE
 
 		[[nodiscard]] inline NiTObjectArray<NiPointer<NiAVObject>>& GetChildren() noexcept
 		{
-			return REL::RelocateMember<NiTObjectArray<NiPointer<NiAVObject>>>(this, 0x110, 0x138);
+			return REL::RelocateMember<NiTObjectArray<NiPointer<NiAVObject>>>(this, 0x110);
 		}
 
 		[[nodiscard]] inline const NiTObjectArray<NiPointer<NiAVObject>>& GetChildren() const noexcept
 		{
-			return REL::RelocateMember<NiTObjectArray<NiPointer<NiAVObject>>>(this, 0x110, 0x138);
+			return REL::RelocateMember<NiTObjectArray<NiPointer<NiAVObject>>>(this, 0x110);
 		}
 
 		void DetachChild(NiAVObject* a_child);

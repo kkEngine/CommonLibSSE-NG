@@ -427,7 +427,7 @@ namespace RE
 	bool GFxValue::ObjectInterface::CreateEmptyMovieClip(void* a_data, GFxValue* a_movieClip, const char* a_instanceName, std::int32_t a_depth)
 	{
 		using func_t = decltype(&GFxValue::ObjectInterface::CreateEmptyMovieClip);
-		REL::Relocation<func_t> func{ RELOCATION_ID(80201, 82224) };
+		REL::Relocation<func_t> func{ REL::ID(82224) };
 		return func(this, a_data, a_movieClip, a_instanceName, a_depth);
 	}
 

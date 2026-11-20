@@ -58,7 +58,7 @@ namespace RE
 
 		[[nodiscard]] MenuEventHandler* AsMenuEventHandler() noexcept
 		{
-			return &REL::RelocateMember<MenuEventHandler>(this, 0x30, 0x40);
+			return &REL::RelocateMember<MenuEventHandler>(this, 0x30);
 		}
 
 		[[nodiscard]] const MenuEventHandler* AsMenuEventHandler() const noexcept
@@ -68,12 +68,12 @@ namespace RE
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40, 0x50);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40, 0x50);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40);
 		}
 
 		void ChangeName(const char* a_name);

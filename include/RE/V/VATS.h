@@ -47,14 +47,14 @@ namespace RE
 
 		[[nodiscard]] static VATS* GetSingleton()
 		{
-			REL::Relocation<VATS**> singleton{ RELOCATION_ID(514725, 400883) };
+			REL::Relocation<VATS**> singleton{ REL::ID(400883) };
 			return *singleton;
 		}
 
 		void SetMagicTimeSlowdown(float a_magicTimeSlowdown, float a_playerMagicTimeSlowdown)
 		{
 			using func_t = decltype(&VATS::SetMagicTimeSlowdown);
-			REL::Relocation<func_t> func{ RELOCATION_ID(43103, 44300) };
+			REL::Relocation<func_t> func{ REL::ID(44300) };
 			return func(this, a_magicTimeSlowdown, a_playerMagicTimeSlowdown);
 		}
 

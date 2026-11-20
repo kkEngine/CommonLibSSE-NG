@@ -52,12 +52,12 @@ namespace RE
 
 		[[nodiscard]] inline ARROW_RUNTIME_DATA& GetArrowRuntimeData() noexcept
 		{
-			return REL::RelocateMemberIfNewer<ARROW_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x1E0, 0x1E8);
+			return REL::RelocateMember<ARROW_RUNTIME_DATA>(this, 0x1E8);
 		}
 
 		[[nodiscard]] inline const ARROW_RUNTIME_DATA& GetArrowRuntimeData() const noexcept
 		{
-			return REL::RelocateMemberIfNewer<ARROW_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x1E0, 0x1E8);
+			return REL::RelocateMember<ARROW_RUNTIME_DATA>(this, 0x1E8);
 		}
 
 		// members

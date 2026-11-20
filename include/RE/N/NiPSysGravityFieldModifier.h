@@ -27,7 +27,7 @@ namespace RE
 		void SetDirection(const NiPoint3& aDirection)
 		{
 			using func_t = decltype(&NiPSysGravityFieldModifier::SetDirection);
-			REL::Relocation<func_t> func{ RELOCATION_ID(73445, 75167) };
+			REL::Relocation<func_t> func{ REL::ID(75167) };
 			func(this, aDirection);
 		}
 

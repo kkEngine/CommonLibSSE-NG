@@ -23,14 +23,14 @@ namespace RE
 	public:
 		static SubtitleManager* GetSingleton()
 		{
-			REL::Relocation<SubtitleManager**> singleton{ RELOCATION_ID(514283, 400443) };
+			REL::Relocation<SubtitleManager**> singleton{ REL::ID(400443) };
 			return *singleton;
 		}
 
 		void KillSubtitles()
 		{
 			using func_t = decltype(&SubtitleManager ::KillSubtitles);
-			REL::Relocation<func_t> func{ RELOCATION_ID(51755, 52628) };
+			REL::Relocation<func_t> func{ REL::ID(52628) };
 			return func(this);
 		}
 

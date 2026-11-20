@@ -32,7 +32,7 @@ namespace RE
 	public:
 		[[nodiscard]] static AnimationObjects* GetSingleton()
 		{
-			REL::Relocation<AnimationObjects**> singleton{ RELOCATION_ID(514179, 400328) };
+			REL::Relocation<AnimationObjects**> singleton{ REL::ID(400328) };
 			return *singleton;
 		}
 

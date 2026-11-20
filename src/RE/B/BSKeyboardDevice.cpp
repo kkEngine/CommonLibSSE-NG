@@ -6,8 +6,8 @@ namespace RE
 		BSInputDevice()
 	{
 		device = INPUT_DEVICE::kKeyboard;
-		const char* prefix = *reinterpret_cast<const char**>(RELOCATION_ID(511916, 388487).address());
-		const char* locale = *reinterpret_cast<const char**>(RELOCATION_ID(500908, 358892).address());
+		const char* prefix = *reinterpret_cast<const char**>(REL::ID(388487).address());
+		const char* locale = *reinterpret_cast<const char**>(REL::ID(358892).address());
 		std::string path = prefix + std::string(locale) + ".txt";
 		if (!LoadControlsDefinitionFile(path.c_str())) {
 			path = prefix + std::string("ENGLISH.txt");

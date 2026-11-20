@@ -50,7 +50,7 @@ namespace RE
 
 		[[nodiscard]] BSTEventSink<MenuOpenCloseEvent>* AsMenuOpenCloseEventSink() noexcept
 		{
-			return &REL::RelocateMember<BSTEventSink<MenuOpenCloseEvent>>(this, 0x30, 0x40);
+			return &REL::RelocateMember<BSTEventSink<MenuOpenCloseEvent>>(this, 0x30);
 		}
 
 		[[nodiscard]] const BSTEventSink<MenuOpenCloseEvent>* AsMenuOpenCloseEventSink() const noexcept
@@ -60,12 +60,12 @@ namespace RE
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x38, 0x48);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x38);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x38, 0x48);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x38);
 		}
 
 		// members

@@ -35,12 +35,12 @@ namespace RE
 
 		[[nodiscard]] inline TRISHAPE_RUNTIME_DATA& GetTrishapeRuntimeData() noexcept
 		{
-			return REL::RelocateMember<TRISHAPE_RUNTIME_DATA>(this, 0x158, 0x1A0);
+			return REL::RelocateMember<TRISHAPE_RUNTIME_DATA>(this, 0x158);
 		}
 
 		[[nodiscard]] inline const TRISHAPE_RUNTIME_DATA& GetTrishapeRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<TRISHAPE_RUNTIME_DATA>(this, 0x158, 0x1A0);
+			return REL::RelocateMember<TRISHAPE_RUNTIME_DATA>(this, 0x158);
 		}
 
 		// members

@@ -8,6 +8,10 @@ https://github.com/CharmedBaryon/CommonLibSSE-NG/actions/workflows/main_ci.yml)
 
 CommonLibSSE NG is a fork of CommonLibSSE which tracks upstream updates but adds a number of enhancements.
 
+> **This fork (NirnLab) supports only Skyrim AE 1.7.99+ (1.7.104).** SE, VR and older AE runtimes are dropped:
+> there are no `ENABLE_SKYRIM_*` options, addresses are plain `REL::ID`s of the 1.7 address library (format 5),
+> and a plugin built with it refuses to load on an older runtime. The sections below describe upstream NG.
+
 ## New Features
 ### Multiple Runtime Targets
 ![stability](https://img.shields.io/static/v1?label=stability&message=stable&color=dimgreen&style=flat)

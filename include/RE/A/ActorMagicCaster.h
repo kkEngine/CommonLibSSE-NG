@@ -72,7 +72,7 @@ namespace RE
 		void CheckAttachCastingArt()
 		{
 			using func_t = decltype(&ActorMagicCaster::CheckAttachCastingArt);
-			REL::Relocation<func_t> func{ RELOCATION_ID(33403, 34185) };
+			REL::Relocation<func_t> func{ REL::ID(34185) };
 			return func(this);
 		}
 

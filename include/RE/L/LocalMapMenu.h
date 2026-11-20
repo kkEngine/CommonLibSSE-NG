@@ -41,12 +41,12 @@ namespace RE
 
 			[[nodiscard]] inline LocalMapCamera* GetLocalMapCamera() const noexcept
 			{
-				return &REL::RelocateMember<LocalMapCamera>(this, 0x30260, 0x30270);
+				return &REL::RelocateMember<LocalMapCamera>(this, 0x30260);
 			}
 
 			void SetLocalMapCamera(const LocalMapCamera& localMapCamera) noexcept
 			{
-				REL::RelocateMember<LocalMapCamera>(this, 0x30260, 0x30270) = localMapCamera;
+				REL::RelocateMember<LocalMapCamera>(this, 0x30260) = localMapCamera;
 			}
 
 			// members
@@ -99,12 +99,12 @@ namespace RE
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x303A0, 0x30418);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x303A0);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x303A0, 0x30418);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x303A0);
 		}
 
 		// members

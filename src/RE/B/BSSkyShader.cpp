@@ -53,13 +53,13 @@ namespace RE
 
 	NiColorA& BSSkyShader::GetAtmosphereBlendColor(size_t colorIndex)
 	{
-		static REL::Relocation<NiColorA*> colors(RELOCATION_ID(528199, 415145));
+		static REL::Relocation<NiColorA*> colors(REL::ID(415145));
 		return colors.get()[colorIndex];
 	}
 
 	NiPoint2& BSSkyShader::GetCloudLayerOffset(size_t cloudLayerIndex)
 	{
-		static REL::Relocation<NiPoint2*> cloudLayerOffset(RELOCATION_ID(528203, 415144));
+		static REL::Relocation<NiPoint2*> cloudLayerOffset(REL::ID(415144));
 		return cloudLayerOffset.get()[cloudLayerIndex];
 	}
 

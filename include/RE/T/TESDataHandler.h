@@ -90,76 +90,52 @@ namespace RE
 
 		[[nodiscard]] inline RUNTIME_DATA& GetGeometryRuntimeData() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0xDA0, 0x1570);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0xDA0);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA& GetGeometryRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0xDA0, 0x1570);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0xDA0);
 		}
 
 		[[nodiscard]] inline TESFile** GetLoadedMods() noexcept {
-			if constexpr (REL::Module::IsVR()) {
-				return &REL::RelocateMember<TESFile*>(this, 0x0, 0xD78);
-			} else {
-				return REL::RelocateMember<TESFileCollection>(this, 0xD70, 0).files.data();
-			}
+			return REL::RelocateMember<TESFileCollection>(this, 0xD70).files.data();
 		}
 
 		[[nodiscard]] inline const TESFile* const * GetLoadedMods() const noexcept {
-			if constexpr (REL::Module::IsVR()) {
-				return &REL::RelocateMember<const TESFile*>(this, 0x0, 0xD78);
-			} else {
-				return REL::RelocateMember<const TESFileCollection>(this, 0xD70, 0).files.data();
-			}
+			return REL::RelocateMember<const TESFileCollection>(this, 0xD70).files.data();
 		}
 
 		[[nodiscard]] inline std::uint8_t GetLoadedModCount() const noexcept {
-			if constexpr (REL::Module::IsVR()) {
-				return static_cast<std::uint8_t>(REL::RelocateMember<std::uint32_t>(this, 0x0, 0xD70));
-			} else {
-				return static_cast<std::uint8_t>(REL::RelocateMember<const TESFileCollection>(this, 0xD70, 0).files.size());
-			}
+			return static_cast<std::uint8_t>(REL::RelocateMember<const TESFileCollection>(this, 0xD70).files.size());
 		}
 
 		[[nodiscard]] inline TESFile** GetLoadedLightMods() noexcept {
-			if constexpr (REL::Module::IsVR()) {
-				return nullptr;
-			} else {
-				return REL::RelocateMember<TESFileCollection>(this, 0xD70, 0).smallFiles.data();
-			}
+			return REL::RelocateMember<TESFileCollection>(this, 0xD70).smallFiles.data();
 		}
 
 		[[nodiscard]] inline const TESFile* const * GetLoadedLightMods() const noexcept {
-			if constexpr (REL::Module::IsVR()) {
-				return nullptr;
-			} else {
-				return REL::RelocateMember<const TESFileCollection>(this, 0xD70, 0).smallFiles.data();
-			}
+			return REL::RelocateMember<const TESFileCollection>(this, 0xD70).smallFiles.data();
 		}
 
 		[[nodiscard]] inline std::uint16_t GetLoadedLightModCount() const noexcept {
-			if constexpr (REL::Module::IsVR()) {
-				return 0;
-			} else {
-				return static_cast<std::uint16_t>(REL::RelocateMember<const TESFileCollection>(this, 0xD70, 0).smallFiles.size());
-			}
+			return static_cast<std::uint16_t>(REL::RelocateMember<const TESFileCollection>(this, 0xD70).smallFiles.size());
 		}
 
 		[[nodiscard]] inline TESRegionDataManager* GetRegionDataManager() noexcept {
-			return REL::RelocateMember<TESRegionDataManager*>(this, 0xDB0, 0x1580);
+			return REL::RelocateMember<TESRegionDataManager*>(this, 0xDB0);
 		}
 
 		[[nodiscard]] inline const TESRegionDataManager* GetRegionDataManager() const noexcept {
-			return REL::RelocateMember<TESRegionDataManager*>(this, 0xDB0, 0x1580);
+			return REL::RelocateMember<TESRegionDataManager*>(this, 0xDB0);
 		}
 
 		[[nodiscard]] inline InventoryChanges* GetMerchantInventory() noexcept {
-			return REL::RelocateMember<InventoryChanges*>(this, 0xDB8, 0x1588);
+			return REL::RelocateMember<InventoryChanges*>(this, 0xDB8);
 		}
 
 		[[nodiscard]] inline const InventoryChanges* GetMerchantInventory() const noexcept {
-			return REL::RelocateMember<InventoryChanges*>(this, 0xDB8, 0x1588);
+			return REL::RelocateMember<InventoryChanges*>(this, 0xDB8);
 		}
 
 		// members

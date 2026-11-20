@@ -37,12 +37,12 @@ namespace RE
 
 		[[nodiscard]] inline VALUE_NODE_RUNTIME_DATA& GetValueNodeRuntimeData() noexcept
 		{
-			return REL::RelocateMember<VALUE_NODE_RUNTIME_DATA>(this, 0x128, 0x150);
+			return REL::RelocateMember<VALUE_NODE_RUNTIME_DATA>(this, 0x128);
 		}
 
 		[[nodiscard]] inline const VALUE_NODE_RUNTIME_DATA& GetValueNodeRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<VALUE_NODE_RUNTIME_DATA>(this, 0x128, 0x150);
+			return REL::RelocateMember<VALUE_NODE_RUNTIME_DATA>(this, 0x128);
 		}
 
 		// members

@@ -26,7 +26,7 @@ namespace RE
 	bool BGSSaveLoadManager::LoadMostRecentSaveGame()
 	{
 		using func_t = decltype(&BGSSaveLoadManager::LoadMostRecentSaveGame);
-		REL::Relocation<func_t> func{ RELOCATION_ID(34856, 35766) };
+		REL::Relocation<func_t> func{ REL::ID(35766) };
 		return func(this);
 	}
 

@@ -59,12 +59,12 @@ namespace RE
 
 		[[nodiscard]] inline GRENADE_RUNTIME_DATA& GetGrenadeRuntimeData() noexcept
 		{
-			return REL::RelocateMemberIfNewer<GRENADE_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x1D8, 0x1E0);
+			return REL::RelocateMember<GRENADE_RUNTIME_DATA>(this, 0x1E0);
 		}
 
 		[[nodiscard]] inline const GRENADE_RUNTIME_DATA& GetGrenadeRuntimeData() const noexcept
 		{
-			return REL::RelocateMemberIfNewer<GRENADE_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x1D8, 0x1E0);
+			return REL::RelocateMember<GRENADE_RUNTIME_DATA>(this, 0x1E0);
 		}
 
 		// members

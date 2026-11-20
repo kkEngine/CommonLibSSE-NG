@@ -67,12 +67,12 @@ namespace RE
 
 		[[nodiscard]] inline HAZARD_RUNTIME_DATA& GetHazardRuntimeData() noexcept
 		{
-			return REL::RelocateMemberIfNewer<HAZARD_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x98, 0xA0);
+			return REL::RelocateMember<HAZARD_RUNTIME_DATA>(this, 0xA0);
 		}
 
 		[[nodiscard]] inline const HAZARD_RUNTIME_DATA& GetHazardRuntimeData() const noexcept
 		{
-			return REL::RelocateMemberIfNewer<HAZARD_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x98, 0xA0);
+			return REL::RelocateMember<HAZARD_RUNTIME_DATA>(this, 0xA0);
 		}
 
 		// members

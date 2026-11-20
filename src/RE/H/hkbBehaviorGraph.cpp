@@ -16,7 +16,7 @@ namespace RE
 	hkbBehaviorGraph* hkbBehaviorGraph::cloneDeep(bool copyAnimationBindings, bool copyIdMappers, bool copyReferencedBehaviors, void* vtableClassRegistry, void* finishLoadedObjectRegistry, hkbGenerator* replacementRootGenerator, void* behaviorToCloneMap)
 	{
 		using func_t = decltype(&hkbBehaviorGraph::cloneDeep);
-		REL::Relocation<func_t> func{ RELOCATION_ID(57770, 58341) };
+		REL::Relocation<func_t> func{ REL::ID(58341) };
 		return func(this, copyAnimationBindings, copyIdMappers, copyReferencedBehaviors, vtableClassRegistry, finishLoadedObjectRegistry, replacementRootGenerator, behaviorToCloneMap);
 	}
 

@@ -68,7 +68,7 @@ namespace RE
 
 		[[nodiscard]] SimpleAnimationGraphManagerHolder* AsSimpleAnimationGraphManagerHolder() noexcept
 		{
-			return &REL::RelocateMember<SimpleAnimationGraphManagerHolder>(this, 0x30, 0x40);
+			return &REL::RelocateMember<SimpleAnimationGraphManagerHolder>(this, 0x30);
 		}
 
 		[[nodiscard]] const SimpleAnimationGraphManagerHolder* AsSimpleAnimationGraphManagerHolder() const noexcept
@@ -78,7 +78,7 @@ namespace RE
 
 		[[nodiscard]] BSTEventSink<BSAnimationGraphEvent>* AsBSAnimationGraphEventSink() noexcept
 		{
-			return &REL::RelocateMember<BSTEventSink<BSAnimationGraphEvent>>(this, 0x48, 0x58);
+			return &REL::RelocateMember<BSTEventSink<BSAnimationGraphEvent>>(this, 0x48);
 		}
 
 		[[nodiscard]] const BSTEventSink<BSAnimationGraphEvent>* AsBSAnimationGraphEventSink() const noexcept
@@ -88,12 +88,12 @@ namespace RE
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x50, 0x60);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x50);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x50, 0x60);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x50);
 		}
 
 		static void OpenBookMenu(const BSString& a_description, const ExtraDataList* a_extraList, TESObjectREFR* a_ref, TESObjectBOOK* a_book, const NiPoint3& a_pos, const NiMatrix3& a_rot, float a_scale, bool a_useDefaultPos);

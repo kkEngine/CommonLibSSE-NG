@@ -132,14 +132,14 @@ namespace RE
 		void DampenMovementVector(const MovementVector& MV_cur, const MovementVector& MV_target, float acc_denorm, float decel_denorm, float dtime, MovementVector& ans)
 		{
 			using func_t = void(const MovementVector& MV_cur, const MovementVector& MV_target, float acc_denorm, float decel_denorm, float dtime, MovementVector& ans);
-			REL::Relocation<func_t> func{ RELOCATION_ID(89353, 91819) };
+			REL::Relocation<func_t> func{ REL::ID(91819) };
 			return func(MV_cur, MV_target, acc_denorm, decel_denorm, dtime, ans);
 		}
 
 		void DampenMovementVector(const MovementVector& MV_cur, const MovementVector& MV_target, float acc_denorm, float decel_denorm, float max_rot_speed_denorm, float dtime, MovementVector& ans)
 		{
 			using func_t = void(const MovementVector& MV_cur, const MovementVector& MV_target, float acc_denorm, float decel_denorm, float max_rot_speed_denorm, float dtime, MovementVector& ans);
-			REL::Relocation<func_t> func{ RELOCATION_ID(89354, 91820) };
+			REL::Relocation<func_t> func{ REL::ID(91820) };
 			return func(MV_cur, MV_target, acc_denorm, decel_denorm, max_rot_speed_denorm, dtime, ans);
 		}
 

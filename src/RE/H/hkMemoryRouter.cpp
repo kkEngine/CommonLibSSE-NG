@@ -36,6 +36,6 @@ namespace RE
 
 	uint32_t hkMemoryRouter::s_memoryRouter()
 	{
-		return *REL::Relocation<uint32_t*>(RELOCATION_ID(520865, 407383));
+		return *REL::Relocation<uint32_t*>(REL::ID(407383));
 	}
 }

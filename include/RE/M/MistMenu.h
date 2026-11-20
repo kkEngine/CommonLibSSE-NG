@@ -94,7 +94,7 @@ namespace RE
 
 		[[nodiscard]] SimpleAnimationGraphManagerHolder* AsSimpleAnimationGraphManagerHolder() noexcept
 		{
-			return &REL::RelocateMember<SimpleAnimationGraphManagerHolder>(this, 0x30, 0x40);
+			return &REL::RelocateMember<SimpleAnimationGraphManagerHolder>(this, 0x30);
 		}
 
 		[[nodiscard]] const SimpleAnimationGraphManagerHolder* AsSimpleAnimationGraphManagerHolder() const noexcept
@@ -104,7 +104,7 @@ namespace RE
 
 		[[nodiscard]] MenuEventHandler* AsMenuEventHandler() noexcept
 		{
-			return &REL::RelocateMember<MenuEventHandler>(this, 0x48, 0x58);
+			return &REL::RelocateMember<MenuEventHandler>(this, 0x48);
 		}
 
 		[[nodiscard]] const MenuEventHandler* AsMenuEventHandler() const noexcept
@@ -114,17 +114,17 @@ namespace RE
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x58, 0x68);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x58);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x58, 0x68);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x58);
 		}
 
 		[[nodiscard]] static MistMenu* GetSingleton()
 		{
-			REL::Relocation<MistMenu**> singleton{ RELOCATION_ID(519827, 406370) };
+			REL::Relocation<MistMenu**> singleton{ REL::ID(406370) };
 			return *singleton;
 		}
 
