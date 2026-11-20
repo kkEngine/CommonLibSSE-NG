@@ -19,17 +19,9 @@ namespace RE
 	// flags = kAlwaysOpen | kRequiresUpdate | kAllowSaving | kCustomRendering | kAssignCursorToRenderer
 	// context = kNone
 	class HUDMenu :
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-		public WorldSpaceMenu,                       // 00
-		public BSTEventSink<UserEventEnabledEvent>,  // 58
-		public BSTEventSink<BSRemoteGamepadEvent>    // 60
-#elif !defined(ENABLE_SKYRIM_VR)
 		public IMenu,                                // 00
 		public BSTEventSink<UserEventEnabledEvent>,  // 30
 		public BSTEventSink<BSRemoteGamepadEvent>    // 38
-#else
-		public IMenu  // 00
-#endif
 	{
 	public:
 		inline static constexpr auto      RTTI = RTTI_HUDMenu;
@@ -58,17 +50,15 @@ namespace RE
 		void               AdvanceMovie(float a_interval, std::uint32_t a_currentTime) override;  // 05
 		void               RefreshPlatform() override;                                            // 08
 
-#ifndef SKYRIM_CROSS_VR
 		// override (BSTEventSink<UserEventEnabledEvent>)
 		BSEventNotifyControl ProcessEvent(const UserEventEnabledEvent* a_event, BSTEventSource<UserEventEnabledEvent>* a_eventSource) override;  // 01
 
 		// override (BSTEventSink<BSRemoteGamepadEvent>)
 		BSEventNotifyControl ProcessEvent(const BSRemoteGamepadEvent* a_event, BSTEventSource<BSRemoteGamepadEvent>* a_eventSource) override;  // 01
-#endif
 
 		[[nodiscard]] WorldSpaceMenu* AsWorldSpaceMenu() noexcept
 		{
-			if SKYRIM_REL_CONSTEXPR (!REL::Module::IsVR()) {
+			if constexpr (!REL::Module::IsVR()) {
 				return nullptr;
 			}
 			return &REL::RelocateMember<WorldSpaceMenu>(this, 0, 0);
@@ -124,17 +114,8 @@ namespace RE
 		}
 
 		// members
-#ifndef SKYRIM_CROSS_VR
-#	if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-		std::uint64_t pad68;  // 68
-#	endif
 		RUNTIME_DATA_CONTENT  // 40, 70
-#endif
 	};
-#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(HUDMenu) == 0x98);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(HUDMenu) == 0xC8);
-#endif
 }
 #undef RUNTIME_DATA_CONTENT

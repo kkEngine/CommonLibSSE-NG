@@ -2,9 +2,6 @@
 
 #include "REX/W32/KERNEL32.h"
 
-#ifdef ENABLE_SKYRIM_VR
-#include <rapidcsv.h>
-#endif
 
 namespace REL
 {
@@ -188,53 +185,4 @@ namespace REL
 		return true;
 	}
 
-#ifdef ENABLE_SKYRIM_VR
-	bool IDDatabase::load_csv(stl::zwstring a_filename, Version a_version, bool a_failOnError)
-	{
-		auto nstring = SKSE::stl::utf16_to_utf8(a_filename).value_or(""s);
-		if (!std::filesystem::exists(nstring)) {
-			return stl::report_and_error(
-					std::format("Required VR Address Library file {} does not exist"sv, nstring),
-					a_failOnError);
-		}
-
-		rapidcsv::Document in(nstring);
-		std::size_t id, address_count;
-		std::string version, offset;
-		auto mapname = L"CommonLibSSEOffsets-v2-"s;
-		mapname += a_version.wstring();
-		address_count = in.GetCell<std::size_t>(0, 0);
-		version = in.GetCell<std::string>(1, 0);
-		const auto byteSize = static_cast<std::size_t>(address_count * sizeof(mapping_t));
-		if (!_mmap.open(mapname, byteSize) &&
-			!_mmap.create(mapname, byteSize)) {
-			return stl::report_and_error("failed to create shared mapping"sv, a_failOnError);
-		}
-
-		_id2offset = {static_cast<mapping_t *>(_mmap.data()), static_cast<std::size_t>(address_count)};
-		if (in.GetRowCount() > address_count + 1) {
-			return stl::report_and_error(
-					std::format("VR Address Library {} tried to exceed {} allocated entries."sv,
-								version, address_count), a_failOnError);
-		} else if (in.GetRowCount() < address_count + 1) {
-			return stl::report_and_error(
-					std::format("VR Address Library {} loaded only {} entries but expected {}. Please redownload."sv,
-								version, in.GetRowCount() - 1, address_count), a_failOnError);
-		}
-
-		std::size_t index = 1;
-		for (; index < in.GetRowCount(); ++index) {
-			id = in.GetCell<std::size_t>(0, index);
-			offset = in.GetCell<std::string>(1, index);
-			_id2offset[index - 1] = {static_cast<std::uint64_t>(id),
-										static_cast<std::uint64_t>(std::stoul(offset, nullptr, 16))};
-		}
-
-		std::sort(_id2offset.begin(),_id2offset.end(), [](auto&& a_lhs, auto&& a_rhs) {
-			return a_lhs.id < a_rhs.id;
-		});
-
-		return true;
-	}
-#endif
 }

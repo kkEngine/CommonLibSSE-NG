@@ -98,16 +98,7 @@ namespace RE
 				void SetCallableFromTasklets1(const char* a_className, const char* a_stateName, const char* a_fnName, bool a_callable) override;                     // 19
 				void SetCallableFromTasklets2(const char* a_className, const char* a_fnName, bool a_callable) override;                                              // 1A - { SetCallableFromTasklets1(a_className, 0, a_fnName, a_callable); }
 				// This is where the vtable differs between AE/SE and VR.
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-				void New_1B(void) override;
-#endif
-#ifndef SKYRIM_CROSS_VR
 				void ForEachBoundObject(VMHandle a_handle, IForEachScriptObjectFunctor* a_functor) override;                                                         // 1B, 1C
-#endif
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-				void New_1D(void) override;
-#endif
-#ifndef SKYRIM_CROSS_VR
 				bool                       FindBoundObject(VMHandle a_handle, const char* a_className, BSTSmartPointer<Object>& a_result) const override;                                                                                   // 1C
 				void                       MoveBoundObjects(VMHandle a_from, VMHandle a_to) override;                                                                                                                                       // 1D
 				void                       ResetAllBoundObjects(VMHandle a_handle) override;                                                                                                                                                // 1E
@@ -134,7 +125,6 @@ namespace RE
 				void                       UnregisterForLogEvent(BSTEventSink<LogEvent>* a_sink) override;                                                                                                                                  // 33
 				void                       RegisterForStatsEvent(BSTEventSink<StatsEvent>* a_sink) override;                                                                                                                                // 34
 				void                       UnregisterForStatsEvent(BSTEventSink<StatsEvent>* a_sink) override;                                                                                                                              // 35
-#endif
 
 				// override (IVMObjectBindInterface)
 				VMHandle GetBoundHandle(const BSTSmartPointer<Object>& a_objPtr) const override;                                                                   // 01

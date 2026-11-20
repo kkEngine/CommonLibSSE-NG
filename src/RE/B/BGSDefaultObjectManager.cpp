@@ -14,7 +14,7 @@ namespace RE
 				return a_idx;
 			}
 			std::size_t result;
-			if SKYRIM_REL_CONSTEXPR (Module::IsVR()) {
+			if constexpr (Module::IsVR()) {
 				result = (0xFFFF0000 & a_idx) >> 16;
 			} else {
 				result = 0x0000FFFF & a_idx;

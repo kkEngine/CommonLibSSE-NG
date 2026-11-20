@@ -429,17 +429,11 @@ namespace REL
 	 * @return Either <code>a_seAndVR</code> if the current runtime is Skyrim SE or VR, or <code>a_ae</code> if the runtime is AE.
 	 */
 	template<class T>
-	[[nodiscard]] SKYRIM_ADDR T Relocate(
+	[[nodiscard]] constexpr T Relocate(
 		[[maybe_unused]] T&& a_seAndVR,
 		[[maybe_unused]] T&& a_ae) noexcept
 	{
-#ifndef ENABLE_SKYRIM_AE
-		return a_seAndVR;
-#elif !defined(ENABLE_SKYRIM_SE) && !defined(ENABLE_SKYRIM_VR)
 		return a_ae;
-#else
-		return Module::IsAE() ? a_ae : a_seAndVR;
-#endif
 	}
 
 	/**
@@ -460,27 +454,12 @@ namespace REL
 	 * <code>a_vr</code> if running Skyrim VR.
 	 */
 	template<class T>
-	[[nodiscard]] SKYRIM_REL T Relocate(
+	[[nodiscard]] constexpr T Relocate(
 		[[maybe_unused]] T a_se,
 		[[maybe_unused]] T a_ae,
 		[[maybe_unused]] T a_vr) noexcept
 	{
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_VR)
-		return a_se;
-#elif !defined(ENABLE_SKYRIM_SE) && !defined(ENABLE_SKYRIM_VR)
 		return a_ae;
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-		return a_vr;
-#else
-		switch (Module::get().GetRuntime()) {
-			case Module::Runtime::AE:
-				return a_ae;
-			case Module::Runtime::VR:
-				return a_vr;
-			default:
-				return a_se;
-		}
-#endif
 	}
 
 	namespace detail
@@ -567,16 +546,8 @@ namespace REL
 	{
 		return (*reinterpret_cast<typename detail::RelocateVirtualHelper<Fn>::function_type**>(
 				*reinterpret_cast<const uintptr_t *>(reinterpret_cast<uintptr_t>(a_self) +
-													 #ifndef ENABLE_SKYRIM_VR
 													 a_seAndAEVtableOffset) +
 			a_seAndAEVtableIndex
-													 #elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-													 a_vrVtableOffset) +
-			a_vrVtableIndex
-													 #else
-													 (Module::IsVR() ? a_vrVtableOffset : a_seAndAEVtableOffset)) +
-				(Module::IsVR() ? a_vrVtableIndex : a_seAndAEVtableIndex)
-				#endif
 				* sizeof(uintptr_t)))(a_self, std::forward<Args>(a_args)...);
 	}
 

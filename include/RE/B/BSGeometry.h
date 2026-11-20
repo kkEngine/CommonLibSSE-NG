@@ -48,21 +48,10 @@ namespace RE
 
 		struct MODEL_DATA
 		{
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-#	define MODEL_DATA_CONTENT        \
-		NiBound  modelBound; /* 0 */  \
-		NiPoint3 unk148;     /* 10 */ \
-		NiPoint3 unk154;     /* 2C */
-#else
 #	define MODEL_DATA_CONTENT NiBound modelBound; /* 0 */
-#endif
 			MODEL_DATA_CONTENT
 		};
-#ifndef ENABLE_SKYRIM_VR
 		static_assert(sizeof(MODEL_DATA) == 0x10);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-		static_assert(sizeof(MODEL_DATA) == 0x28);
-#endif
 
 		struct GEOMETRY_RUNTIME_DATA
 		{
@@ -89,7 +78,6 @@ namespace RE
 		bool          IsEqual(NiObject* a_object) override;                // 1C - { return false; }
 		void          ProcessClone(NiCloningProcess& a_cloning) override;  // 1D
 		void          PostLinkObject(NiStream& a_stream) override;         // 1E
-#ifndef SKYRIM_CROSS_VR
 		// The following are virtual functions past the point where VR compatibility breaks.
 		void AttachProperty(NiAlphaProperty* a_property) override;                                                        // 27
 		void SetSelectiveUpdateFlags(bool& a_selectiveUpdate, bool a_selectiveUpdateTransforms, bool& a_rigid) override;  // 2B
@@ -98,12 +86,11 @@ namespace RE
 		void UpdateRigidDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2) override;                                // 2E
 		void UpdateWorldBound() override;                                                                                 // 2F
 		void OnVisible(NiCullingProcess& a_process) override;                                                             // 34
-#endif
 
 		// add
-		SKYRIM_REL_VR_VIRTUAL BSMultiIndexTriShape* AsMultiIndexTriShape();      // 35 - { return 0; }
-		SKYRIM_REL_VR_VIRTUAL BSSkinnedDecalTriShape* AsSkinnedDecalTriShape();  // 36 - { return 0; }
-		SKYRIM_REL_VR_VIRTUAL void                    Unk_37(void);              // 37 - { return 0; }
+		virtual BSMultiIndexTriShape* AsMultiIndexTriShape();      // 35 - { return 0; }
+		virtual BSSkinnedDecalTriShape* AsSkinnedDecalTriShape();  // 36 - { return 0; }
+		virtual void                    Unk_37(void);              // 37 - { return 0; }
 
 		[[nodiscard]] inline MODEL_DATA& GetModelData() noexcept
 		{
@@ -136,27 +123,14 @@ namespace RE
 		}
 
 		// members
-#ifndef SKYRIM_CROSS_VR
 		MODEL_DATA_CONTENT;    // 110, 138
 		RUNTIME_DATA_CONTENT;  // 120, 160
-#	ifndef ENABLE_SKYRIM_VR
 		stl::enumeration<Type, std::uint8_t> type;   // 150
 		std::uint8_t                         pad31;  // 151
 		std::uint16_t                        pad32;  // 152
 		std::uint32_t                        pad34;  // 154
-#	elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-		stl::enumeration<Type, std::uint32_t> type;   // 190
-		std::uint8_t                          pad31;  // 194
-		std::uint16_t                         pad32;  // 195
-		std::uint32_t                         pad34;  // 197
-#	endif
-#endif
 	};
-#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(BSGeometry) == 0x158);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(BSGeometry) == 0x1A0);
-#endif
 }
 #undef MODEL_DATA_CONTENT
 #undef RUNTIME_DATA_CONTENT

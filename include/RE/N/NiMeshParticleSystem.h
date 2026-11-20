@@ -21,7 +21,6 @@ namespace RE
 		bool          RegisterStreamables(NiStream& a_stream) override;                                                            // 1A - { return BSGeometry::RegisterStreamables(a_stream); }
 		void          SaveBinary(NiStream& a_stream) override;                                                                     // 1B
 		bool          IsEqual(NiObject* a_object) override;                                                                        // 1C - { return BSGeometry::IsEqual(); }
-#ifndef SKYRIM_CROSS_VR
 		void          SetSelectiveUpdateFlags(bool& a_selectiveUpdate, bool a_selectiveUpdateTransforms, bool& a_rigid) override;  // 2B
 		void          UpdateDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2) override;                                     // 2C
 		void          UpdateSelectedDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2) override;                             // 2D
@@ -29,7 +28,6 @@ namespace RE
 		void          UpdateWorldBound() override;                                                                                 // 2F
 		void          UpdateWorldData(NiUpdateData* a_data) override;                                                              // 30
 		void          OnVisible(NiCullingProcess& a_process) override;                                                             // 34
-#endif
 
 		struct MESH_PARTICLE_SYSTEM_RUNTIME_DATA
 		{
@@ -51,9 +49,7 @@ namespace RE
 		}
 
 		// members
-#ifndef SKYRIM_CROSS_VR
 		RUNTIME_DATA_CONTENT  // 198, 1C0
-#endif
 	};
 }
 #undef RUNTIME_DATA_CONTENT

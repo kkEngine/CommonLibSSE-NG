@@ -70,18 +70,16 @@ namespace RE
 		return func(this);
 	}
 
-#ifndef ENABLE_SKYRIM_VR
 	void PlayerCharacter::EndGrabObject()
 	{
 		if (GetPlayerRuntimeData().grabType == GrabbingType::kNormal) {
 			DestroyMouseSprings();
 		}
 	}
-#endif
 
 	NiPointer<Actor> PlayerCharacter::GetActorDoingPlayerCommand() const
 	{
-        if SKYRIM_REL_CONSTEXPR (REL::Module::IsVR()) {
+        if constexpr (REL::Module::IsVR()) {
             return REL::RelocateMember<ActorHandle>(this, 0, 0xE8C).get();
         } else {
             return REL::RelocateMemberIfNewer<ActorHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x894, AE1799Shift(0x89C)).get();
@@ -104,7 +102,7 @@ namespace RE
 
 	NiPointer<TESObjectREFR> PlayerCharacter::GetGrabbedRef()
 	{
-		if SKYRIM_REL_CONSTEXPR (Module::IsVR()) {
+		if constexpr (Module::IsVR()) {
 			return nullptr;
 		} else {
 			return REL::RelocateMemberIfNewer<ObjectRefHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x8C8, AE1799Shift(0x8D0)).get();
@@ -127,7 +125,7 @@ namespace RE
 
 	TintMask* PlayerCharacter::GetOverlayTintMask(TintMask* a_original)
 	{
-		if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
+		if constexpr (REL::Module::IsVR()) {
 			return nullptr;
 		} else {
 			auto* tryOverlayTintMasks = REL::RelocateMemberIfNewer<BSTArray<TintMask*>*>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB28, AE1799Shift(0xB30));
@@ -148,7 +146,7 @@ namespace RE
 
 	BSTArray<TintMask*>* PlayerCharacter::GetTintList()
 	{
-		if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
+		if constexpr (REL::Module::IsVR()) {
 			return nullptr;
 		} else {
 			auto* tryOverlayTintMasks = REL::RelocateMemberIfNewer<BSTArray<TintMask*>*>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB28, AE1799Shift(0xB30));
@@ -158,7 +156,7 @@ namespace RE
 
 	TintMask* PlayerCharacter::GetTintMask(std::uint32_t a_tintType, std::uint32_t a_index)
 	{
-		if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
+		if constexpr (REL::Module::IsVR()) {
 			return nullptr;
 		} else {
 			using func_t = decltype(&PlayerCharacter::GetTintMask);
@@ -169,7 +167,7 @@ namespace RE
 
 	bool PlayerCharacter::HasActorDoingCommand() const
 	{
-        if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
+        if constexpr (REL::Module::IsVR()) {
             return static_cast<bool>(REL::RelocateMember<ActorHandle>(this, 0, 0xE8C));
         }
         else {
@@ -179,7 +177,7 @@ namespace RE
 
 	bool PlayerCharacter::IsGrabbing() const
 	{
-		if SKYRIM_REL_CONSTEXPR (Module::IsVR()) {
+		if constexpr (Module::IsVR()) {
 			return false;
 		} else {
 			return static_cast<bool>(REL::RelocateMemberIfNewer<ObjectRefHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x8C8, AE1799Shift(0x8D0)));

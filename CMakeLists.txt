@@ -1,25 +1,10 @@
 cmake_minimum_required(VERSION 3.23)
 
 option(SKSE_SUPPORT_XBYAK "Enables trampoline support for Xbyak." OFF)
-option(ENABLE_SKYRIM_SE "Enable support for Skyrim SE in the dynamic runtime feature." ON)
-option(ENABLE_SKYRIM_AE "Enable support for Skyrim AE in the dynamic runtime feature." ON)
-option(ENABLE_SKYRIM_VR "Enable support for Skyrim VR in the dynamic runtime feature." ON)
-option(ENABLE_SKYRIM_AE_1799 "Use the Skyrim AE 1.7.99+ virtual table layouts (input handlers gained vfuncs). Such a build only runs on 1.7.99+, a build without it only below 1.7.99." OFF)
 option(BUILD_TESTS "Enable building of the unit tests." ON)
 message("Options:")
 message("\tEnable Xbyak: ${SKSE_SUPPORT_XBYAK}")
-message("\tEnable Skyrim SE: ${ENABLE_SKYRIM_SE}")
-message("\tEnable Skyrim AE: ${ENABLE_SKYRIM_AE}")
-message("\tEnable Skyrim VR: ${ENABLE_SKYRIM_VR}")
 message("\tBuild Tests: ${BUILD_TESTS}")
-
-if(NOT ENABLE_SKYRIM_SE AND NOT ENABLE_SKYRIM_AE AND NOT ENABLE_SKYRIM_VR)
-	message(FATAL_ERROR "At least one Skyrim runtime must be supported by the CommonLibSSE build.")
-endif()
-
-if(ENABLE_SKYRIM_AE_1799 AND (ENABLE_SKYRIM_SE OR ENABLE_SKYRIM_VR OR NOT ENABLE_SKYRIM_AE))
-	message(FATAL_ERROR "ENABLE_SKYRIM_AE_1799 requires an AE-only build: the 1.7.99+ virtual layouts can't be selected at runtime.")
-endif()
 
 project(
 	CommonLibSSE
@@ -38,7 +23,6 @@ if("${PROJECT_SOURCE_DIR}" STREQUAL "${PROJECT_BINARY_DIR}")
 endif()
 
 find_package(spdlog CONFIG REQUIRED)
-find_path(RAPIDCSV_INCLUDE_DIRS "rapidcsv.h")
 
 include(cmake/sourcelist.cmake)
 include(cmake/testlist.cmake)
@@ -69,11 +53,6 @@ target_compile_definitions(
 		WINVER=0x0601	# windows 7, minimum supported version by skyrim special edition
 		_WIN32_WINNT=0x0601
 		"$<$<BOOL:${SKSE_SUPPORT_XBYAK}>:SKSE_SUPPORT_XBYAK=1>"
-		"$<$<BOOL:${ENABLE_SKYRIM_SE}>:ENABLE_SKYRIM_SE=1>"
-		"$<$<BOOL:${ENABLE_SKYRIM_AE}>:ENABLE_SKYRIM_AE=1>"
-		"$<$<BOOL:${ENABLE_SKYRIM_VR}>:ENABLE_SKYRIM_VR=1>"
-		"$<$<BOOL:${ENABLE_SKYRIM_AE_1799}>:SKYRIM_AE_1799=1>"
-		HAS_SKYRIM_MULTI_TARGETING=1
 )
 
 target_compile_features(
@@ -128,7 +107,6 @@ target_include_directories(
 	"${PROJECT_NAME}"
 	PRIVATE
 		${spdlog_INCLUDE_DIRS}
-		${RAPIDCSV_INCLUDE_DIRS}
 )
 
 target_compile_definitions(
@@ -208,7 +186,6 @@ if(BUILD_TESTS)
 		PRIVATE
 			${Catch2_INCLUDE_DIRS}
 			${spdlog_INCLUDE_DIRS}
-			${RAPIDCSV_INCLUDE_DIRS}
 	)
 
 	target_compile_definitions(

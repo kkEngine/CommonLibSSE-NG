@@ -228,18 +228,7 @@ namespace RE
 	static_assert(sizeof(PlayerActionObject) == 0xC);
 
 	class PlayerCharacter :
-#ifndef ENABLE_SKYRIM_AE
-		public Character,                            // 000
-		public BSTEventSource<BGSActorCellEvent>,    // 2D0
-		public BSTEventSource<BGSActorDeathEvent>,   // 328
-		public BSTEventSource<PositionPlayerEvent>,  // 380
-		public BSTEventSink<MenuOpenCloseEvent>,     // 2B0
-		public BSTEventSink<MenuModeChangeEvent>,    // 2B8
-		public BSTEventSink<UserEventEnabledEvent>,  // 2C0
-		public BSTEventSink<TESTrackedStatsEvent>    // 2C8
-#else
 		public Character // 000
-#endif
 	{
 	public:
 		inline static constexpr auto RTTI = RTTI_PlayerCharacter;
@@ -533,11 +522,11 @@ namespace RE
 		void RemoveWeapon(BIPED_OBJECT equipIndex) override;  // 082
 
 		// add
-		SKYRIM_REL_VR_VIRTUAL void          Unk_12A(void);                                                                 // 12A
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL std::uint32_t GetViolentCrimeGoldValue(const TESFaction* a_faction) const;     // 12B
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL std::uint32_t GetNonViolentCrimeGoldValue(const TESFaction* a_faction) const;  // 12C
-		SKYRIM_REL_VR_VIRTUAL void                        ClearAllCrimeGold(TESFaction* a_faction);                        // 12D
-		SKYRIM_REL_VR_VIRTUAL void                        Unk_12E(void);                                                   // 12E - { return 0; }
+		virtual void          Unk_12A(void);                                                                 // 12A
+		[[nodiscard]] virtual std::uint32_t GetViolentCrimeGoldValue(const TESFaction* a_faction) const;     // 12B
+		[[nodiscard]] virtual std::uint32_t GetNonViolentCrimeGoldValue(const TESFaction* a_faction) const;  // 12C
+		virtual void                        ClearAllCrimeGold(TESFaction* a_faction);                        // 12D
+		virtual void                        Unk_12E(void);                                                   // 12E - { return 0; }
 
 		static PlayerCharacter* GetSingleton();
 		static bool             IsGodMode();
@@ -550,9 +539,7 @@ namespace RE
 		bool                                   CenterOnCell(TESObjectCELL* a_cell);
 		bool                                   CheckCast(MagicItem* a_spell, Effect* a_effect, MagicSystem::CannotCastReason& a_reason);
 		void                                   DestroyMouseSprings();
-#ifndef ENABLE_SKYRIM_VR
 		void                                   EndGrabObject();
-#endif
 		[[nodiscard]] NiPointer<Actor>         GetActorDoingPlayerCommand() const;
 		[[nodiscard]] float                    GetArmorValue(InventoryEntryData* a_form);
 		[[nodiscard]] float                    GetDamage(InventoryEntryData* a_form);
@@ -644,7 +631,6 @@ namespace RE
 
 		struct PLAYER_RUNTIME_DATA
 		{
-#ifndef ENABLE_SKYRIM_VR                                                                     // Non-VR
 #define PLAYER_RUNTIME_DATA_CONTENT \
 			mutable BSSpinLock questTargetsLock;                                                 /* 3D8, 3E0 */ \
 			CRIME_VALUE_CONTENT;                                                                 /* 3E0 */ \
@@ -746,62 +732,6 @@ namespace RE
 			BSTSmallArray<void*, 4>                 unkBA0;                                      /* BA0 */ \
 			PreTransformationData*                  preTransformationData;                       /* BD0 */ \
 			PlayerFlags                             playerFlags;                                 /* BD8 */
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)                               // VR
-#define PLAYER_RUNTIME_DATA_CONTENT \
-			std::uint64_t unk3D8;        /* 3D8 */ \
-			std::uint64_t unk3E0;        /* 3E0 */ \
-			std::uint64_t unk3E8;        /* 3E8 */ \
-			VR_NODE_DATA_CONTENT;        /* 3F0 */ \
-			std::uint64_t unk680;        /* 680 */ \
-			std::uint64_t unk688;        /* 688 */ \
-			std::uint64_t unk690;        /* 690 */ \
-			std::uint64_t unk698;        /* 698 */ \
-			std::uint64_t unk6A0;        /* 6A0 */ \
-			std::uint64_t unk6A8[0x65];  /* 6A8 */ \
-			CRIME_VALUE_CONTENT;         /* 9D0 */ \
-			std::uint64_t unkA30[0x11];  /* A30 */ \
-			void*         perkArray;     /* AB8 */ \
-			std::uint64_t unk6C0[0x14];  /* AC0 */ \
-			/*BSTArray<PerkRankData*>								addedPerks;									  // B60 */ \
-			/*BSTArray<BGSPerk*>									perks;										  // B68 */ \
-			/*BSTArray<BGSPerk*>									standingStonePerks;							  // B70 */ \
-			std::uint64_t addedPerks;                /* B60 - these 3 here gotta be fixed */ \
-			std::uint64_t perks;                     /* B68 */ \
-			std::uint64_t standingStonePerks;        /* B70 */ \
-			std::uint64_t unkB78;                    /* B78 */ \
-			std::uint64_t unkB80;                    /* B80 */ \
-			std::uint64_t unkMessageArrayPtr;        /* B88 */ \
-			std::uint64_t unkB90;                    /* B90 */ \
-			std::uint64_t unkB98;                    /* B98 */ \
-			std::uint64_t unkBA0;                    /* BA0 */ \
-			std::uint64_t unkBA8;                    /* BA8 */ \
-			std::uint64_t unkBB0[0x25];              /* BB0 */ \
-			std::uint64_t imageSpaceModifierAnims1;  /* CD8 - Wrong Datatype from Below */ \
-			std::uint64_t imageSpaceModifierAnims2;  /* CE0 - Wrong Datatype from below */ \
-			std::uint64_t unkCE8[0x34];              /* CE8 */ \
-			std::uint32_t padE90;                    /* E88 */ \
-			ActorHandle   actorDoingPlayerCommand;   /* E8C */ \
-			std::uint64_t unkE90;                    /* E90 */ \
-			std::uint64_t unkE98[0x27];              /* E98 */ \
-			/* BSTSmallArray<hkRefPtr<bhkMouseSpringAction>, 4>		grabSpring;                                   // F00    // not used in vr as far as i can tell   F08?????? */ \
-			INFO_RUNTIME_DATA_CONTENT;                    /* FD0 */ \
-			std::uint64_t unk1120[0x1A];             /* 1120 */ \
-			std::uint32_t unk11F0;                   /* 11F0 */ \
-			GAME_STATE_DATA_CONTENT;                 /* 11F4 */ \
-			std::uint64_t unk1200;                   /* 1200 */ \
-			std::uint64_t unk1208;                   /* 1208 */ \
-			std::uint64_t unk1210;                   /* 1210 */ \
-			std::uint64_t unk1218;                   /* 1218 */ \
-			std::uint64_t unk1220;                   /* 1220 */ \
-			RACE_DATA_CONTENT;                       /* 1228 */ \
-			std::uint64_t unk1240[0x12];             /* 1240 */ \
-			std::uint8_t  pad12D0;                   /* 12D0 */ \
-			std::uint8_t  flags;                     /* 12D1  -- TODO MAP THESE FLAGS OUT */ \
-			std::uint16_t pad12D2;                   /* 12D2 */ \
-			std::uint32_t unk12D4;                   /* 12D4 */
-#else
-#define PLAYER_RUNTIME_DATA_CONTENT
-#endif
 
 			PLAYER_RUNTIME_DATA_CONTENT
 		};
@@ -818,7 +748,7 @@ namespace RE
 
 		[[nodiscard]] inline CrimeValue& GetCrimeValue() noexcept
 		{
-			if SKYRIM_REL_CONSTEXPR (REL::Module::IsAE()) {
+			if constexpr (REL::Module::IsAE()) {
 				if (REL::Module::get().version().compare(SKSE::RUNTIME_SSE_1_6_629) != std::strong_ordering::less) {
 					return REL::RelocateMember<CrimeValue>(this, AE1799Shift(0x3E8));
 				}
@@ -828,7 +758,7 @@ namespace RE
 
 		[[nodiscard]] inline const CrimeValue& GetCrimeValue() const noexcept
 		{
-			if SKYRIM_REL_CONSTEXPR (REL::Module::IsAE()) {
+			if constexpr (REL::Module::IsAE()) {
 				if (REL::Module::get().version().compare(SKSE::RUNTIME_SSE_1_6_629) != std::strong_ordering::less) {
 					return REL::RelocateMember<CrimeValue>(this, AE1799Shift(0x3E8));
 				}
@@ -838,7 +768,7 @@ namespace RE
 
 		[[nodiscard]] inline RaceData& GetRaceData() noexcept
 		{
-			if SKYRIM_REL_CONSTEXPR (REL::Module::IsAE()) {
+			if constexpr (REL::Module::IsAE()) {
 				if (REL::Module::get().version().compare(SKSE::RUNTIME_SSE_1_6_629) != std::strong_ordering::less) {
 					return REL::RelocateMember<RaceData>(this, AE1799Shift(0xB38));
 				}
@@ -848,7 +778,7 @@ namespace RE
 
 		[[nodiscard]] inline const RaceData& GetRaceData() const noexcept
 		{
-			if SKYRIM_REL_CONSTEXPR (REL::Module::IsAE()) {
+			if constexpr (REL::Module::IsAE()) {
 				if (REL::Module::get().version().compare(SKSE::RUNTIME_SSE_1_6_629) != std::strong_ordering::less) {
 					return REL::RelocateMember<RaceData>(this, AE1799Shift(0xB38));
 				}
@@ -858,7 +788,7 @@ namespace RE
 
 		[[nodiscard]] inline GameStateData& GetGameStatsData() noexcept
 		{
-			if SKYRIM_REL_CONSTEXPR (REL::Module::IsAE()) {
+			if constexpr (REL::Module::IsAE()) {
 				if (REL::Module::get().version().compare(SKSE::RUNTIME_SSE_1_6_629) != std::strong_ordering::less) {
 					return REL::RelocateMember<GameStateData>(this, AE1799Shift(0xB00));
 				}
@@ -868,7 +798,7 @@ namespace RE
 
 		[[nodiscard]] inline const GameStateData& GetGameStatsData() const noexcept
 		{
-			if SKYRIM_REL_CONSTEXPR (REL::Module::IsAE()) {
+			if constexpr (REL::Module::IsAE()) {
 				if (REL::Module::get().version().compare(SKSE::RUNTIME_SSE_1_6_629) != std::strong_ordering::less) {
 					return REL::RelocateMember<GameStateData>(this, AE1799Shift(0xB00));
 				}
@@ -878,7 +808,7 @@ namespace RE
 
 		[[nodiscard]] inline INFO_RUNTIME_DATA& GetInfoRuntimeData() noexcept
 		{
-			if SKYRIM_REL_CONSTEXPR (REL::Module::IsAE()) {
+			if constexpr (REL::Module::IsAE()) {
 				if (REL::Module::get().version().compare(SKSE::RUNTIME_SSE_1_6_629) != std::strong_ordering::less) {
 					return REL::RelocateMember<INFO_RUNTIME_DATA>(this, AE1799Shift(0x8D8));
 				}
@@ -888,7 +818,7 @@ namespace RE
 
 		[[nodiscard]] inline const INFO_RUNTIME_DATA& GetInfoRuntimeData() const noexcept
 		{
-			if SKYRIM_REL_CONSTEXPR (REL::Module::IsAE()) {
+			if constexpr (REL::Module::IsAE()) {
 				if (REL::Module::get().version().compare(SKSE::RUNTIME_SSE_1_6_629) != std::strong_ordering::less) {
 					return REL::RelocateMember<INFO_RUNTIME_DATA>(this, AE1799Shift(0x8D8));
 				}
@@ -898,7 +828,7 @@ namespace RE
 
 		[[nodiscard]] VR_NODE_DATA* GetVRNodeData() noexcept
 		{
-			if SKYRIM_REL_VR_CONSTEXPR (!REL::Module::IsVR()) {
+			if constexpr (!REL::Module::IsVR()) {
 				return nullptr;
 			} else {
 				return &REL::RelocateMember<VR_NODE_DATA>(this, 0, 0x3F0);
@@ -907,7 +837,7 @@ namespace RE
 
 		[[nodiscard]] const VR_NODE_DATA* GetVRNodeData() const noexcept
 		{
-			if SKYRIM_REL_VR_CONSTEXPR (!REL::Module::IsVR()) {
+			if constexpr (!REL::Module::IsVR()) {
 				return nullptr;
 			} else {
 				return &REL::RelocateMember<VR_NODE_DATA>(this, 0, 0x3F0);
@@ -915,18 +845,10 @@ namespace RE
 		}
 
 		// members
-#if (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_VR))
-		PLAYER_RUNTIME_DATA_CONTENT
-#endif
 
 	private:
 		bool CenterOnCell_Impl(const char* a_cellName, RE::TESObjectCELL* a_cell);
 	};
-#if !defined(ENABLE_SKYRIM_VR) && !defined(ENABLE_SKYRIM_AE)
-	static_assert(sizeof(PlayerCharacter) == 0xBE0);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(PlayerCharacter) == 0x12D8);
-#endif
 }
 #undef PLAYER_RUNTIME_DATA_CONTENT
 #undef VR_NODE_DATA_CONTENT

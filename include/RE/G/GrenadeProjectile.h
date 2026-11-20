@@ -29,7 +29,6 @@ namespace RE
 		void InitLoadGame(BGSLoadFormBuffer* a_buf) override;    // 10
 		void FinishLoadGame(BGSLoadFormBuffer* a_buf) override;  // 11
 		void Revert(BGSLoadFormBuffer* a_buf) override;          // 12
-#ifndef SKYRIM_CROSS_VR
 		// Override functions past where Skyrim VR breaks compatibility.
 		[[nodiscard]] BGSDecalGroup* GetDecalGroup() const override;       // 9F - { return decalGroup; }
 		bool           IsGrenadeProjectile() override;                // A3 - { return 1; }
@@ -45,7 +44,6 @@ namespace RE
 		void           AddImpact(TESObjectREFR* a_ref, const NiPoint3& a_targetLoc, const NiPoint3& a_velocity, hkpCollidable* a_collidable, std::int32_t a_arg6, std::uint32_t a_arg7) override;                // BD
 		void           OnTriggerEnter() override;                // BF - { flags |= 1 << 30; }
 		void                         Handle3DLoaded() override;            // C0
-#endif
 
 		struct GRENADE_RUNTIME_DATA
 		{
@@ -70,12 +68,6 @@ namespace RE
 		}
 
 		// members
-#ifndef ENABLE_SKYRIM_AE
-		GRENADE_RUNTIME_DATA_CONTENT
-#endif
 	};
-#ifndef ENABLE_SKYRIM_AE
-	static_assert(sizeof(GrenadeProjectile) == 0x1E8);
-#endif
 }
 #undef GRENADE_RUNTIME_DATA_CONTENT

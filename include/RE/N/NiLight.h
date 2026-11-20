@@ -44,14 +44,8 @@ namespace RE
 		}
 
 		// members
-#ifndef SKYRIM_CROSS_VR
 		RUNTIME_DATA_CONTENT  // 110, 138
-#endif
 	};
-#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(NiLight) == 0x140);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(NiLight) == 0x168);
-#endif
 }
 #undef RUNTIME_DATA_CONTENT

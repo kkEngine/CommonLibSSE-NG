@@ -40,9 +40,7 @@ namespace RE
 			return REL::RelocateMember<SCENE_GRAPH_RUNTIME_DATA>(this, 0x140, 0x168);
 		}
 
-#ifndef SKYRIM_CROSS_VR
 		RUNTIME_DATA_CONTENT
-#endif
 	};
 }
 #undef RUNTIME_DATA_CONTENT

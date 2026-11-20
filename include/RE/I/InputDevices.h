@@ -10,7 +10,6 @@ namespace RE
 			kKeyboard = 0,
 			kMouse,
 			kGamepad,
-#ifdef SKYRIM_AE_1799
 			// AE 1.7.99 inserted two devices before the virtual keyboard (the game's device factory
 			// switch and the 6 mapping arrays of every ControlMap context). They are not created on PC;
 			// the NX controlmap.txt names their columns "Gesture ID" and "Gamepad button except Look
@@ -18,13 +17,6 @@ namespace RE
 			kGesture = 3,
 			kUnknown4 = 4,
 			kVirtualKeyboard = 5,
-#else
-			kVirtualKeyboard,
-#endif
-#ifdef ENABLE_SKYRIM_VR
-			kVRRight = 5,
-			kVRLeft = 6,
-#endif
 
 			kTotal
 		};

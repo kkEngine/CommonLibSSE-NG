@@ -7,9 +7,6 @@ namespace RE
 	class BSOpenVR : public BSVRInterface
 	{
 	public:
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-		constexpr static auto RTTI = RTTI_BSOpenVR;
-#endif
 		~BSOpenVR() override;  // 00
 
 		// override BSVRInterface

@@ -17,12 +17,8 @@ namespace RE
 	// context = kJournal
 	class JournalMenu :
 		public IMenu,  // 00
-#ifndef SKYRIM_CROSS_VR
 		public MenuEventHandler,            // 30
 		public BSTEventSink<BSSystemEvent>  // 40
-#else
-		public MenuEventHandler  // 30
-#endif
 	{
 	public:
 		inline static constexpr auto      RTTI = RTTI_JournalMenu;
@@ -51,14 +47,12 @@ namespace RE
 		void               AdvanceMovie(float a_interval, std::uint32_t a_currentTime) override;  // 05
 		void               PostDisplay() override;                                                // 06
 
-#ifndef SKYRIM_CROSS_VR
 		// override (MenuEventHandler)
 		bool CanProcess(InputEvent* a_event) override;              // 01
 		bool ProcessThumbstick(ThumbstickEvent* a_event) override;  // 03
 
 		// override (BSTEventSink<BSSystemEvent>)
 		BSEventNotifyControl ProcessEvent(const BSSystemEvent* a_event, BSTEventSource<BSSystemEvent>* a_eventSource) override;  // 01
-#endif
 
 		[[nodiscard]] MenuEventHandler* AsMenuEventHandler() noexcept
 		{
@@ -91,14 +85,8 @@ namespace RE
 		}
 
 		// members
-#ifndef SKYRIM_CROSS_VR
 		RUNTIME_DATA_CONTENT  // 48, 58
-#endif
 	};
-#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(JournalMenu) == 0xE8);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(JournalMenu) == 0xF8);
-#endif
 }
 #undef RUNTIME_DATA_CONTENT

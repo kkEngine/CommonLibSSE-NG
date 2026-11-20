@@ -48,14 +48,8 @@ namespace RE
 			return func(this);
 		}
 
-#ifndef SKYRIM_CROSS_VR
 		RUNTIME_DATA_CONTENT;  // 160, 1A8
-#endif
 	};
-#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(BSDynamicTriShape) == 0x180);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(BSDynamicTriShape) == 0x1C8);
-#endif
 }
 #undef RUNTIME_DATA_CONTENT

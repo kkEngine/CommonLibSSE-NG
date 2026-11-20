@@ -9,12 +9,8 @@ namespace RE
 	// flags = kPausesGame
 	// context = kMenuMode
 	class CreditsMenu :
-#ifndef SKYRIM_CROSS_VR
 		public IMenu,              // 00
 		public GFxFunctionHandler  // 30
-#else
-		public IMenu  // 00
-#endif
 	{
 	public:
 		inline static constexpr auto      RTTI = RTTI_CreditsMenu;
@@ -25,10 +21,8 @@ namespace RE
 		// override (IMenu)
 		UI_MESSAGE_RESULTS ProcessMessage(UIMessage& a_message) override;  // 04
 
-#ifndef SKYRIM_CROSS_VR
 		// override (GFxFunctionHandler)
 		void Call(Params& a_params) override;  // 01
-#endif
 
 		[[nodiscard]] GFxFunctionHandler* AsGFxFunctionHandler() noexcept
 		{
@@ -40,9 +34,5 @@ namespace RE
 			return const_cast<CreditsMenu*>(this)->AsGFxFunctionHandler();
 		}
 	};
-#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(CreditsMenu) == 0x40);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(CreditsMenu) == 0x50);
-#endif
 }

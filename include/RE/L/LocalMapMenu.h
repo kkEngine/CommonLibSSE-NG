@@ -54,7 +54,6 @@ namespace RE
 			Data             unk301F8;        // 301F8
 			std::uint64_t    unk30240;        // 30240
 			std::uint64_t    unk30248;        // 30248
-#ifndef ENABLE_SKYRIM_VR
 			std::uint64_t                  unk30250;  // 30250
 			std::uint64_t                  unk30258;  // 30258
 			LocalMapCamera                 camera;    // 30260
@@ -62,35 +61,8 @@ namespace RE
 			ImageSpaceShaderParam          unk302D0;  // 302D0
 			std::uint64_t                  unk30350;  // 30350
 			NiPointer<NiNode>              unk30358;  // 30358
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-			std::uint64_t                  padVR1;    // 30250
-			std::uint64_t                  padVR2;    // 30258
-			std::uint64_t                  unk30260;  // 30260
-			std::uint64_t                  unk30268;  // 30268
-			LocalMapCamera                 camera;    // 30270
-			NiPointer<BSShaderAccumulator> unk302D8;  // 302D8
-			ImageSpaceShaderParam          unk302E0;  // 302E0
-			std::uint64_t                  unk30360;  // 30360
-			NiPointer<NiNode>              unk30368;  // 30368
-			BSTArray<void*>                unk30370;  // 30370
-			BSTArray<void*>                unk30388;  // 30388
-			BSTArray<void*>                unk303A0;  // 303A0
-			void*                          unk303B8;  // 303B8
-			NiCamera*                      unk303C0;  // 303C0
-			std::uint32_t                  unk303C8;  // 303C8
-			std::uint32_t                  pad303CC;  // 303CC
-			std::uint64_t                  unk303D0;  // 303D0
-#else
-			std::uint64_t unk30250;         // 30250
-			std::uint64_t unk30258;         // 30258
-			std::uint8_t  unk30260[0x100];  // 30260
-#endif
 		};
-#ifndef ENABLE_SKYRIM_VR
 		static_assert(sizeof(LocalMapCullingProcess) == 0x30360);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-		static_assert(sizeof(LocalMapCullingProcess) == 0x303D8);
-#endif
 
 		class InputHandler : public MenuEventHandler
 		{
@@ -144,14 +116,6 @@ namespace RE
 		float                   unk0003C;             // 0003C
 		LocalMapCullingProcess  localCullingProcess;  // 00040
 		RUNTIME_DATA            runtimeData;          // 303A0, 30418
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-		std::uint32_t unk30478;  // 30478
-		std::uint32_t pad3047C;  // 3047C
-#endif
 	};
-#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(LocalMapMenu) == 0x30400);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(LocalMapMenu) == 0x30480);
-#endif
 }

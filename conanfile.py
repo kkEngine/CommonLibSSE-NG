@@ -19,16 +19,10 @@ class CommonLibSSE(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     options = {
         "testing": [True, False],
-        "ae": [True, False],
-        "se": [True, False],
-        "vr": [True, False],
         "xbyak": [True, False]
     }
     default_options = {
         "testing": False,
-        "ae": True,
-        "se": True,
-        "vr": True,
         "xbyak": False,
         "spdlog:header_only": True
     }
@@ -67,10 +61,7 @@ class CommonLibSSE(ConanFile):
             raise ConanInvalidConfiguration("x86_64 is the only supported architecture")
 
     def build(self):
-        defs = {"ENABLE_SKYRIM_AE": "ON" if self.options.ae else "OFF",
-                "ENABLE_SKYRIM_SE": "ON" if self.options.se else "OFF",
-                "ENABLE_SKYRIM_VR": "ON" if self.options.vr else "OFF",
-                "BUILD_TESTS": "ON" if self.options.testing else "OFF",
+        defs = {"BUILD_TESTS": "ON" if self.options.testing else "OFF",
                 "SKSE_SUPPORT_XBYAK": "ON" if self.options.xbyak else "OFF"}
         def_args = " ".join(['-D{}="{}"'.format(k, v) for k, v in defs.items()])
         build_type = str(self.settings.build_type).lower()

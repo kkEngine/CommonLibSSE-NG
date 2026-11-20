@@ -46,7 +46,7 @@ namespace RE
 
 	TESObjectARMO* InventoryChanges::GetArmorInSlot(std::int32_t a_slot)
 	{
-		if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
+		if constexpr (REL::Module::IsVR()) {
 			auto actor = this->owner ? this->owner->As<RE::Actor>() : nullptr;
 			if (!actor) {
 				return nullptr;

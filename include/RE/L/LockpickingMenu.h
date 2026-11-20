@@ -20,19 +20,14 @@ namespace RE
 	// context = kLockpicking
 	class LockpickingMenu :
 		public IMenu,  // 00
-#ifndef SKYRIM_CROSS_VR
 		public MenuEventHandler,                 // 30
 		public BSTEventSink<MenuOpenCloseEvent>  // 40
-#else
-		public MenuEventHandler  // 30
-#endif
 	{
 	public:
 		inline static constexpr auto      RTTI = RTTI_LockpickingMenu;
 		inline static constexpr auto      VTABLE = VTABLE_LockpickingMenu;
 		constexpr static std::string_view MENU_NAME = "Lockpicking Menu";
 
-#ifdef SKYRIM_AE_1799
 		// AE 1.7.99 inserted 0x14 bytes after pickBreakSeconds (seen in the ctor)
 #	define LOCKPICKING_AE1799_CONTENT \
 		std::uint32_t unkA4;           \
@@ -41,9 +36,6 @@ namespace RE
 		std::uint8_t  unkAE;           \
 		std::uint8_t  padAF;           \
 		std::uint64_t unkB0;
-#else
-#	define LOCKPICKING_AE1799_CONTENT
-#endif
 
 		struct RUNTIME_DATA
 		{
@@ -85,18 +77,13 @@ namespace RE
 
 			RUNTIME_DATA_CONTENT
 		};
-		#ifdef SKYRIM_AE_1799
 		static_assert(sizeof(RUNTIME_DATA) == 0xE0);
-#else
-		static_assert(sizeof(RUNTIME_DATA) == 0xC8);
-#endif
 
 		~LockpickingMenu() override;  // 00
 
 		// override (IMenu)
 		UI_MESSAGE_RESULTS ProcessMessage(UIMessage& a_message) override;  // 04
 
-#ifndef SKYRIM_CROSS_VR
 		// override (MenuEventHandler)
 		bool CanProcess(InputEvent* a_event) override;              // 01
 		bool ProcessThumbstick(ThumbstickEvent* a_event) override;  // 03
@@ -105,7 +92,6 @@ namespace RE
 
 		// override (BSTEventSink<MenuOpenCloseEvent>)
 		BSEventNotifyControl ProcessEvent(const MenuOpenCloseEvent* a_event, BSTEventSource<MenuOpenCloseEvent>* a_eventSource) override;  // 01
-#endif
 
 		[[nodiscard]] static TESObjectREFR* GetTargetReference();
 
@@ -140,17 +126,9 @@ namespace RE
 		}
 
 		// members
-#ifndef SKYRIM_CROSS_VR
 		RUNTIME_DATA_CONTENT  // 48, 58
-#endif
 	};
-#if defined(SKYRIM_AE_1799)
 	static_assert(sizeof(LockpickingMenu) == 0x128);
-#elif !defined(ENABLE_SKYRIM_VR)
-	static_assert(sizeof(LockpickingMenu) == 0x110);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(LockpickingMenu) == 0x120);
-#endif
 }
 #undef RUNTIME_DATA_CONTENT
 #undef LOCKPICKING_AE1799_CONTENT

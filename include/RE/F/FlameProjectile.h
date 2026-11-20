@@ -27,7 +27,6 @@ namespace RE
 		void InitLoadGame(BGSLoadFormBuffer* a_buf) override;    // 10
 		void FinishLoadGame(BGSLoadFormBuffer* a_buf) override;  // 11
 		void Revert(BGSLoadFormBuffer* a_buf) override;          // 12
-#ifndef SKYRIM_CROSS_VR
 		bool IsFlameProjectile() override;               // A4 - { return 1; }
 		void Process3D() override;               // A9
 		void UpdateImpl(float a_delta) override;  // AB
@@ -35,7 +34,6 @@ namespace RE
 		void AddImpact(TESObjectREFR* a_ref, const NiPoint3& a_targetLoc, const NiPoint3& a_velocity, hkpCollidable* a_collidable, std::int32_t a_arg6, std::uint32_t a_arg7) override;               // BD
 		void Handle3DLoaded() override;           // C0 - { flags = flags & 0xFFFFFFCC | 8; }
 		bool ShouldUseDesiredTarget() override;               // C1
-#endif
 
 		struct FLAME_RUNTIME_DATA
 		{
@@ -57,12 +55,6 @@ namespace RE
 		}
 
 		// members
-#ifndef ENABLE_SKYRIM_AE
-		FLAME_RUNTIME_DATA_CONTENT
-#endif
 	};
-#ifndef ENABLE_SKYRIM_AE
-	static_assert(sizeof(FlameProjectile) == 0x1E0);
-#endif
 }
 #undef FLAME_RUNTIME_DATA_CONTENT

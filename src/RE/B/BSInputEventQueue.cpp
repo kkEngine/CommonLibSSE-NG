@@ -101,11 +101,9 @@ namespace RE
 
 	void BSInputEventQueue::ClearInputQueue()
 	{
-#ifdef SKYRIM_AE_1799
 		sixaxisEventCount = 0;
 		motionGestureEventCount = 0;
 		amiiboEventCount = 0;
-#endif
 		kinectEventCount = 0;
 		connectEventCount = 0;
 		thumbstickEventCount = 0;

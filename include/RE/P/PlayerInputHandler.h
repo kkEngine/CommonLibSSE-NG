@@ -18,18 +18,12 @@ namespace RE
 		virtual ~PlayerInputHandler();  // 00
 
 		virtual bool CanProcess(InputEvent* a_event) = 0;  // 01
-#ifdef SKYRIM_AE_1799
 		// AE 1.7.99 inserted two event handlers here, every vfunc below moved by 2
 		virtual void ProcessMotionGesture(MotionGestureEvent* a_event, PlayerControlsData* a_data);  // 02 - { return; }
 		virtual void ProcessSixaxis(SixaxisEvent* a_event, PlayerControlsData* a_data);              // 03 - { return; }
 		virtual void ProcessThumbstick(ThumbstickEvent* a_event, PlayerControlsData* a_data);        // 04 - { return; }
 		virtual void ProcessMouseMove(MouseMoveEvent* a_event, PlayerControlsData* a_data);          // 05 - { return; }
 		virtual void ProcessButton(ButtonEvent* a_event, PlayerControlsData* a_data);                // 06 - { return; }
-#else
-		virtual void ProcessThumbstick(ThumbstickEvent* a_event, PlayerControlsData* a_data);  // 02 - { return; }
-		virtual void ProcessMouseMove(MouseMoveEvent* a_event, PlayerControlsData* a_data);    // 03 - { return; }
-		virtual void ProcessButton(ButtonEvent* a_event, PlayerControlsData* a_data);          // 04 - { return; }
-#endif
 
 		[[nodiscard]] bool IsInputEventHandlingEnabled() const;
 		void               SetInputEventHandlingEnabled(bool a_enabled);

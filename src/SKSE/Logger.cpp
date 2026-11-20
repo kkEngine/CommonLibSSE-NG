@@ -77,7 +77,7 @@ namespace SKSE
 
 			std::filesystem::path path = knownPath.get();
 			path /= "My Games"sv;
-			if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
+			if constexpr (REL::Module::IsVR()) {
 				path /= "Skyrim VR";
 			} else {
 				path /= std::filesystem::exists("steam_api64.dll") ?
