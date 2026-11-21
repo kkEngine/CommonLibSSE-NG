@@ -38,23 +38,17 @@ namespace RE
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30, 0x40);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30, 0x40);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30);
 		}
 
 		// members
-#ifndef SKYRIM_CROSS_VR
 		RUNTIME_DATA_CONTENT  // 30, 40
-#endif
 	};
-#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(SleepWaitMenu) == 0x58);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(SleepWaitMenu) == 0x68);
-#endif
 }
 #undef RUNTIME_DATA_CONTENT

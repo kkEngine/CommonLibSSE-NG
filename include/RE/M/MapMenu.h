@@ -9,7 +9,6 @@
 #include "RE/I/IMenu.h"
 #include "RE/L/LocalMapMenu.h"
 #include "RE/M/MapCamera.h"
-#include "RE/W/WorldSpaceMenu.h"
 
 namespace RE
 {
@@ -25,17 +24,9 @@ namespace RE
 	// flags = kPausesGame | kUsesCursor | kRendersOffscreenTargets | kCustomRendering
 	// context = kMap
 	class MapMenu :
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-		public WorldSpaceMenu,                    // 00000
-		public BSTEventSink<MenuOpenCloseEvent>,  // 00058
-		public IMapCameraCallbacks                // 00060
-#elif !defined(ENABLE_SKYRIM_VR)
 		public IMenu,                             // 00000
 		public BSTEventSink<MenuOpenCloseEvent>,  // 00030
 		public IMapCameraCallbacks                // 00038
-#else
-		public IMenu
-#endif
 	{
 	public:
 		inline static constexpr auto      RTTI = RTTI_MapMenu;
@@ -53,11 +44,7 @@ namespace RE
 
 			RUNTIME_DATA_CONTENT
 		};
-#ifndef ENABLE_SKYRIM_VR
 		static_assert(sizeof(RUNTIME_DATA) == 0x30420);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-		static_assert(sizeof(RUNTIME_DATA) == 0x304A0);
-#endif
 
 		struct RUNTIME_DATA2
 		{
@@ -93,9 +80,7 @@ namespace RE
 		void               RefreshPlatform() override;                                            // 08
 
 		// override (BSTEventSink<MenuOpenCloseEvent>)
-#ifndef SKYRIM_CROSS_VR
 		BSEventNotifyControl ProcessEvent(const MenuOpenCloseEvent* a_event, BSTEventSource<MenuOpenCloseEvent>* a_eventSource) override;  // 01
-#endif
 
 		void PlaceMarker()
 		{
@@ -104,22 +89,9 @@ namespace RE
 			return func(this);
 		}
 
-		[[nodiscard]] WorldSpaceMenu* AsWorldSpaceMenu() noexcept
-		{
-			if SKYRIM_REL_CONSTEXPR (!REL::Module::IsVR()) {
-				return nullptr;
-			}
-			return &REL::RelocateMember<WorldSpaceMenu>(this, 0, 0);
-		}
-
-		[[nodiscard]] const WorldSpaceMenu* AsWorldSpaceMenu() const noexcept
-		{
-			return const_cast<MapMenu*>(this)->AsWorldSpaceMenu();
-		}
-
 		[[nodiscard]] BSTEventSink<MenuOpenCloseEvent>* AsMenuOpenCloseEventSink() noexcept
 		{
-			return &REL::RelocateMember<BSTEventSink<MenuOpenCloseEvent>>(this, 0x30, 0x58);
+			return &REL::RelocateMember<BSTEventSink<MenuOpenCloseEvent>>(this, 0x30);
 		}
 
 		[[nodiscard]] const BSTEventSink<MenuOpenCloseEvent>* AsMenuOpenCloseEventSink() const noexcept
@@ -129,7 +101,7 @@ namespace RE
 
 		[[nodiscard]] IMapCameraCallbacks* AsIMapCameraCallbacks() noexcept
 		{
-			return &REL::RelocateMember<IMapCameraCallbacks>(this, 0x38, 0x60);
+			return &REL::RelocateMember<IMapCameraCallbacks>(this, 0x38);
 		}
 
 		[[nodiscard]] const IMapCameraCallbacks* AsIMapCameraCallbacks() const noexcept
@@ -139,34 +111,30 @@ namespace RE
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40, 0x68);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40, 0x68);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40);
 		}
 
 		[[nodiscard]] inline RUNTIME_DATA2& GetRuntimeData2() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA2>(this, 0x30460, 0x30508);
+			return REL::RelocateMember<RUNTIME_DATA2>(this, 0x30460);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA2& GetRuntimeData2() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA2>(this, 0x30460, 0x30508);
+			return REL::RelocateMember<RUNTIME_DATA2>(this, 0x30460);
 		}
 
 		// members
-#ifndef SKYRIM_CROSS_VR
 		RUNTIME_DATA_CONTENT       // 40, 68
 			RUNTIME_DATA2_CONTENT  // 30460, 30508
-#endif
 	};
 
-#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(MapMenu) == 0x30598);
-#endif
 }
 
 #undef RUNTIME_DATA_CONTENT

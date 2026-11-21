@@ -72,12 +72,7 @@ namespace REL
 			/**
 			 * The Skyrim runtime is a pre-Anniversary Edition Skyrim SE release (version 1.5.97 and prior).
 			 */
-			SE = 1 << 1,
-
-			/**
-			 * The Skyrim runtime is Skyrim VR.
-			 */
-			VR = 1 << 2
+			SE = 1 << 1
 		};
 
 		[[nodiscard]] static Module &get()
@@ -116,8 +111,7 @@ namespace REL
 		 * <p>
 		 * This overload accepts only a <code>Runtime</code> value, and based on that value attempts to find the
 		 * executable, using the Windows registry to find an installed copy of Skyrim of the given runtime. Using
-		 * <code>Runtime::Unknown</code> causes an attempt to discover Skyrim Special Edition first, and if that fails,
-		 * attempts to discover Skyrim VR.
+		 * <code>Runtime::Unknown</code> looks for Skyrim Special Edition.
 		 * </p>
 		 *
 		 * <p>
@@ -130,21 +124,18 @@ namespace REL
 		static bool inject(Runtime a_runtime = Runtime::Unknown)
 		{
 			if (a_runtime == Runtime::Unknown) {
-				return inject(Runtime::SE) || inject(Runtime::VR);
+				return inject(Runtime::SE);
 			}
 
 			constexpr std::size_t bufferSize = 4096;  // Max NTFS path length.
-			const wchar_t* subKey =
-					a_runtime == Runtime::VR ?
-					LR"(SOFTWARE\Bethesda Softworks\Skyrim VR)" :
-					LR"(SOFTWARE\Bethesda Softworks\Skyrim Special Edition)";
+			const wchar_t* subKey = LR"(SOFTWARE\Bethesda Softworks\Skyrim Special Edition)";
 			std::uint32_t length = bufferSize * sizeof(wchar_t);
 			std::uint8_t value[bufferSize];
 			if (REX::W32::RegGetValueW(REX::W32::HKEY_LOCAL_MACHINE, subKey, L"Installed Path", 0x20002u, nullptr, value, &length) != 0) {
 				return false;
 			}
 			std::filesystem::path installPath(reinterpret_cast<wchar_t *>(value));
-			installPath /= a_runtime == Runtime::VR ? L"SkyrimVR.exe" : L"SkyrimSE.exe";
+			installPath /= L"SkyrimSE.exe";
 			return inject(installPath.c_str());
 		}
 
@@ -165,10 +156,8 @@ namespace REL
 			_instance._filename = _instance._filePath = a_filename.data();
 			_instance._version = a_version;
 			if (a_runtime == Runtime::Unknown) {
-				// Minor version 4 = VR, 5 = SE, 6+ = AE (1.7.99 bumped the minor version).
-				if (a_version[1] == 4) {
-					_instance._runtime = Runtime::VR;
-				} else if (a_version[1] >= 6) {
+				// Minor version 5 = SE, 6+ = AE (1.7.99 bumped the minor version).
+				if (a_version[1] >= 6) {
 					_instance._runtime = Runtime::AE;
 				} else {
 					_instance._runtime = Runtime::SE;
@@ -220,12 +209,10 @@ namespace REL
 		 */
 		[[nodiscard]] static SKYRIM_REL Runtime GetRuntime() noexcept
 		{
-#if (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_VR))
+#if !defined(ENABLE_SKYRIM_AE)
 			return Runtime::SE;
-#elif (!defined(ENABLE_SKYRIM_SE) && !defined(ENABLE_SKYRIM_VR))
+#elif !defined(ENABLE_SKYRIM_SE)
 			return Runtime::AE;
-#elif (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
-			return Runtime::VR;
 #else
 			return get()._runtime;
 #endif
@@ -253,20 +240,6 @@ namespace REL
 		[[nodiscard]] static SKYRIM_REL bool IsSE() noexcept
 		{
 			return GetRuntime() == Runtime::SE;
-		}
-
-		/**
-		 * Returns whether the current Skyrim runtime is a Skyrim VR release.
-		 */
-		[[nodiscard]] static SKYRIM_REL_VR bool IsVR() noexcept
-		{
-#ifndef ENABLE_SKYRIM_VR
-			return false;
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-			return true;
-#else
-			return GetRuntime() == Runtime::VR;
-#endif
 		}
 
 	private:
@@ -342,10 +315,8 @@ namespace REL
 			const auto version = GetFileVersion(_filePath);
 			if (version) {
 				_version = *version;
-				// Minor version 4 = VR, 5 = SE, 6+ = AE (1.7.99 bumped the minor version).
-				if (_version[1] == 4) {
-					_runtime = Runtime::VR;
-				} else if (_version[1] >= 6) {
+				// Minor version 5 = SE, 6+ = AE (1.7.99 bumped the minor version).
+				if (_version[1] >= 6) {
 					_runtime = Runtime::AE;
 				} else {
 					_runtime = Runtime::SE;
@@ -373,8 +344,8 @@ namespace REL
 		};
 
 		static constexpr auto ENVIRONMENT = L"SKSE_RUNTIME"sv;
-		static constexpr std::array<std::wstring_view, 2> RUNTIMES{
-			{L"SkyrimVR.exe", L"SkyrimSE.exe"}
+		static constexpr std::array<std::wstring_view, 1> RUNTIMES{
+			{L"SkyrimSE.exe"}
 		};
 
 		static Module                       _instance;

@@ -32,23 +32,17 @@ namespace RE
 
 		[[nodiscard]] inline POINT_LIGHT_RUNTIME_DATA& GetPointLightRuntimeData() noexcept
 		{
-			return REL::RelocateMember<POINT_LIGHT_RUNTIME_DATA>(this, 0x140, 0x168);
+			return REL::RelocateMember<POINT_LIGHT_RUNTIME_DATA>(this, 0x140);
 		}
 
 		[[nodiscard]] inline const POINT_LIGHT_RUNTIME_DATA& GetPointLightRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<POINT_LIGHT_RUNTIME_DATA>(this, 0x140, 0x168);
+			return REL::RelocateMember<POINT_LIGHT_RUNTIME_DATA>(this, 0x140);
 		}
 
 		// members
-#ifndef SKYRIM_CROSS_VR
 		RUNTIME_DATA_CONTENT  // 140, 168
-#endif
 	};
-#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(NiPointLight) == 0x150);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(NiPointLight) == 0x178);
-#endif
 }
 #undef RUNTIME_DATA_CONTENT

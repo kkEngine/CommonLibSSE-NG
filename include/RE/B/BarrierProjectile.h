@@ -37,12 +37,10 @@ namespace RE
 		void        Revert(BGSLoadFormBuffer* a_buf) override;          // 12
 		void        InitHavok() override;                               // 66
 		NiAVObject* Load3D(bool a_backgroundLoading) override;          // 6A
-#ifndef SKYRIM_CROSS_VR
 		bool        IsBarrierProjectile() override;                              // A7 - { return 1; }
 		void        UpdateImpl(float a_delta) override;                 // AB
 		bool        ProcessImpacts() override;                              // AC
 		bool        GetKillOnCollision() override;                              // B8 - { return 0; }
-#endif
 
 		struct BARRIER_RUNTIME_DATA
 		{

@@ -33,12 +33,12 @@ namespace RE
 
 		[[nodiscard]] inline DYNAMIC_TRISHAPE_RUNTIME_DATA& GetDynamicTrishapeRuntimeData() noexcept
 		{
-			return REL::RelocateMember<DYNAMIC_TRISHAPE_RUNTIME_DATA>(this, 0x160, 0x1A8);
+			return REL::RelocateMember<DYNAMIC_TRISHAPE_RUNTIME_DATA>(this, 0x160);
 		}
 
 		[[nodiscard]] inline const DYNAMIC_TRISHAPE_RUNTIME_DATA& GetDynamicTrishapeRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<DYNAMIC_TRISHAPE_RUNTIME_DATA>(this, 0x160, 0x1A8);
+			return REL::RelocateMember<DYNAMIC_TRISHAPE_RUNTIME_DATA>(this, 0x160);
 		}
 
 		BSDynamicTriShape* ctor()
@@ -48,14 +48,8 @@ namespace RE
 			return func(this);
 		}
 
-#ifndef SKYRIM_CROSS_VR
 		RUNTIME_DATA_CONTENT;  // 160, 1A8
-#endif
 	};
-#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(BSDynamicTriShape) == 0x180);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(BSDynamicTriShape) == 0x1C8);
-#endif
 }
 #undef RUNTIME_DATA_CONTENT

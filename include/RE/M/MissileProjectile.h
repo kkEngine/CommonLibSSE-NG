@@ -28,7 +28,6 @@ namespace RE
 		void InitLoadGame(BGSLoadFormBuffer* a_buf) override;    // 10
 		void FinishLoadGame(BGSLoadFormBuffer* a_buf) override;  // 11
 		void Revert(BGSLoadFormBuffer* a_buf) override;          // 12
-#ifndef SKYRIM_CROSS_VR
 		bool IsMissileProjectile() override;               // A2 - { return 1; }
 		void Process3D() override;               // A9
 		void UpdateImpl(float a_delta) override;  // AB
@@ -36,11 +35,10 @@ namespace RE
 		bool GetKillOnCollision() override;               // B8 - { return unk1D8 == 1; }
 		void AddImpact(TESObjectREFR* a_ref, const NiPoint3& a_targetLoc, const NiPoint3& a_velocity, hkpCollidable* a_collidable, std::int32_t a_arg6, std::uint32_t a_arg7) override;               // BD
 		void Handle3DLoaded() override;           // C0
-#endif
 
 		// add
-		SKYRIM_REL_VR_VIRTUAL void Unk_C2(void);  // C2 - { return 0; }
-		SKYRIM_REL_VR_VIRTUAL void Unk_C3(void);  // C3 - { return 0; }
+		virtual void Unk_C2(void);  // C2 - { return 0; }
+		virtual void Unk_C3(void);  // C3 - { return 0; }
 
 		struct MISSILE_RUNTIME_DATA
 		{

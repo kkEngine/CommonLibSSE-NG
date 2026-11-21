@@ -8,18 +8,10 @@ namespace RE
 	{
 		constexpr auto kInvalid = (std::numeric_limits<std::size_t>::max)();
 
+		// DefaultObjectID uses the SE numbering, like DEFAULT_OBJECTS
 		inline std::size_t MapIndex(std::underlying_type_t<DefaultObjectID> a_idx) noexcept
 		{
-			if (a_idx <= std::to_underlying(DefaultObjectID::kKeywordActivatorFurnitureNoPlayer)) {
-				return a_idx;
-			}
-			std::size_t result;
-			if SKYRIM_REL_CONSTEXPR (Module::IsVR()) {
-				result = (0xFFFF0000 & a_idx) >> 16;
-			} else {
-				result = 0x0000FFFF & a_idx;
-			}
-			return result ? BGSDefaultObjectManager::ToRuntimeIndex(result) : kInvalid;
+			return BGSDefaultObjectManager::ToRuntimeIndex(static_cast<std::size_t>(a_idx));
 		}
 	}
 
@@ -30,7 +22,7 @@ namespace RE
 			return nullptr;
 		}
 		return IsObjectInitialized(idx) ?
-                   &RelocateMember<TESForm**>(this, 0x20, 0x20)[idx] :
+                   &RelocateMember<TESForm**>(this, 0x20)[idx] :
                    nullptr;
 	}
 
@@ -39,19 +31,13 @@ namespace RE
 		return IsObjectInitialized(MapIndex(std::to_underlying(a_object)));
 	}
 
-	bool BGSDefaultObjectManager::SupportsVR(DefaultObjectID a_object) noexcept
+	bool BGSDefaultObjectManager::SupportsSE(DefaultObjectID) noexcept
 	{
-		auto idx = std::to_underlying(a_object);
-		return idx <= std::to_underlying(DefaultObjectID::kKeywordActivatorFurnitureNoPlayer) || idx & 0xFFFF0000;
+		return true;  // every DefaultObjectID has an SE index
 	}
 
-	bool BGSDefaultObjectManager::SupportsSE(DefaultObjectID a_object) noexcept
+	bool BGSDefaultObjectManager::SupportsCurrentRuntime(DefaultObjectID) noexcept
 	{
-		return (std::to_underlying(a_object) & 0x0000FFFF) || a_object != DefaultObjectID::kWerewolfSpell;
-	}
-
-	bool BGSDefaultObjectManager::SupportsCurrentRuntime(DefaultObjectID a_object) noexcept
-	{
-		return MapIndex(std::to_underlying(a_object)) != kInvalid;
+		return true;
 	}
 }

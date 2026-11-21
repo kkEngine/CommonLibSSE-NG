@@ -44,25 +44,15 @@ namespace RE
 		struct InputContext
 		{
 		public:
-			[[nodiscard]] static SKYRIM_REL_VR std::size_t GetNumDeviceMappings() noexcept
+			[[nodiscard]] static constexpr std::size_t GetNumDeviceMappings() noexcept
 			{
-#ifndef SKYRIM_CROSS_VR
 				return INPUT_DEVICES::kTotal;
-#else
-				if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
-					return INPUT_DEVICES::kTotal;
-				} else {
-					return static_cast<std::size_t>(INPUT_DEVICES::kVirtualKeyboard) + 1;
-				}
-#endif
 			}
 
 			// members
 			BSTArray<UserEventMapping> deviceMappings[INPUT_DEVICES::kTotal];  // 00
 		};
-#ifdef ENABLE_SKYRIM_VR
-		static_assert(sizeof(InputContext) == 0xA8);
-#elif defined(SKYRIM_AE_1799)
+#if defined(SKYRIM_AE_1799)
 		static_assert(sizeof(InputContext) == 0x90);
 #else
 		static_assert(sizeof(InputContext) == 0x60);

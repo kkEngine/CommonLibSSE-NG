@@ -32,17 +32,15 @@ namespace RE
 
 		[[nodiscard]] inline SCENE_GRAPH_RUNTIME_DATA& GetRuntimeData() noexcept
 		{
-			return REL::RelocateMember<SCENE_GRAPH_RUNTIME_DATA>(this, 0x140, 0x168);
+			return REL::RelocateMember<SCENE_GRAPH_RUNTIME_DATA>(this, 0x140);
 		}
 
 		[[nodiscard]] inline const SCENE_GRAPH_RUNTIME_DATA& GetRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<SCENE_GRAPH_RUNTIME_DATA>(this, 0x140, 0x168);
+			return REL::RelocateMember<SCENE_GRAPH_RUNTIME_DATA>(this, 0x140);
 		}
 
-#ifndef SKYRIM_CROSS_VR
 		RUNTIME_DATA_CONTENT
-#endif
 	};
 }
 #undef RUNTIME_DATA_CONTENT

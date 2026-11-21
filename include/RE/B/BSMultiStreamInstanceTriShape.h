@@ -31,8 +31,6 @@ namespace RE
 		// override (BSInstanceTriShape)
 		const NiRTTI* GetRTTI() const override;                           // 02
 		NiObject*     CreateClone(NiCloningProcess& a_cloning) override;  // 17
-#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_VR))
-		// The following are virtual functions past the point where VR compatibility breaks.
 		void OnVisible(NiCullingProcess& a_process) override;  // 34
 
 		// overrides for BSTriShape
@@ -43,27 +41,20 @@ namespace RE
 		bool          GetIsAddingInstances() override;                                                                                     // 3B
 		std::uint32_t AddGroup(std::uint32_t a_numInstances, std::uint16_t& a_instanceData, std::uint32_t a_arg3, float a_arg4) override;  // 3C
 		void          RemoveGroup(std::uint32_t a_numInstance) override;                                                                   // 3D
-#endif
 
 		[[nodiscard]] inline MULTISTREAM_TRISHAPE_RUNTIME_DATA& GetMultiStreamTrishapeRuntimeData() noexcept
 		{
-			return REL::RelocateMember<MULTISTREAM_TRISHAPE_RUNTIME_DATA>(this, 0x160, 0x1A8);
+			return REL::RelocateMember<MULTISTREAM_TRISHAPE_RUNTIME_DATA>(this, 0x160);
 		}
 
 		[[nodiscard]] inline const MULTISTREAM_TRISHAPE_RUNTIME_DATA& GetMultiStreamTrishapeRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<MULTISTREAM_TRISHAPE_RUNTIME_DATA>(this, 0x160, 0x1A8);
+			return REL::RelocateMember<MULTISTREAM_TRISHAPE_RUNTIME_DATA>(this, 0x160);
 		}
 
 		// members
-#ifndef SKYRIM_CROSS_VR
 		RUNTIME_DATA_CONTENT  // 160, 1A8
-#endif
 	};
-#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(BSMultiStreamInstanceTriShape) == 0x1A0);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(BSMultiStreamInstanceTriShape) == 0x1E8);
-#endif
 }
 #undef RUNTIME_DATA_CONTENT

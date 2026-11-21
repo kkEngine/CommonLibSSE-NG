@@ -24,30 +24,26 @@ namespace RE
 		static_assert(sizeof(RUNTIME_DATA) == 0x28);
 
 		// add
-		SKYRIM_REL_VR_VIRTUAL void  Unk_35(void);                           // 35, 36 - call controller vtbl+0xA0?
-		SKYRIM_REL_VR_VIRTUAL void  Unk_36(void);                           // 36, 37 - ret 0
-		SKYRIM_REL_VR_VIRTUAL void  Unk_37(void);                           // 37, 38 - same as Unk_33
-		SKYRIM_REL_VR_VIRTUAL void* Unk_38(void);                           // 38, 39 - ret call m_spModelData vtbl+0x9C
-		SKYRIM_REL_VR_VIRTUAL void  SetGeometryData(NiGeometryData* unk1);  // 39, 3A - set and AddRef geometry data
-		SKYRIM_REL_VR_VIRTUAL void* Unk_3A(void);                           // 3A, 3B - ret call m_spModelData vtbl+0x94
-		SKYRIM_REL_VR_VIRTUAL std::uint16_t Unk_3B(bool unk1);              // 3B, 3C ??
+		virtual void  Unk_35(void);                           // 35, 36 - call controller vtbl+0xA0?
+		virtual void  Unk_36(void);                           // 36, 37 - ret 0
+		virtual void  Unk_37(void);                           // 37, 38 - same as Unk_33
+		virtual void* Unk_38(void);                           // 38, 39 - ret call m_spModelData vtbl+0x9C
+		virtual void  SetGeometryData(NiGeometryData* unk1);  // 39, 3A - set and AddRef geometry data
+		virtual void* Unk_3A(void);                           // 3A, 3B - ret call m_spModelData vtbl+0x94
+		virtual std::uint16_t Unk_3B(bool unk1);              // 3B, 3C ??
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x110, 0x138);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x110);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x110, 0x138);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x110);
 		}
 
 		RUNTIME_DATA_CONTENT  // 110, 138
 	};
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(NiGeometry) == 0x160);
-#else
 	static_assert(sizeof(NiGeometry) == 0x138);
-#endif
 }
 #undef RUNTIME_DATA_CONTENT

@@ -185,48 +185,45 @@ namespace RE
 		void         InitHavok() override;                                              // 66
 		NiAVObject*  Load3D(bool a_backgroundLoading) override;                         // 6A
 		void         Set3D(NiAVObject* a_object, bool a_queue3DTasks = true) override;  // 6C
-#ifndef SKYRIM_CROSS_VR
-		// Override functions past where Skyrim VR breaks compatibility.
 		void                      MoveHavok(bool a_forceRec) override;                                   // 85 - { return; }
 		void                      GetLinearVelocity(NiPoint3& a_velocity) const override;                // 86
 		NiNode*                   GetFireNode() override;                                                // 8B
 		[[nodiscard]] Projectile* AsProjectile() override;                                               // 8F - { return this; }
 		bool                      OnAddCellPerformQueueReference(TESObjectCELL& a_cell) const override;  // 90 - { return false; }
-#endif
 
 		// add
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool  IsMissileProjectile();                                                                                                                                                     // A2 - { return 0; }
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool  IsGrenadeProjectile();                                                                                                                                                     // A3 - { return 0; }
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool  IsFlameProjectile();                                                                                                                                                       // A4 - { return 0; }
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool  IsBeamProjectile();                                                                                                                                                        // A5 - { return 0; }
-		SKYRIM_REL_VR_VIRTUAL void                Unk_A6(void);                                                                                                                                                              // A6 - { return 0; }
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool  IsBarrierProjectile();                                                                                                                                                     // A7 - { return 0; }
-		SKYRIM_REL_VR_VIRTUAL void                OnKill();                                                                                                                                                                  // A8 - { return; }
-		SKYRIM_REL_VR_VIRTUAL void                Process3D();                                                                                                                                                               // A9 - { return; }
-		SKYRIM_REL_VR_VIRTUAL void                PostLoad3D(NiAVObject* a_root);                                                                                                                                            // AA
-		SKYRIM_REL_VR_VIRTUAL void                UpdateImpl(float a_delta);                                                                                                                                                 // AB
-		SKYRIM_REL_VR_VIRTUAL bool                ProcessImpacts();                                                                                                                                                          // AC
-		SKYRIM_REL_VR_VIRTUAL void                Update3D();                                                                                                                                                                // AD
-		SKYRIM_REL_VR_VIRTUAL void                Unk_AE(void);                                                                                                                                                              // AE - { return 0; }
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float GetPowerSpeedMult() const;                                                                                                                                                       // AF - { if (unk158) return 1.0; else return unk188; } - "float GetSpeed()"?
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL float GetWeaponSpeedMult() const;                                                                                                                                                      // B0 - { return 1.0; }
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool  GetStopMainSoundAfterImpact();                                                                                                                                             // B1 - { return 0; }
-		SKYRIM_REL_VR_VIRTUAL void                ReportHavokDeactivation();                                                                                                                                                 // B2 - { return; }
-		SKYRIM_REL_VR_VIRTUAL bool                TurnOff(Actor* a_owner, bool a_noDeactivateSound);                                                                                                                         // B3
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool  IsPermanent() const;                                                                                                                                                       // B4 - { return TESDataHandler::GetSingleton()->IsGeneratedFormID(formID) == 0; }
-		SKYRIM_REL_VR_VIRTUAL float               GetGravity();                                                                                                                                                              // B5 - { void* var = unk40; if ((var->unk80 >> 17) & 1) return 1.0; else return var->unk84; }
-		SKYRIM_REL_VR_VIRTUAL void                CleanUpPointersOnDisable();                                                                                                                                                // B6
-		SKYRIM_REL_VR_VIRTUAL bool                RunTargetPick();                                                                                                                                                           // B7
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool  GetKillOnCollision();                                                                                                                                                      // B8 - { return 1; }
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool  ShouldBeLimited();                                                                                                                                                         // B9 - { return 0; }
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool  TargetsWholeBody();                                                                                                                                                        // BA - { return 0; }
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL std::uint32_t GetCollisionGroup();                                                                                                                                               // BB
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bhkShape*     GetCollisionShape();                                                                                                                                               // BC
-		SKYRIM_REL_VR_VIRTUAL void                        AddImpact(TESObjectREFR* a_ref, const NiPoint3& a_targetLoc, const NiPoint3& a_velocity, hkpCollidable* a_collidable, std::int32_t a_arg6, std::uint32_t a_arg7);  // BD
-		SKYRIM_REL_VR_VIRTUAL bool                        HandleHits(hkpCollidable* a_collidable);                                                                                                                           // BE
-		SKYRIM_REL_VR_VIRTUAL void                        OnTriggerEnter();                                                                                                                                                  // BF - { return; }
-		SKYRIM_REL_VR_VIRTUAL void                        Handle3DLoaded();                                                                                                                                                  // C0 - { return; }
-		[[nodiscard]] SKYRIM_REL_VR_VIRTUAL bool          ShouldUseDesiredTarget();                                                                                                                                          // C1 - { return 0; }
+		[[nodiscard]] virtual bool  IsMissileProjectile();                                                                                                                                                     // A2 - { return 0; }
+		[[nodiscard]] virtual bool  IsGrenadeProjectile();                                                                                                                                                     // A3 - { return 0; }
+		[[nodiscard]] virtual bool  IsFlameProjectile();                                                                                                                                                       // A4 - { return 0; }
+		[[nodiscard]] virtual bool  IsBeamProjectile();                                                                                                                                                        // A5 - { return 0; }
+		virtual void                Unk_A6(void);                                                                                                                                                              // A6 - { return 0; }
+		[[nodiscard]] virtual bool  IsBarrierProjectile();                                                                                                                                                     // A7 - { return 0; }
+		virtual void                OnKill();                                                                                                                                                                  // A8 - { return; }
+		virtual void                Process3D();                                                                                                                                                               // A9 - { return; }
+		virtual void                PostLoad3D(NiAVObject* a_root);                                                                                                                                            // AA
+		virtual void                UpdateImpl(float a_delta);                                                                                                                                                 // AB
+		virtual bool                ProcessImpacts();                                                                                                                                                          // AC
+		virtual void                Update3D();                                                                                                                                                                // AD
+		virtual void                Unk_AE(void);                                                                                                                                                              // AE - { return 0; }
+		[[nodiscard]] virtual float GetPowerSpeedMult() const;                                                                                                                                                       // AF - { if (unk158) return 1.0; else return unk188; } - "float GetSpeed()"?
+		[[nodiscard]] virtual float GetWeaponSpeedMult() const;                                                                                                                                                      // B0 - { return 1.0; }
+		[[nodiscard]] virtual bool  GetStopMainSoundAfterImpact();                                                                                                                                             // B1 - { return 0; }
+		virtual void                ReportHavokDeactivation();                                                                                                                                                 // B2 - { return; }
+		virtual bool                TurnOff(Actor* a_owner, bool a_noDeactivateSound);                                                                                                                         // B3
+		[[nodiscard]] virtual bool  IsPermanent() const;                                                                                                                                                       // B4 - { return TESDataHandler::GetSingleton()->IsGeneratedFormID(formID) == 0; }
+		virtual float               GetGravity();                                                                                                                                                              // B5 - { void* var = unk40; if ((var->unk80 >> 17) & 1) return 1.0; else return var->unk84; }
+		virtual void                CleanUpPointersOnDisable();                                                                                                                                                // B6
+		virtual bool                RunTargetPick();                                                                                                                                                           // B7
+		[[nodiscard]] virtual bool  GetKillOnCollision();                                                                                                                                                      // B8 - { return 1; }
+		[[nodiscard]] virtual bool  ShouldBeLimited();                                                                                                                                                         // B9 - { return 0; }
+		[[nodiscard]] virtual bool  TargetsWholeBody();                                                                                                                                                        // BA - { return 0; }
+		[[nodiscard]] virtual std::uint32_t GetCollisionGroup();                                                                                                                                               // BB
+		[[nodiscard]] virtual bhkShape*     GetCollisionShape();                                                                                                                                               // BC
+		virtual void                        AddImpact(TESObjectREFR* a_ref, const NiPoint3& a_targetLoc, const NiPoint3& a_velocity, hkpCollidable* a_collidable, std::int32_t a_arg6, std::uint32_t a_arg7);  // BD
+		virtual bool                        HandleHits(hkpCollidable* a_collidable);                                                                                                                           // BE
+		virtual void                        OnTriggerEnter();                                                                                                                                                  // BF - { return; }
+		virtual void                        Handle3DLoaded();                                                                                                                                                  // C0 - { return; }
+		[[nodiscard]] virtual bool          ShouldUseDesiredTarget();                                                                                                                                          // C1 - { return 0; }
 
 		BGSProjectile* GetProjectileBase() const;
 		float          GetHeight() const;
