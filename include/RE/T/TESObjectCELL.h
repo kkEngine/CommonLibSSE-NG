@@ -263,6 +263,12 @@ namespace RE
 		std::uint8_t                              pad047;           // 047
 		ExtraDataList                             extraList;        // 048
 
+#ifndef ENABLE_SKYRIM_AE
+		RUNTIME_DATA_CONTENT
+#endif
 	};
+#ifndef ENABLE_SKYRIM_AE
+	static_assert(sizeof(TESObjectCELL) == 0x140);
+#endif
 }
 #undef RUNTIME_DATA_CONTENT

@@ -358,7 +358,7 @@ namespace RE
 
 	BSReadWriteLock& ExtraDataList::GetLock() const noexcept
 	{
-		if constexpr (REL::Module::IsAE()) {
+		if SKYRIM_REL_CONSTEXPR (REL::Module::IsAE()) {
 			return *reinterpret_cast<BSReadWriteLock*>(reinterpret_cast<std::uintptr_t>(this) +
 													   (REL::Module::get().version().compare(SKSE::RUNTIME_SSE_1_6_629) == std::strong_ordering::less ? 0x10 : 0x18));
 		} else {

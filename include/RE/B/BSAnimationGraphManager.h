@@ -29,7 +29,7 @@ namespace RE
 	public:
 		[[nodiscard]] BSSpinLock* GetGraphLock() const noexcept
 		{
-			if constexpr (REL::Module::IsAE()) {
+			if SKYRIM_REL_CONSTEXPR (REL::Module::IsAE()) {
 				if (REL::Module::get().version() >= SKSE::RUNTIME_SSE_1_6_629) {
 					return &REL::RelocateMember<BSSpinLock>(this, 0x20);
 				}
@@ -50,7 +50,13 @@ namespace RE
 		// members
 		BSTArray<AnimVariableCacheInfo> variableCache;  // 00
 		mutable BSSpinLock              updateLock;     // 18
+#if !defined(ENABLE_SKYRIM_AE)
+		BSTSmartPointer<BShkbAnimationGraph> animationGraph;  // 20, 28 - smart ptr
+#endif
 	};
+#if !defined(ENABLE_SKYRIM_AE)
+	static_assert(sizeof(BSAnimationGraphVariableCache) == 0x28);
+#endif
 
 	BSSmartPointer(BSAnimationGraphManager);
 
@@ -157,6 +163,12 @@ namespace RE
 		BSTArray<BSAnimationGraphManager*>                  subManagers;     // 58
 		BSAnimationGraphVariableCache                       variableCache;   // 70
 
+#ifndef ENABLE_SKYRIM_AE
+		RUNTIME_DATA_CONTENT
+#endif
 	};
+#ifndef ENABLE_SKYRIM_AE
+	static_assert(sizeof(BSAnimationGraphManager) == 0xB0);
+#endif
 }
 #undef RUNTIME_DATA_CONTENT

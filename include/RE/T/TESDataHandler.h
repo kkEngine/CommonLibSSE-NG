@@ -99,7 +99,7 @@ namespace RE
 		}
 
 		[[nodiscard]] inline TESFile** GetLoadedMods() noexcept {
-			if constexpr (REL::Module::IsVR()) {
+			if SKYRIM_REL_CONSTEXPR (REL::Module::IsVR()) {
 				return &REL::RelocateMember<TESFile*>(this, 0x0, 0xD78);
 			} else {
 				return REL::RelocateMember<TESFileCollection>(this, 0xD70, 0).files.data();
@@ -107,7 +107,7 @@ namespace RE
 		}
 
 		[[nodiscard]] inline const TESFile* const * GetLoadedMods() const noexcept {
-			if constexpr (REL::Module::IsVR()) {
+			if SKYRIM_REL_CONSTEXPR (REL::Module::IsVR()) {
 				return &REL::RelocateMember<const TESFile*>(this, 0x0, 0xD78);
 			} else {
 				return REL::RelocateMember<const TESFileCollection>(this, 0xD70, 0).files.data();
@@ -115,7 +115,7 @@ namespace RE
 		}
 
 		[[nodiscard]] inline std::uint8_t GetLoadedModCount() const noexcept {
-			if constexpr (REL::Module::IsVR()) {
+			if SKYRIM_REL_CONSTEXPR (REL::Module::IsVR()) {
 				return static_cast<std::uint8_t>(REL::RelocateMember<std::uint32_t>(this, 0x0, 0xD70));
 			} else {
 				return static_cast<std::uint8_t>(REL::RelocateMember<const TESFileCollection>(this, 0xD70, 0).files.size());
@@ -123,7 +123,7 @@ namespace RE
 		}
 
 		[[nodiscard]] inline TESFile** GetLoadedLightMods() noexcept {
-			if constexpr (REL::Module::IsVR()) {
+			if SKYRIM_REL_CONSTEXPR (REL::Module::IsVR()) {
 				return nullptr;
 			} else {
 				return REL::RelocateMember<TESFileCollection>(this, 0xD70, 0).smallFiles.data();
@@ -131,7 +131,7 @@ namespace RE
 		}
 
 		[[nodiscard]] inline const TESFile* const * GetLoadedLightMods() const noexcept {
-			if constexpr (REL::Module::IsVR()) {
+			if SKYRIM_REL_CONSTEXPR (REL::Module::IsVR()) {
 				return nullptr;
 			} else {
 				return REL::RelocateMember<const TESFileCollection>(this, 0xD70, 0).smallFiles.data();
@@ -139,7 +139,7 @@ namespace RE
 		}
 
 		[[nodiscard]] inline std::uint16_t GetLoadedLightModCount() const noexcept {
-			if constexpr (REL::Module::IsVR()) {
+			if SKYRIM_REL_CONSTEXPR (REL::Module::IsVR()) {
 				return 0;
 			} else {
 				return static_cast<std::uint16_t>(REL::RelocateMember<const TESFileCollection>(this, 0xD70, 0).smallFiles.size());
@@ -176,6 +176,7 @@ namespace RE
 		std::uint32_t                     padD54;                                         // D54
 		TESFile*                          activeFile;                                     // D58
 		BSSimpleList<TESFile*>            files;                                          // D60
+#ifndef ENABLE_SKYRIM_VR
 		TESFileCollection                 compiledFileCollection;                         // D70
 		RUNTIME_DATA_CONTENT
 		std::uint8_t                      unkDAA;                                         // DAA
@@ -183,6 +184,15 @@ namespace RE
 		std::uint32_t                     padDAC;                                         // DAC
 		TESRegionDataManager*             regionDataManager;                              // DB0
 		InventoryChanges*                 merchantInventory;                              // DB8
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+		std::uint32_t         loadedModCount;     // D70
+		std::uint32_t         pad14;              // D74
+		TESFile*              loadedMods[0xFF];   // D78
+		RUNTIME_DATA_CONTENT
+		std::uint8_t          pad157B[5];         // 157B
+		TESRegionDataManager* regionDataManager;  // 1580
+		InventoryChanges*     merchantInventory;  // 1588
+#endif
 	};
 #undef RUNTIME_DATA_CONTENT
 

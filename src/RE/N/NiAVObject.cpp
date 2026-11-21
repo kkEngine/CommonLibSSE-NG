@@ -322,4 +322,80 @@ namespace RE
 		return func(this, a_enable, a_arg2, a_arg3);
 	}
 
+#ifdef SKYRIM_CROSS_VR
+	void NiAVObject::PerformOp(PerformOpFunc& a_func)
+	{
+		REL::RelocateVirtual<decltype(&NiAVObject::PerformOp)>(0x26, 0x27, this, a_func);
+	}
+
+	void NiAVObject::AttachProperty(NiAlphaProperty* a_property)
+	{
+		REL::RelocateVirtual<decltype(&NiAVObject::AttachProperty)>(0x27, 0x28, this, a_property);
+	}
+
+	void NiAVObject::SetMaterialNeedsUpdate(bool a_needsUpdate)
+	{
+		REL::RelocateVirtual<decltype(&NiAVObject::SetMaterialNeedsUpdate)>(0x28, 0x29, this, a_needsUpdate);
+	}
+
+	void NiAVObject::SetDefaultMaterialNeedsUpdateFlag(bool a_flag)
+	{
+		REL::RelocateVirtual<decltype(&NiAVObject::SetDefaultMaterialNeedsUpdateFlag)>(0x29, 0x2A, this, a_flag);
+	}
+
+	NiAVObject* NiAVObject::GetObjectByName(const BSFixedString& a_name)
+	{
+		return REL::RelocateVirtual<decltype(&NiAVObject::GetObjectByName)>(0x2A, 0x2B, this, a_name);
+	}
+
+	void NiAVObject::SetSelectiveUpdateFlags(bool& a_selectiveUpdate, bool a_selectiveUpdateTransforms, bool& a_rigid)
+	{
+		return REL::RelocateVirtual<decltype(&NiAVObject::SetSelectiveUpdateFlags)>(0x2B, 0x2C, this, a_selectiveUpdate, a_selectiveUpdateTransforms, a_rigid);
+	}
+
+	void NiAVObject::UpdateDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2)
+	{
+		REL::RelocateVirtual<decltype(&NiAVObject::UpdateDownwardPass)>(0x2C, 0x2D, this, a_data, a_arg2);
+	}
+
+	void NiAVObject::UpdateSelectedDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2)
+	{
+		REL::RelocateVirtual<decltype(&NiAVObject::UpdateSelectedDownwardPass)>(0x2D, 0x2E, this, a_data, a_arg2);
+	}
+
+	void NiAVObject::UpdateRigidDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2)
+	{
+		REL::RelocateVirtual<decltype(&NiAVObject::UpdateRigidDownwardPass)>(0x2E, 0x2F, this, a_data, a_arg2);
+	}
+
+	void NiAVObject::UpdateWorldBound()
+	{
+		REL::RelocateVirtual<decltype(&NiAVObject::UpdateWorldBound)>(0x2F, 0x30, this);
+	}
+
+	void NiAVObject::UpdateWorldData(NiUpdateData* a_data)
+	{
+		REL::RelocateVirtual<decltype(&NiAVObject::UpdateWorldData)>(0x30, 0x31, this, a_data);
+	}
+
+	void NiAVObject::UpdateTransformAndBounds(NiUpdateData& a_data)
+	{
+		REL::RelocateVirtual<decltype(&NiAVObject::UpdateTransformAndBounds)>(0x31, 0x32, this, a_data);
+	}
+
+	void NiAVObject::PreAttachUpdate(NiNode* a_parent, NiUpdateData& a_data)
+	{
+		REL::RelocateVirtual<decltype(&NiAVObject::PreAttachUpdate)>(0x32, 0x33, this, a_parent, a_data);
+	}
+
+	void NiAVObject::PostAttachUpdate()
+	{
+		REL::RelocateVirtual<decltype(&NiAVObject::PostAttachUpdate)>(0x33, 0x34, this);
+	}
+
+	void NiAVObject::OnVisible(NiCullingProcess& a_process)
+	{
+		REL::RelocateVirtual<decltype(&NiAVObject::OnVisible)>(0x34, 0x35, this, a_process);
+	}
+#endif
 }

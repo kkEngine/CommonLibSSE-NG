@@ -22,9 +22,13 @@ namespace RE
 	// flags = kPausesGame | kUsesMenuContext | kDisablePauseMenu | kRequiresUpdate | kTopmostRenderedMenu | kRendersOffscreenTargets
 	// context = kBook
 	class BookMenu :
+#ifndef SKYRIM_CROSS_VR
 		public IMenu,                               // 00
 		public SimpleAnimationGraphManagerHolder,   // 30
 		public BSTEventSink<BSAnimationGraphEvent>  // 48
+#else
+		public IMenu  // 00
+#endif
 	{
 	public:
 		inline static constexpr auto      RTTI = RTTI_BookMenu;
@@ -60,8 +64,10 @@ namespace RE
 		void               PostDisplay() override;                                                // 06
 		void               PreDisplay() override;                                                 // 07
 
+#ifndef SKYRIM_CROSS_VR
 		// override (BSTEventSink<BSAnimationGraphEvent>)
 		BSEventNotifyControl ProcessEvent(const BSAnimationGraphEvent* a_event, BSTEventSource<BSAnimationGraphEvent>* a_eventSource) override;  // 01
+#endif
 
 		[[nodiscard]] static TESObjectBOOK* GetTargetForm();
 		[[nodiscard]] static TESObjectREFR* GetTargetReference();  // returns null if opened from inventory
@@ -99,8 +105,14 @@ namespace RE
 		static void OpenBookMenu(const BSString& a_description, const ExtraDataList* a_extraList, TESObjectREFR* a_ref, TESObjectBOOK* a_book, const NiPoint3& a_pos, const NiMatrix3& a_rot, float a_scale, bool a_useDefaultPos);
 
 		// members
+#ifndef SKYRIM_CROSS_VR
 		RUNTIME_DATA_CONTENT  // 50, 60
+#endif
 	};
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(BookMenu) == 0x98);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(BookMenu) == 0xA8);
+#endif
 }
 #undef RUNTIME_DATA_CONTENT

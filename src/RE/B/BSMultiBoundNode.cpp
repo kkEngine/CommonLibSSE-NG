@@ -4,6 +4,7 @@ using namespace REL;
 
 namespace RE
 {
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_VR))
 	BSMultiBoundRoom* BSMultiBoundNode::GetMultiBoundRoom()
 	{
 		return RelocateVirtual<decltype(&BSMultiBoundNode::GetMultiBoundRoom)>(0x3E, 0x3F, this);
@@ -23,4 +24,5 @@ namespace RE
 	{
 		RelocateVirtual<decltype(&BSMultiBoundNode::Unk_41)>(0x41, 0x42, this);
 	}
+#endif
 }

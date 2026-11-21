@@ -80,6 +80,12 @@ namespace RE
 		TESObjectREFR*                                tempRef;        // 038
 		ExtraDataList                                 originalExtra;  // 040
 
+#ifndef ENABLE_SKYRIM_AE
+		RUNTIME_DATA_CONTENT
+#endif
 	};
+#ifndef ENABLE_SKYRIM_AE
+	static_assert(sizeof(Inventory3DManager) == 0x160);
+#endif
 }
 #undef RUNTIME_DATA_CONTENT

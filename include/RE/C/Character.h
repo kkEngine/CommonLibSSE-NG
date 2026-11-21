@@ -38,6 +38,7 @@ namespace RE
 		[[nodiscard]] BSFaceGenNiNode*        GetFaceNodeSkinned() override;                                 // 061
 		[[nodiscard]] BSFaceGenAnimationData* GetFaceGenAnimationData() override;                            // 063
 		void                                  SetBiped(const BSTSmartPointer<BipedAnim>& a_biped) override;  // 081
+#ifndef SKYRIM_CROSS_VR
 		void  InitiateVampireFeedPackage(Actor* a_arg1, TESObjectREFR* a_arg2) override;  // 0C0
 		void  Unk_C4(void) override;                                                      // 0C4 - { unk272 = a_arg1; }
 		void  Unk_C5(void) override;                                                      // 0C5 - { return unk272; }
@@ -49,9 +50,13 @@ namespace RE
 		float GetArmorBaseFactorSum() override;                                           // 0E7
 		float CalcUnarmedDamage() override;                                               // 0E8
 		void  PrecacheData(void) override;                                                // 120
+#endif
 
 		// add
-		virtual void Unk_128(void);  // 128
-		virtual void Unk_129(void);  // 129 - { return 1; }
+		SKYRIM_REL_VR_VIRTUAL void Unk_128(void);  // 128
+		SKYRIM_REL_VR_VIRTUAL void Unk_129(void);  // 129 - { return 1; }
 	};
+#ifndef ENABLE_SKYRIM_AE
+	static_assert(sizeof(Character) == 0x2B0);
+#endif
 }

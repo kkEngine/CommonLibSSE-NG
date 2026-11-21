@@ -76,11 +76,19 @@ namespace SKSE
 		}
 
 		(void)REL::Module::get();
+#ifdef SKYRIM_AE_1799
 		// Classes like MenuEventHandler are declared with the 1.7.99+ vtables in this build;
 		// on an older runtime every overridden or called vfunc past the insertion point would be wrong.
 		if (!REL::Module::IsAtLeast(SKSE::RUNTIME_SSE_1_7_99)) {
 			stl::report_and_fail("This plugin was built for Skyrim 1.7.99 or newer and can't run on this version of the game."sv);
 		}
+#else
+		// The other way round: this build declares the pre-1.7.99 layouts, which are wrong on 1.7.99+.
+		if (REL::Module::IsAtLeast(SKSE::RUNTIME_SSE_1_7_99)) {
+			stl::report_and_fail("This plugin was built for Skyrim 1.7.98 or older and can't run on this version of the game. "
+								 "Rebuild it with ENABLE_SKYRIM_AE_1799."sv);
+		}
+#endif
 		(void)REL::IDDatabase::get();
 
 		auto&       storage = detail::APIStorage::get();

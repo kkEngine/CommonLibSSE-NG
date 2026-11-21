@@ -193,6 +193,7 @@ namespace RE
 			kKeywordFurnitureForces1stPerson = 180,
 			kKeywordFurnitureForces3rdPerson = 181,
 			kKeywordActivatorFurnitureNoPlayer = 182,
+#ifndef ENABLE_SKYRIM_VR
 			kTelekinesisGrabSound = 183,
 			kTelekinesisThrowSound = 184,
 			kWorldMapWeather = 185,
@@ -376,6 +377,193 @@ namespace RE
 			kModsHelpFormList = 363,
 
 			kTotal = 364
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+			kisJarlChair = 184,
+			kFurnitureAnimatesFast = 185,
+			isCartTravelPlayer = 186,
+			kTelekinesisGrabSound = 187,
+			kTelekinesisThrowSound = 188,
+			kWorldMapWeather = 189,
+			kHelpManualPC = 190,
+			kHelpManualXBox = 191,
+			kHelpManualUnknown1 = 192,
+			kHelpManualUnknown2 = 193,
+			kKeywordTypeAmmo = 194,
+			kKeywordTypeArmor = 195,
+			kKeywordTypeBook = 196,
+			kKeywordTypeIngredient = 197,
+			kKeywordTypeKey = 198,
+			kKeywordTypeMisc = 199,
+			kKeywordTypeSoulGem = 200,
+			kKeywordTypeWeapon = 201,
+			kKeywordTypePotion = 202,
+			kBaseWeaponEnchantment = 203,
+			kBaseArmorEnchantment = 204,
+			kBasePotion = 205,
+			kBasePoison = 206,
+			kKeywordDragon = 207,
+			kKeywordMovable = 208,
+			kArtObjectAbsorbEffect = 209,
+			kWeaponMaterialList = 210,
+			kArmorMaterialList = 211,
+			kKeywordDisallowEnchanting = 212,
+			kFavortravelmarkerlocation = 213,
+			kKeywordHoldLocation = 214,
+			kKeywordCivilWarOwner = 215,
+			kKeywordCivilWarNeutral = 216,
+			kLocRefTypeCivilWarSoldier = 217,
+			kKeywordClearableLocation = 218,
+			kLocRefTypeResourceDestructible = 219,
+			kFormListHairColorList = 220,
+			kComplexSceneObject = 221,
+			kKeywordReusableSoulGem = 222,
+			kKeywordAnimal = 223,
+			kKeywordDaedra = 224,
+			kKeywordRobot = 225,
+			kKeywordNirnroot = 226,
+			kFightersGuildFaction = 227,
+			kMagesGuildFaction = 228,
+			kThievesGuildFaction = 229,
+			kDarkBrotherhoodFaction = 230,
+			kJarlFaction = 231,
+			kBunnyFaction = 232,
+			kPlayerIsVampireVariable = 233,
+			kPlayerIsWerewolfVariable = 234,
+			kRoadMarker = 235,
+			kKeywordScaleActorTo10 = 236,
+			kKeywordVampire = 237,
+			kKeywordForge = 238,
+			kKeywordCookingPot = 239,
+			kKeywordSmelter = 240,
+			kKeywordTanningRack = 241,
+			kHelpBasicLockpickingPC = 242,
+			kHelpBasicLockpickingConsole = 243,
+
+			kHelpBasicForging = 245,
+			kHelpBasicCooking = 246,
+			kHelpBasicSmelting = 247,
+			kHelpBasicTanning = 248,
+			kHelpBasicObjectCreation = 249,
+			kHelpBasicEnchanting = 250,
+			kHelpBasicSmithingWeapon = 251,
+			kHelpBasicSmithingArmor = 252,
+			kHelpBasicAlchemy = 253,
+			kHelpBarter = 254,
+			kHelpLevelingup = 255,
+			kHelpSkillsMenu = 256,
+			kHelpMapMenu = 257,
+			kHelpJournal = 258,
+			kHelpLowHealth = 259,
+			kHelpLowMagicka = 260,
+			kHelpLowStamina = 261,
+			kHelpJail = 262,
+			kHelpTeamateFavor = 263,
+			kHelpWeaponCharge = 264,
+			kHelpFavorites = 265,
+			kKinectHelpFormList = 266,
+			//kHelpFlyingMount = 260,
+			kHelpTargetLock = 267,
+			kHelpSwitchTarget = 268,
+			kHelpAttackTarget = 269,
+			kHelp270 = 270,
+			kHelp271 = 271,
+			kHelp272 = 271,
+			kHelpSwimming = 273,
+			kHelpArchery = 274,
+			kHelp275 = 275,
+			kImagespaceLoadscreen = 280,
+			kKeywordWeaponMaterialDaedric = 281,
+			kKeywordWeaponMaterialDraugr = 282,
+			kKeywordWeaponMaterialDraugrHoned = 283,
+			kKeywordWeaponMaterialDwarven = 284,
+			kKeywordWeaponMaterialEbony = 285,
+			kKeywordWeaponMaterialElven = 286,
+			kKeywordWeaponMaterialFalmer = 287,
+			kKeywordWeaponMaterialFalmerHoned = 288,
+			kKeywordWeaponMaterialGlass = 289,
+			kKeywordWeaponMaterialImperial = 290,
+			kKeywordWeaponMaterialIron = 291,
+			kKeywordWeaponMaterialOrcish = 292,
+			kKeywordWeaponMaterialSteel = 293,
+			kKeywordWeaponMaterialWood = 294,
+			kKeywordWeaponTypeBoundArrow = 295,
+			kKeywordArmorMaterialDaedric = 296,
+			kKeywordArmorMaterialDragonplate = 297,
+			kKeywordArmorMaterialDragonscale = 298,
+			kKeywordArmorMaterialDragonbone = 299,
+			kKeywordArmorMaterialDwarven = 300,
+			kKeywordArmorMaterialEbony = 301,
+			kKeywordArmorMaterialElven = 302,
+			kKeywordArmorMaterialElvenSplinted = 303,
+			kKeywordArmorMaterialFullLeather = 304,
+			kKeywordArmorMaterialGlass = 305,
+			kKeywordArmorMaterialHide = 306,
+			kKeywordArmorMaterialImperial = 307,
+			kKeywordArmorMaterialImperialHeavy = 308,
+			kKeywordArmorMaterialImperialReinforced = 309,
+			kKeywordArmorMaterialIron = 310,
+			kKeywordArmorMaterialIronBanded = 311,
+			kKeywordArmorMaterialOrcish = 312,
+			kKeywordArmorMaterialScaled = 313,
+			kKeywordArmorMaterialSteel = 314,
+			kKeywordArmorMaterialSteelPlate = 315,
+			kKeywordArmorMaterialStormcloak = 316,
+			kKeywordArmorMaterialStudded = 317,
+			kKeywordGenericCraftableKeyword01 = 318,
+			kKeywordGenericCraftableKeyword02 = 319,
+			kKeywordGenericCraftableKeyword03 = 320,
+			kKeywordGenericCraftableKeyword04 = 321,
+			kKeywordGenericCraftableKeyword05 = 322,
+			kKeywordGenericCraftableKeyword06 = 323,
+			kKeywordGenericCraftableKeyword07 = 324,
+			kKeywordGenericCraftableKeyword08 = 325,
+			kKeywordGenericCraftableKeyword09 = 326,
+			kKeywordGenericCraftableKeyword10 = 327,
+			kKeywordJewelry = 328,
+			kKeywordCuirass = 329,
+			kLocalMapHidePlane = 330,
+			kSnowLODMaterial = 331,
+			kSnowLODMaterialHD = 332,
+			kAshLODMaterial = 333,
+			kAshLODMaterialHD = 334,
+			kDialogueFollowerQuest = 335,
+			kPotentialFollowerFaction = 336,
+			kWerewolfAvailablePerks = 337,
+			kVampireAvailablePerks = 338,
+			kWerewolfRace = 339,
+			kVampireRace = 340,
+			kVampireSpells = 341,
+			kDragonMountNoLandList = 342,
+			kPlayerCanMountDragonHereList = 343,
+			kFlyingMountAllowedSpells = 344,
+			kFlyingMountDisallowedSpells = 345,
+			kKeywordMount = 346,
+			kVerletCape = 347,
+			kFurnitureTestNPC = 348,
+			kKeywordConditionalExplosion = 349,
+			kVampireFeedNoCrimeFaction = 350,
+			kSkyrimWorldspace = 351,
+			kKeywordArmorMaterialLightBonemold = 352,
+			kKeywordArmorMaterialLightChitin = 353,
+			kKeywordArmorMaterialLightNordic = 354,
+			kKeywordArmorMaterialLightStalhrim = 355,
+			kFlyingMountFlyFastWorldspaces = 356,
+			kKeywordArmorMaterialHeavyBonemold = 357,
+			kKeywordArmorMaterialHeavyChitin = 358,
+			kKeywordArmorMaterialHeavyNordic = 359,
+			kKeywordArmorMaterialHeavyStalhrim = 360,
+			kKeywordWeaponMaterialNordic = 361,
+			kKeywordWeaponMaterialStalhrim = 362,
+			kModsHelpFormList = 363,
+			kVrPlayerStaggerImod = 364,
+			kVRPlayroomQuest = 366,
+			kVRPlayroom = 367,
+			kVRSettingsWarning = 368,
+
+			kTotal = 369
+#else
+			kTotal = 183
+#endif
 		};
 	};
 	using DEFAULT_OBJECT = DEFAULT_OBJECTS::DEFAULT_OBJECT;
@@ -830,7 +1018,7 @@ namespace RE
 		// kHelpAttackTarget. Converts an SE-numbered index into the index of the running AE game.
 		[[nodiscard]] static std::size_t ToRuntimeIndex(std::size_t a_seIndex) noexcept
 		{
-			if constexpr (!REL::Module::IsAE()) {
+			if SKYRIM_REL_CONSTEXPR (!REL::Module::IsAE()) {
 				return a_seIndex;
 			} else {
 				constexpr std::size_t kKeywordTypeAmmo = 188;
@@ -898,7 +1086,7 @@ namespace RE
 		// objectInit follows objects[kTotal]: SE 364 forms, AE 1.6 366, AE 1.7.99+ 372
 		[[nodiscard]] static std::ptrdiff_t ObjectInitOffset() noexcept
 		{
-			if constexpr (!REL::Module::IsAE()) {
+			if SKYRIM_REL_CONSTEXPR (!REL::Module::IsAE()) {
 				return 0xB80;
 			} else {
 				return REL::Module::IsAtLeast(SKSE::RUNTIME_SSE_1_7_99) ? 0xBC0 : 0xB90;
@@ -918,8 +1106,16 @@ namespace RE
 
 		// members
 		TESForm* objects[DEFAULT_OBJECTS::kTotal];  // 020 - DNAM
+#ifndef SKYRIM_CROSS_VR
 		bool          objectInit[DEFAULT_OBJECTS::kTotal];  // B80
 		std::uint32_t padCEC;                               // CEC
+#else
+		std::uint8_t unk5D8[0x718];  // 5D8
+#endif
 	};
+#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(BGSDefaultObjectManager) == 0xD20);
+#else
 	static_assert(sizeof(BGSDefaultObjectManager) == 0xCF0);
+#endif
 }

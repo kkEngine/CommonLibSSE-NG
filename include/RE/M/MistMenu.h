@@ -19,9 +19,13 @@ namespace RE
 	// flags = kDisablePauseMenu | kAllowSaving | kDontHideCursorWhenTopmost
 	// context = kNone
 	class MistMenu :
+#ifndef SKYRIM_CROSS_VR
 		public IMenu,                              // 00
 		public SimpleAnimationGraphManagerHolder,  // 30, 40
 		public MenuEventHandler                    // 48, 58
+#else
+		public IMenu  // 00
+#endif
 	{
 	public:
 		inline static constexpr auto      RTTI = RTTI_MistMenu;
@@ -87,10 +91,12 @@ namespace RE
 		void               PostDisplay() override;                                                // 06
 
 		// override (MenuEventHandler)
+#ifndef SKYRIM_CROSS_VR
 		bool CanProcess(InputEvent* a_event) override;              // 01
 		bool ProcessThumbstick(ThumbstickEvent* a_event) override;  // 03
 		bool ProcessMouseMove(MouseMoveEvent* a_event) override;    // 04
 		bool ProcessButton(ButtonEvent* a_event) override;          // 05
+#endif
 
 		[[nodiscard]] SimpleAnimationGraphManagerHolder* AsSimpleAnimationGraphManagerHolder() noexcept
 		{
@@ -129,8 +135,14 @@ namespace RE
 		}
 
 		// members
+#ifndef SKYRIM_CROSS_VR
 		RUNTIME_DATA_CONTENT  // 58, 68
+#endif
 	};
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(MistMenu) == 0x140);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(MistMenu) == 0x150);
+#endif
 }
 #undef RUNTIME_DATA_CONTENT

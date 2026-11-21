@@ -46,8 +46,10 @@ namespace RE
 		// override (BSGeometry)
 		const NiRTTI* GetRTTI() const override;                           // 02
 		NiObject*     CreateClone(NiCloningProcess& a_cloning) override;  // 17
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_VR))
 		// Compatibility between VR and non-VR breaks beyond this point.
 		BSMultiIndexTriShape* AsMultiIndexTriShape() override;  // 35 - { return this; }
+#endif
 
 		[[nodiscard]] inline MULTI_INDEX_TRISHAPE_RUNTIME_DATA& GetMultiIndexTrishapeRuntimeData() noexcept
 		{
@@ -60,8 +62,14 @@ namespace RE
 		}
 
 		// members
+#ifndef SKYRIM_CROSS_VR
 		RUNTIME_DATA_CONTENT  // 160, 1A8
+#endif
 	};
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(BSMultiIndexTriShape) == 0x1D8);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(BSMultiIndexTriShape) == 0x220);
+#endif
 }
 #undef RUNTIME_DATA_CONTENT

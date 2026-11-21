@@ -21,6 +21,7 @@ namespace RE
 		virtual ~MenuEventHandler() = default;  // 00
 
 		virtual bool CanProcess(InputEvent* a_event) = 0;  // 01
+#ifdef SKYRIM_AE_1799
 		// AE 1.7.99 inserted two event handlers here, every vfunc below moved by 2
 		virtual bool ProcessMotionGesture(MotionGestureEvent* a_event);  // 02 - { return false; }
 		virtual bool ProcessSixaxis(SixaxisEvent* a_event);              // 03 - { return false; }
@@ -28,6 +29,12 @@ namespace RE
 		virtual bool ProcessThumbstick(ThumbstickEvent* a_event);        // 05 - { return false; }
 		virtual bool ProcessMouseMove(MouseMoveEvent* a_event);          // 06 - { return false; }
 		virtual bool ProcessButton(ButtonEvent* a_event);                // 07 - { return false; }
+#else
+		virtual bool ProcessKinect(KinectEvent* a_event);          // 02 - { return false; }
+		virtual bool ProcessThumbstick(ThumbstickEvent* a_event);  // 03 - { return false; }
+		virtual bool ProcessMouseMove(MouseMoveEvent* a_event);    // 04 - { return false; }
+		virtual bool ProcessButton(ButtonEvent* a_event);          // 05 - { return false; }
+#endif
 
 		// members
 		bool          registered;  // 0C

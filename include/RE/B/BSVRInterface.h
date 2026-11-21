@@ -12,6 +12,9 @@ namespace RE
 		public BSTEventSource<VRResetHMDHeight>
 	{
 	public:
+#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+		constexpr static auto RTTI = RTTI_BSVRInterface;
+#endif
 
 		virtual ~BSVRInterface();  // 0
 

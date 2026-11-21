@@ -156,7 +156,7 @@ namespace RE
 		std::uint32_t fullMasters = 0;
 		std::uint32_t smallMasters = 0;
 
-		if constexpr (REL::Module::IsVR()) {
+		if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
 			for (std::uint32_t i = 0; i < modFile->masterCount; ++i) {
 				const auto* master = modFile->masterPtrs[i];
 				if (master == expectedFile) {

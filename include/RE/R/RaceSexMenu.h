@@ -12,8 +12,12 @@ namespace RE
 	// flags = kPausesGame | kUsesMenuContext | kRequiresUpdate | kTopmostRenderedMenu | kUpdateUsesCursor
 	// context = kItemMenu
 	class RaceSexMenu :
+#ifndef SKYRIM_CROSS_VR
 		public IMenu,            // 00
 		public MenuEventHandler  // 30, 40
+#else
+		public IMenu  // 00
+#endif
 	{
 	public:
 		inline static constexpr auto      RTTI = RTTI_RaceSexMenu;
@@ -51,10 +55,12 @@ namespace RE
 		void               AdvanceMovie(float a_interval, std::uint32_t a_currentTime) override;  // 05
 
 		// override (MenuEventHandler)
+#ifndef SKYRIM_CROSS_VR
 		bool CanProcess(InputEvent* a_event) override;              // 01
 		bool ProcessThumbstick(ThumbstickEvent* a_event) override;  // 03
 		bool ProcessMouseMove(MouseMoveEvent* a_event) override;    // 04
 		bool ProcessButton(ButtonEvent* a_event) override;          // 05
+#endif
 
 		[[nodiscard]] MenuEventHandler* AsMenuEventHandler() noexcept
 		{
@@ -79,8 +85,14 @@ namespace RE
 		void ChangeName(const char* a_name);
 
 		// members
+#ifndef SKYRIM_CROSS_VR
 		RUNTIME_DATA_CONTENT  // 40, 50
+#endif
 	};
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(RaceSexMenu) == 0x1A8);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(RaceSexMenu) == 0x1B8);
+#endif
 }
 #undef RUNTIME_DATA_CONTENT

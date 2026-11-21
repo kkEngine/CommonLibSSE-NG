@@ -27,6 +27,7 @@ namespace RE
 		// override (MissileProjectile)
 		void SaveGame(BGSSaveFormBuffer* a_buf) override;  // 0E
 		void LoadGame(BGSLoadFormBuffer* a_buf) override;  // 0F
+#ifndef SKYRIM_CROSS_VR
 		void  PostLoad3D(NiAVObject* a_root) override;                        // AA
 		void UpdateImpl(float a_delta) override;           // AB
 		bool ProcessImpacts() override;                        // AC
@@ -40,6 +41,7 @@ namespace RE
 		void Handle3DLoaded() override;                    // C0
 		void Unk_C2(void) override;                        // C2 - { return 1; }
 		void Unk_C3(void) override;                        // C3 - { return 1; }
+#endif
 
 		struct ARROW_RUNTIME_DATA
 		{
@@ -61,6 +63,12 @@ namespace RE
 		}
 
 		// members
+#ifndef ENABLE_SKYRIM_AE
+		ARROW_RUNTIME_DATA_CONTENT
+#endif
 	};
+#ifndef ENABLE_SKYRIM_AE
+	static_assert(sizeof(ArrowProjectile) == 0x1F0);
+#endif
 }
 #undef ARROW_RUNTIME_DATA_CONTENT

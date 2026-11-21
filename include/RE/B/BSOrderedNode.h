@@ -31,10 +31,12 @@ namespace RE
 		bool          RegisterStreamables(NiStream& a_stream) override;   // 1A
 		void          SaveBinary(NiStream& a_stream) override;            // 1B
 		bool          IsEqual(NiObject* a_object) override;               // 1C
+#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_VR))
 		// The following are virtual functions past the point where VR compatibility breaks.
 		void UpdateDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2) override;          // 2C
 		void UpdateSelectedDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2) override;  // 2D
 		void OnVisible(NiCullingProcess& a_process) override;                                  // 34
+#endif
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
@@ -47,8 +49,14 @@ namespace RE
 		}
 
 		// members
+#ifndef SKYRIM_CROSS_VR
 		RUNTIME_DATA_CONTENT  // 128, 150
+#endif
 	};
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(BSOrderedNode) == 0x140);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(BSOrderedNode) == 0x168);
+#endif
 }
 #undef RUNTIME_DATA_CONTENT

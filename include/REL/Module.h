@@ -218,15 +218,23 @@ namespace REL
 		/**
 		 * Get the type of runtime the currently-loaded Skyrim module is.
 		 */
-		[[nodiscard]] static constexpr Runtime GetRuntime() noexcept
+		[[nodiscard]] static SKYRIM_REL Runtime GetRuntime() noexcept
 		{
+#if (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_VR))
+			return Runtime::SE;
+#elif (!defined(ENABLE_SKYRIM_SE) && !defined(ENABLE_SKYRIM_VR))
 			return Runtime::AE;
+#elif (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE))
+			return Runtime::VR;
+#else
+			return get()._runtime;
+#endif
 		}
 
 		/**
 		 * Returns whether the current Skyrim runtime is a post-Anniversary Edition Skyrim SE release.
 		 */
-		[[nodiscard]] static constexpr bool IsAE() noexcept
+		[[nodiscard]] static SKYRIM_REL bool IsAE() noexcept
 		{
 			return GetRuntime() == Runtime::AE;
 		}
@@ -242,7 +250,7 @@ namespace REL
 		/**
 		 * Returns whether the current Skyrim runtime is a pre-Anniversary Edition Skyrim SE release.
 		 */
-		[[nodiscard]] static constexpr bool IsSE() noexcept
+		[[nodiscard]] static SKYRIM_REL bool IsSE() noexcept
 		{
 			return GetRuntime() == Runtime::SE;
 		}
@@ -250,9 +258,15 @@ namespace REL
 		/**
 		 * Returns whether the current Skyrim runtime is a Skyrim VR release.
 		 */
-		[[nodiscard]] static constexpr bool IsVR() noexcept
+		[[nodiscard]] static SKYRIM_REL_VR bool IsVR() noexcept
 		{
+#ifndef ENABLE_SKYRIM_VR
 			return false;
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+			return true;
+#else
+			return GetRuntime() == Runtime::VR;
+#endif
 		}
 
 	private:

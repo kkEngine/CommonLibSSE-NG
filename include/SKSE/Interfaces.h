@@ -398,7 +398,11 @@ namespace SKSE
 		char                author[256] = {};
 		char                supportEmail[252] = {};
 		bool                noStructUse : 1 = false;
+#ifdef SKYRIM_AE_1799
 		bool                addressLibraryV5 : 1 = true;  // kVersionIndependentEx_AddressLibraryV5 (SKSE 2.3.1 loads plugins without it too)
+#else
+		bool                addressLibraryV5 : 1 = false;  // this build has the pre-1.7.99 layouts, see ENABLE_SKYRIM_AE_1799
+#endif
 		std::uint8_t        padding1 : 6 = 0;
 		std::uint8_t        padding2 = 0;
 		std::uint16_t       padding3 = 0;

@@ -39,13 +39,15 @@ namespace RE
 		void InitItemImpl() override;                            // 13
 		void SetActorCause(ActorCause* a_cause) override;        // 50
 		void Release3DRelatedData() override;                    // 6B
+#ifndef SKYRIM_CROSS_VR
 		// Override functions past where Skyrim VR breaks compatibility.
 		bool OnAddCellPerformQueueReference(TESObjectCELL& a_cell) const override;  // 90 - { return false; }
+#endif
 
 		// add
-		virtual void Initialize();         // A2
-		virtual void Unk_A3(void);         // A3 - { return; }
-		virtual bool IsPermanent() const;  // A4 - { return TESDataHandler::GetSingleton()->IsGeneratedFormID(formID) == 0; }
+		SKYRIM_REL_VR_VIRTUAL void Initialize();         // A2
+		SKYRIM_REL_VR_VIRTUAL void Unk_A3(void);         // A3 - { return; }
+		SKYRIM_REL_VR_VIRTUAL bool IsPermanent() const;  // A4 - { return TESDataHandler::GetSingleton()->IsGeneratedFormID(formID) == 0; }
 
 		struct HAZARD_RUNTIME_DATA
 		{
@@ -76,6 +78,12 @@ namespace RE
 		}
 
 		// members
+#ifndef ENABLE_SKYRIM_AE
+		HAZARD_RUNTIME_DATA_CONTENT
+#endif
 	};
+#ifndef ENABLE_SKYRIM_AE
+	static_assert(sizeof(Hazard) == 0xD8);
+#endif
 }
 #undef HAZARD_RUNTIME_DATA_CONTENT

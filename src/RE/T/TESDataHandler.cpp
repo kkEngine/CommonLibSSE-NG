@@ -44,7 +44,7 @@ namespace RE
 			return 0;
 		}
 
-		if constexpr (REL::Module::IsVR()) {
+		if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
 			// Use SkyrimVR lookup logic, ignore light plugin index which doesn't exist in VR
 			return (a_localFormID & 0xFFFFFF) | (file->compileIndex << 24);
 		} else {
@@ -63,7 +63,7 @@ namespace RE
 		}
 
 		auto rawIndex = (a_rawFormID & 0xFF000000) >> 24;
-		if constexpr (REL::Module::IsVR()) {
+		if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
 			if (rawIndex >= file->masterCount) {
 				return 0;
 			}

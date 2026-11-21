@@ -8,6 +8,9 @@ namespace RE
 	class BSTrackedControllerDevice : public BSInputDevice
 	{
 	public:
+#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+		inline static constexpr auto RTTI = RTTI_BSTrackedControllerDevice;
+#endif
 
 		~BSTrackedControllerDevice() override;
 

@@ -39,12 +39,26 @@ namespace RE
 
 	BSTrackedControllerDevice* BSInputDeviceManager::GetVRControllerRight()
 	{
+#ifndef ENABLE_SKYRIM_VR
 		return nullptr;
+#else
+		if SKYRIM_REL_VR_CONSTEXPR (!REL::Module::IsVR()) {
+			return nullptr;
+		}
+		return static_cast<BSTrackedControllerDevice*>(devices[std::to_underlying(INPUT_DEVICE::kVRRight)]);
+#endif
 	}
 
 	BSTrackedControllerDevice* BSInputDeviceManager::GetVRControllerLeft()
 	{
+#ifndef ENABLE_SKYRIM_VR
 		return nullptr;
+#else
+		if SKYRIM_REL_VR_CONSTEXPR (!REL::Module::IsVR()) {
+			return nullptr;
+		}
+		return static_cast<BSTrackedControllerDevice*>(devices[std::to_underlying(INPUT_DEVICE::kVRLeft)]);
+#endif
 	}
 
 	BSWin32VirtualKeyboardDevice* BSInputDeviceManager::GetVirtualKeyboard()

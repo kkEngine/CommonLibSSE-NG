@@ -11,7 +11,7 @@ namespace RE
 
 	BSShaderTextureSet* BSShaderTextureSet::Create()
 	{
-		if constexpr (REL::Module::IsAE()) {
+		if SKYRIM_REL_CONSTEXPR (REL::Module::IsAE()) {
 			using func_t = decltype(&BSShaderTextureSet::Create);
 			REL::Relocation<func_t> func{ REL::ID(107172) };
 			return func();

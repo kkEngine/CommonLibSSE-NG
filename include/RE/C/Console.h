@@ -102,9 +102,11 @@ public:                                                                \
 		}
 
 		// members
+#ifndef SKYRIM_CROSS_VR
 		RUNTIME_DATA_CONTENT
 		EXTENDED_CONSOLE_DATA_CONTENT
 		RUNTIME_DATA_CONTENT2
+#endif
 
 	protected:
 		void

@@ -36,7 +36,13 @@ namespace RE
 		}
 
 		// members
+#ifndef SKYRIM_CROSS_VR
 		CraftingSubMenus::CraftingSubMenu* subMenu;  // 30, 40
+#endif
 	};
+#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(CraftingMenu) == 0x38);
+#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
+	static_assert(sizeof(CraftingMenu) == 0x48);
+#endif
 }

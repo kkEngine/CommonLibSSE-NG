@@ -2,7 +2,9 @@
 
 #include "RE/B/BSAtomic.h"
 #include "RE/B/bhkSerializable.h"
+#ifdef SKYRIM_AE_1799
 #	include "RE/B/bhkWorldCinfo.h"
+#endif
 #include "RE/H/hkVector4.h"
 
 namespace RE
@@ -77,9 +79,11 @@ namespace RE
 		std::uint64_t                 unkC5C0;                    // C5C0
 		BGSAcousticSpaceListener*     acousticSpaceListener;      // C5C8
 		hkpSuspendInactiveAgentsUtil* suspendInactiveAgentsUtil;  // C5D0
+#ifdef SKYRIM_AE_1799
 		// AE 1.7.99 keeps the creation info here, every member below moved by 0x108
 		std::uint64_t                 padC5D8;                    // C5D8
 		bhkWorldCinfo                 worldCinfo;                 // C5E0
+#endif
 		std::uint32_t                 unkC5D8;                    // C5D8 - incremented per frame
 		std::uint32_t                 unkC5DC;                    // C5DC
 		std::uint32_t                 unkC5E0;                    // C5E0
@@ -94,5 +98,9 @@ namespace RE
 		std::uint16_t                 unkC5FC;                    // C5FC
 		std::uint16_t                 unkC5FE;                    // C5FE
 	};
+#ifdef SKYRIM_AE_1799
 	static_assert(sizeof(bhkWorld) == 0xC710);
+#else
+	static_assert(sizeof(bhkWorld) == 0xC600);
+#endif
 }

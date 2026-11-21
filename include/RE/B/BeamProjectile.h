@@ -34,6 +34,7 @@ namespace RE
 		void InitLoadGame(BGSLoadFormBuffer* a_buf) override;    // 10
 		void FinishLoadGame(BGSLoadFormBuffer* a_buf) override;  // 11
 		void Revert(BGSLoadFormBuffer* a_buf) override;          // 12
+#ifndef SKYRIM_CROSS_VR
 		bool IsBeamProjectile() override;               // A5
 		void Process3D() override;               // A9
 		void UpdateImpl(float a_delta) override;  // AB
@@ -41,6 +42,7 @@ namespace RE
 		void AddImpact(TESObjectREFR* a_ref, const NiPoint3& a_targetLoc, const NiPoint3& a_velocity, hkpCollidable* a_collidable, std::int32_t a_arg6, std::uint32_t a_arg7) override;               // BD
 		void Handle3DLoaded() override;           // C0
 		bool ShouldUseDesiredTarget() override;               // C1
+#endif
 
 		// override (BSTEventSink<BSProceduralGeomEvent>)
 		BSEventNotifyControl ProcessEvent(const BSProceduralGeomEvent* a_event, BSTEventSource<BSProceduralGeomEvent>* a_eventSource) override;  // 01
@@ -62,6 +64,12 @@ namespace RE
 		}
 
 		// members
+#ifndef ENABLE_SKYRIM_AE
+		BEAM_RUNTIME_DATA_CONTENT
+#endif
 	};
+#ifndef ENABLE_SKYRIM_AE
+	static_assert(sizeof(BeamProjectile) == 0x240);
+#endif
 }
 #undef BEAM_RUNTIME_DATA_CONTENT

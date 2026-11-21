@@ -37,7 +37,17 @@ namespace RE
 
 		[[nodiscard]] const PresenceBitfield*& GetPresence() const noexcept;
 
+#ifndef ENABLE_SKYRIM_AE
+		~BaseExtraList();  // 00, virtual on AE 1.6.629 and later.
+
+		// members
+		BSExtraData*      data = nullptr;      // 00, 08
+		PresenceBitfield* presence = nullptr;  // 08, 10
+#endif
 	};
+#ifndef ENABLE_SKYRIM_AE
+	static_assert(sizeof(BaseExtraList) == 0x10);
+#endif
 
 	class ExtraDataList
 	{
@@ -193,5 +203,8 @@ namespace RE
 
 		// members
 		BaseExtraList           _extraData;  // 00
+#ifndef ENABLE_SKYRIM_AE
+		mutable BSReadWriteLock _lock;       // 10, 18; offset 18 only for AE versions .629 and later.
+#endif
 	};
 }
