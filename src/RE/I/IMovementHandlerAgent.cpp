@@ -4,7 +4,7 @@ namespace RE
 {
 	const BSFixedString& IMovementHandlerAgent::QPipelineStage()
 	{
-		return *REL::Relocation<BSFixedString*>(REL::ID(412320));
+		return *REL::Relocation<BSFixedString*>(RELOCATION_ID(525843, 412320));
 	}
 
 	IMovementHandlerAgent::IMovementHandlerAgent()

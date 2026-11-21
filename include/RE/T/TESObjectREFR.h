@@ -489,12 +489,12 @@ namespace RE
 
 		[[nodiscard]] inline REFERENCE_RUNTIME_DATA& GetReferenceRuntimeData() noexcept
 		{
-			return REL::RelocateMember<REFERENCE_RUNTIME_DATA>(this, 0x90);
+			return REL::RelocateMemberIfNewer<REFERENCE_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x88, 0x90);
 		}
 
 		[[nodiscard]] inline const REFERENCE_RUNTIME_DATA& GetReferenceRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<REFERENCE_RUNTIME_DATA>(this, 0x90);
+			return REL::RelocateMemberIfNewer<REFERENCE_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x88, 0x90);
 		}
 
 		// members

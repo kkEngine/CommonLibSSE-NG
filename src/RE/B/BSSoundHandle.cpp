@@ -15,28 +15,28 @@ namespace RE
 	bool BSSoundHandle::FadeInPlay(std::uint16_t a_fadeTimeMS)
 	{
 		using func_t = decltype(&BSSoundHandle::FadeInPlay);
-		REL::Relocation<func_t> func{ REL::ID(67645) };
+		REL::Relocation<func_t> func{ RELOCATION_ID(66384, 67645) };
 		return func(this, a_fadeTimeMS);
 	}
 
 	bool BSSoundHandle::FadeOutAndRelease(std::uint16_t a_fadeTimeMS)
 	{
 		using func_t = decltype(&BSSoundHandle::FadeOutAndRelease);
-		REL::Relocation<func_t> func{ REL::ID(67646) };
+		REL::Relocation<func_t> func{ RELOCATION_ID(66385, 67646) };
 		return func(this, a_fadeTimeMS);
 	}
 
 	std::uint64_t BSSoundHandle::GetDuration()
 	{
 		using func_t = decltype(&BSSoundHandle::GetDuration);
-		REL::Relocation<func_t> func{ REL::ID(67630) };
+		REL::Relocation<func_t> func{ RELOCATION_ID(66369, 67630) };
 		return func(this);
 	}
 
 	bool BSSoundHandle::IsPlaying() const
 	{
 		using func_t = decltype(&BSSoundHandle::IsPlaying);
-		REL::Relocation<func_t> func{ REL::ID(67620) };
+		REL::Relocation<func_t> func{ RELOCATION_ID(66359, 67620) };
 		return func(this);
 	}
 
@@ -50,7 +50,7 @@ namespace RE
 	bool BSSoundHandle::SetFrequency(float a_frequency)
 	{
 		using func_t = decltype(&BSSoundHandle::SetFrequency);
-		REL::Relocation<func_t> func{ REL::ID(67627) };
+		REL::Relocation<func_t> func{ RELOCATION_ID(66366, 67627) };
 		return func(this, a_frequency);
 	}
 
@@ -71,14 +71,14 @@ namespace RE
 	void BSSoundHandle::SetOutputModel(const BGSSoundOutput* a_outputModel)
 	{
 		using func_t = decltype(&BSSoundHandle::SetOutputModel);
-		REL::Relocation<func_t> func{ REL::ID(67624) };
+		REL::Relocation<func_t> func{ RELOCATION_ID(66363, 67624) };
 		return func(this, a_outputModel);
 	}
 
 	bool BSSoundHandle::SetVolume(float a_volume)
 	{
 		using func_t = decltype(&BSSoundHandle::SetVolume);
-		REL::Relocation<func_t> func{ REL::ID(67626) };
+		REL::Relocation<func_t> func{ RELOCATION_ID(66365, 67626) };
 		return func(this, a_volume);
 	}
 

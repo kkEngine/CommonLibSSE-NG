@@ -5,7 +5,7 @@ namespace RE
 	bool NiCamera::BoundInFrustum(const NiBound& a_bound, NiCamera* a_camera)
 	{
 		using func_t = decltype(&BoundInFrustum);
-		REL::Relocation<func_t> func{ REL::ID(15899) };
+		REL::Relocation<func_t> func{ RELOCATION_ID(15671, 15899) };
 		return func(a_bound, a_camera);
 	}
 

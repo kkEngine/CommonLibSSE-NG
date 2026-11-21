@@ -53,12 +53,12 @@ namespace RE
 
 		[[nodiscard]] inline BEAM_RUNTIME_DATA& GetBeamRuntimeData() noexcept
 		{
-			return REL::RelocateMember<BEAM_RUNTIME_DATA>(this, 0xA0);
+			return REL::RelocateMemberIfNewer<BEAM_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x98, 0xA0);
 		}
 
 		[[nodiscard]] inline const BEAM_RUNTIME_DATA& GetBeamRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<BEAM_RUNTIME_DATA>(this, 0xA0);
+			return REL::RelocateMemberIfNewer<BEAM_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x98, 0xA0);
 		}
 
 		// members

@@ -15,14 +15,14 @@ namespace RE
 	public:
 		static ScreenSplatter* GetSingleton()
 		{
-			REL::Relocation<ScreenSplatter**> singleton{ REL::ID(400672) };
+			REL::Relocation<ScreenSplatter**> singleton{ RELOCATION_ID(514512, 400672) };
 			return *singleton;
 		}
 
 		void Clear()
 		{
 			using func_t = decltype(&ScreenSplatter::Clear);
-			REL::Relocation<func_t> func{ REL::ID(16407) };
+			REL::Relocation<func_t> func{ RELOCATION_ID(16175, 16407) };
 			return func(this);
 		}
 

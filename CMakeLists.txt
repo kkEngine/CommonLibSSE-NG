@@ -207,6 +207,13 @@ if(BUILD_TESTS)
 			include/SKSE/Impl/PCH.h
 	)
 
+	file(COPY
+			tests/REL/version-1-4-15-0.csv
+			tests/REL/version-1-5-97-0.bin
+			tests/REL/versionlib-1-6-353-0.bin
+		 DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/Data/SKSE/Plugins/"
+	)
+
 	catch_discover_tests("${PROJECT_NAME}Tests")
 	add_test(NAME "${PROJECT_NAME}Tests" COMMAND "${PROJECT_NAME}Tests")
 endif()

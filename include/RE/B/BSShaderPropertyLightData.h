@@ -21,14 +21,14 @@ namespace RE
 			uint32_t          a9)
 		{
 			using func_t = decltype(&BSShaderPropertyLightData::GetLights);
-			REL::Relocation<func_t> func{ REL::ID(107784) };
+			REL::Relocation<func_t> func{ RELOCATION_ID(100997, 107784) };
 			return func(this, outLights, maxLights, shadowLightCount, shadowSceneNode, property, includeShadowLights, shadowDirectionalLight, isFirstPerson, a9);
 		}
 
 		uint32_t GetAffectingPointShadowLightsCount(BSShaderProperty* property)
 		{
 			using func_t = decltype(&BSShaderPropertyLightData::GetAffectingPointShadowLightsCount);
-			REL::Relocation<func_t> func{ REL::ID(107781) };
+			REL::Relocation<func_t> func{ RELOCATION_ID(100994, 107781) };
 			return func(this, property);
 		}
 

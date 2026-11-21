@@ -195,7 +195,7 @@ namespace RE
 		ImageSpaceModifierInstanceForm* TriggerIfNotActive(float a_strength, NiAVObject* a_target)
 		{
 			using func_t = decltype(&TESImageSpaceModifier::TriggerIfNotActive);
-			REL::Relocation<func_t> func{ REL::ID(18572) };
+			REL::Relocation<func_t> func{ RELOCATION_ID(18187, 18572) };
 			return func(this, a_strength, a_target);
 		}
 

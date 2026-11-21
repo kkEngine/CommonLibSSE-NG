@@ -94,32 +94,32 @@ namespace RE
 
 		[[nodiscard]] inline MODEL_DATA& GetModelData() noexcept
 		{
-			return REL::RelocateMember<MODEL_DATA>(this, 0x110);
+			return REL::RelocateMember<MODEL_DATA>(this, 0x110, 0x138);
 		}
 
 		[[nodiscard]] inline const MODEL_DATA& GetModelData() const noexcept
 		{
-			return REL::RelocateMember<MODEL_DATA>(this, 0x110);
+			return REL::RelocateMember<MODEL_DATA>(this, 0x110, 0x138);
 		}
 
 		[[nodiscard]] inline GEOMETRY_RUNTIME_DATA& GetGeometryRuntimeData() noexcept
 		{
-			return REL::RelocateMember<GEOMETRY_RUNTIME_DATA>(this, 0x120);
+			return REL::RelocateMember<GEOMETRY_RUNTIME_DATA>(this, 0x120, 0x160);
 		}
 
 		[[nodiscard]] inline const GEOMETRY_RUNTIME_DATA& GetGeometryRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<GEOMETRY_RUNTIME_DATA>(this, 0x120);
+			return REL::RelocateMember<GEOMETRY_RUNTIME_DATA>(this, 0x120, 0x160);
 		}
 
 		[[nodiscard]] inline stl::enumeration<Type, std::uint8_t>& GetType() noexcept
 		{
-			return REL::RelocateMember<stl::enumeration<Type, std::uint8_t>>(this, 0x150);
+			return REL::RelocateMember<stl::enumeration<Type, std::uint8_t>>(this, 0x150, 0x190);
 		}
 
 		[[nodiscard]] inline const stl::enumeration<Type, std::uint8_t>& GetType() const noexcept
 		{
-			return REL::RelocateMember<stl::enumeration<Type, std::uint8_t>>(this, 0x150);
+			return REL::RelocateMember<stl::enumeration<Type, std::uint8_t>>(this, 0x150, 0x190);
 		}
 
 		// members

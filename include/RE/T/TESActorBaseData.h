@@ -153,7 +153,7 @@ namespace RE
 		[[nodiscard]] std::uint16_t GetLevel() const
 		{
 			using func_t = decltype(&TESActorBaseData::GetLevel);
-			REL::Relocation<func_t> func{ REL::ID(14384) };
+			REL::Relocation<func_t> func{ RELOCATION_ID(14262, 14384) };
 			return func(this);
 		}
 

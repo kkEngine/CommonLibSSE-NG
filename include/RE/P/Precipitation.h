@@ -33,7 +33,7 @@ namespace RE
 
 		static NiPoint3 GetDirection()
 		{
-			REL::Relocation<NiPoint3*> precipDirection{ REL::ID(401648) };
+			REL::Relocation<NiPoint3*> precipDirection{ RELOCATION_ID(515509, 401648) };
 			return *precipDirection;
 		}
 

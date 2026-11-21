@@ -18,6 +18,20 @@ namespace RE
 		inline static constexpr auto      RTTI = RTTI_Console;
 		constexpr static std::string_view MENU_NAME = "Console";
 
+		struct EXTENDED_CONSOLE_DATA
+		{
+#define EXTENDED_CONSOLE_DATA_CONTENT                                  \
+private:                                                               \
+	[[maybe_unused]] std::uint32_t pad48; /* 48 */                     \
+	[[maybe_unused]] std::uint8_t  pad4c; /* 4c */                     \
+public:                                                                \
+	bool         showAchievementWarning; /* 4d -- only used in ctor */ \
+	bool         ctrlKeyHeld;            /* 4e */                      \
+	std::uint8_t pad4f;                  /* 4f */
+
+			EXTENDED_CONSOLE_DATA_CONTENT
+		};
+
 		struct RUNTIME_DATA
 		{
 #define RUNTIME_DATA_CONTENT       \
@@ -53,26 +67,43 @@ namespace RE
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30, 0x40);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30, 0x40);
 		}
 
 		[[nodiscard]] inline RUNTIME_DATA2& GetRuntimeData2() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA2>(this, 0x48);
+			return REL::RelocateMember<RUNTIME_DATA2>(this, 0x48, 0x60);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA2& GetRuntimeData2() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA2>(this, 0x48);
+			return REL::RelocateMember<RUNTIME_DATA2>(this, 0x48, 0x60);
+		}
+
+		[[nodiscard]] inline EXTENDED_CONSOLE_DATA* TryGetExtendedConsoleData() noexcept
+		{
+			if (REL::Module::IsAE()) {
+				return nullptr;
+			}
+			return &REL::RelocateMember<EXTENDED_CONSOLE_DATA>(this, 0, 0x58);
+		}
+
+		[[nodiscard]] inline const EXTENDED_CONSOLE_DATA* TryGetExtendedConsoleData() const noexcept
+		{
+			if (REL::Module::IsAE()) {
+				return nullptr;
+			}
+			return &REL::RelocateMember<EXTENDED_CONSOLE_DATA>(this, 0, 0x58);
 		}
 
 		// members
 		RUNTIME_DATA_CONTENT
+		EXTENDED_CONSOLE_DATA_CONTENT
 		RUNTIME_DATA_CONTENT2
 
 	protected:
@@ -82,3 +113,4 @@ namespace RE
 }
 #undef RUNTIME_DATA_CONTENT
 #undef RUNTIME_DATA_CONTENT2
+#undef EXTENDED_CONSOLE_DATA_CONTENT

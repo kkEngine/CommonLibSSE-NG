@@ -219,6 +219,10 @@ namespace REL
 			_impl{a_offset.address()}
 		{}
 
+		explicit Relocation(VariantOffset a_offset) :
+			_impl{a_offset.address()}
+		{}
+
 		explicit Relocation(ID a_id) :
 			_impl{a_id.address()}
 		{}
@@ -228,6 +232,42 @@ namespace REL
 		{}
 
 		explicit Relocation(ID a_id, Offset a_offset) :
+			_impl{a_id.address() + a_offset.offset()}
+		{}
+
+		explicit Relocation(ID a_id, VariantOffset a_offset) :
+			_impl{a_id.address() + a_offset.offset()}
+		{}
+
+		explicit Relocation(RelocationID a_id) :
+			_impl{a_id.address()}
+		{}
+
+		explicit Relocation(RelocationID a_id, std::ptrdiff_t a_offset) :
+			_impl{a_id.address() + a_offset}
+		{}
+
+		explicit Relocation(RelocationID a_id, Offset a_offset) :
+			_impl{a_id.address() + a_offset.offset()}
+		{}
+
+		explicit Relocation(RelocationID a_id, VariantOffset a_offset) :
+			_impl{a_id.address() + a_offset.offset()}
+		{}
+
+		explicit Relocation(VariantID a_id) :
+			_impl{a_id.address()}
+		{}
+
+		explicit Relocation(VariantID a_id, std::ptrdiff_t a_offset) :
+			_impl{a_id.address() + a_offset}
+		{}
+
+		explicit Relocation(VariantID a_id, Offset a_offset) :
+			_impl{a_id.address() + a_offset.offset()}
+		{}
+
+		explicit Relocation(VariantID a_id, VariantOffset a_offset) :
 			_impl{a_id.address() + a_offset.offset()}
 		{}
 
@@ -243,7 +283,25 @@ namespace REL
 			return *this;
 		}
 
+		Relocation& operator=(VariantOffset a_offset)
+		{
+			_impl = a_offset.address();
+			return *this;
+		}
+
 		Relocation& operator=(ID a_id)
+		{
+			_impl = a_id.address();
+			return *this;
+		}
+
+		Relocation& operator=(RelocationID a_id)
+		{
+			_impl = a_id.address();
+			return *this;
+		}
+
+		Relocation& operator=(VariantID a_id)
 		{
 			_impl = a_id.address();
 			return *this;
@@ -355,10 +413,216 @@ namespace REL
 		std::uintptr_t _impl{0};
 	};
 
+	/**
+	 * Return the correct value of two choices between SE/VR, and AE versions of Skyrim.
+	 *
+	 * <p>
+	 * This is commonly used to select between relative offsets within a function, when hooking a call instruction.
+	 * In such cases the function can be identified by its Address Library ID, but the offset within the function
+	 * may vary between Skyrim versions. This selection is made at runtime, allowing the same compiled code to run
+	 * in multiple versions of Skyrim.
+	 * </p>
+	 *
+	 * @tparam T the type of value to return.
+	 * @param a_seAndVR the value to use for SE and VR.
+	 * @param a_ae the value to use for AE.
+	 * @return Either <code>a_seAndVR</code> if the current runtime is Skyrim SE or VR, or <code>a_ae</code> if the runtime is AE.
+	 */
+	template<class T>
+	[[nodiscard]] constexpr T Relocate(
+		[[maybe_unused]] T&& a_seAndVR,
+		[[maybe_unused]] T&& a_ae) noexcept
+	{
+		return a_ae;
+	}
+
+	/**
+	 * Return the correct value of two choices between SE, AE, and VR versions of Skyrim.
+	 *
+	 * <p>
+	 * This is commonly used to select between relative offsets within a function, when hooking a call instruction.
+	 * In such cases the function can be identified by its Address Library ID, but the offset within the function
+	 * may vary between Skyrim versions. This selection is made at runtime, allowing the same compiled code to run
+	 * in multiple versions of Skyrim.
+	 * </p>
+	 *
+	 * @tparam T the type of value to return.
+	 * @param a_se the value to use for SE.
+	 * @param a_ae the value to use for AE.
+	 * @param a_vr the value to use for VR.
+	 * @return Either <code>a_se</code> if the current runtime is Skyrim SE, or <code>a_ae</code> if the runtime is AE, or
+	 * <code>a_vr</code> if running Skyrim VR.
+	 */
+	template<class T>
+	[[nodiscard]] constexpr T Relocate(
+		[[maybe_unused]] T a_se,
+		[[maybe_unused]] T a_ae,
+		[[maybe_unused]] T a_vr) noexcept
+	{
+		return a_ae;
+	}
+
+	namespace detail
+	{
+		template<class T>
+		struct RelocateVirtualHelper {};
+
+		template<class Ret, class This>
+		struct RelocateVirtualHelper<Ret(This*)>
+		{
+			using this_type = This;
+			using return_type = Ret;
+			using function_type = Ret(This*);
+		};
+
+		template<class Ret, class This, class... Args>
+		struct RelocateVirtualHelper<Ret(This*, Args...)>
+		{
+			using this_type = This;
+			using return_type = Ret;
+			using function_type = Ret(This *, Args...);
+		};
+
+		template<class Ret, class This>
+		struct RelocateVirtualHelper<Ret(This::*)()>
+		{
+			using this_type = This;
+			using return_type = Ret;
+			using function_type = Ret(This *);
+		};
+
+		template<class Ret, class This, class... Args>
+		struct RelocateVirtualHelper<Ret(This::*)(Args...)>
+		{
+			using this_type = This;
+			using return_type = Ret;
+			using function_type = Ret(This *, Args...);
+		};
+
+		template<class Ret, class This>
+		struct RelocateVirtualHelper<Ret(This::*)() const>
+		{
+			using this_type = const This;
+			using return_type = Ret;
+			using function_type = Ret(const This *);
+		};
+
+		template<class Ret, class This, class... Args>
+		struct RelocateVirtualHelper<Ret(This::*)(Args...) const>
+		{
+			using this_type = const This;
+			using return_type = Ret;
+			using function_type = Ret(const This*, Args...);
+		};
+	}
+
+	/**
+	 * Invokes a virtual function in a cross-platform way where the vtable structure is variant across AE/SE and VR runtimes.
+	 *
+	 * <p>
+	 * Some classes in Skyrim VR add new virtual functions in the middle of the vtable structure, which makes it ABI-incompatible with AE/SE.
+	 * A naive virtual function call, therefore, cannot work across all runtimes without the plugin being recompiled specifically for VR.
+	 * This call works with types which have variant vtables to allow a non-virtual function definition to be created in the virtual function's
+	 * place, and to have that call dynamically lookup the correct function based on the vtable structure expected in the current runtime.
+	 * </p>
+	 *
+	 * @tparam Fn the type of the function being called.
+	 * @tparam Args the types of the arguments being passed.
+	 * @param a_seAndAEVtableOffset the offset from the <code>this</code> pointer to the vtable with the virtual function in SE/AE.
+	 * @param a_vrVtableIndex the offset from the <code>this</code> pointer to the vtable with the virtual function in VR.
+	 * @param a_seAndAEVtableIndex the index of the function in the class' vtable in SE and AE.
+	 * @param a_vrVtableIndex the index of the function in the class' vtable in VR.
+	 * @param a_self the <code>this</code> argument for the call.
+	 * @param a_args the remaining arguments for the call, if any.
+	 * @return The result of the function call.
+	 */
+	template<class Fn, class... Args>
+	[[nodiscard]] inline typename detail::RelocateVirtualHelper<Fn>::return_type RelocateVirtual(
+		[[maybe_unused]] std::ptrdiff_t a_seAndAEVtableOffset,
+		[[maybe_unused]] std::ptrdiff_t a_vrVtableOffset,
+		[[maybe_unused]] std::ptrdiff_t a_seAndAEVtableIndex,
+		[[maybe_unused]] std::ptrdiff_t a_vrVtableIndex,
+		typename detail::RelocateVirtualHelper<Fn>::this_type* a_self, Args &&... a_args)
+	{
+		return (*reinterpret_cast<typename detail::RelocateVirtualHelper<Fn>::function_type**>(
+				*reinterpret_cast<const uintptr_t *>(reinterpret_cast<uintptr_t>(a_self) +
+													 a_seAndAEVtableOffset) +
+			a_seAndAEVtableIndex
+				* sizeof(uintptr_t)))(a_self, std::forward<Args>(a_args)...);
+	}
+
+	/**
+	 * Invokes a virtual function in a cross-platform way where the vtable structure is variant across AE/SE and VR runtimes.
+	 *
+	 * <p>
+	 * Some classes in Skyrim VR add new virtual functions in the middle of the vtable structure, which makes it ABI-incompatible with AE/SE.
+	 * A naive virtual function call, therefore, cannot work across all runtimes without the plugin being recompiled specifically for VR.
+	 * This call works with types which have variant vtables to allow a non-virtual function definition to be created in the virtual function's
+	 * place, and to have that call dynamically lookup the correct function based on the vtable structure expected in the current runtime.
+	 * </p>
+	 *
+	 * <p>
+	 * This call assumes the vtable to be used is the one at offset 0, i.e. it invokes a virtual function either on the first parent class
+	 * or the current class.
+	 * </p>
+	 *
+	 * @tparam Fn the type of the function being called.
+	 * @tparam Args the types of the arguments being passed.
+	 * @param a_seAndAEVtableIndex the index of the function in the class' vtable in SE and AE.
+	 * @param a_vrVtableIndex the index of the function in the class' vtable in VR.
+	 * @param a_self the <code>this</code> argument for the call.
+	 * @param a_args the remaining arguments for the call, if any.
+	 * @return The result of the function call.
+	 */
+	template<class Fn, class... Args>
+	[[nodiscard]] inline typename detail::RelocateVirtualHelper<Fn>::return_type RelocateVirtual(
+		std::ptrdiff_t a_seAndAEVtableIndex,
+		std::ptrdiff_t a_vrVtableIndex,
+		typename detail::RelocateVirtualHelper<Fn>::this_type* a_self, Args&&... a_args)
+	{
+		return RelocateVirtual<Fn, Args...>(0, 0, a_seAndAEVtableIndex, a_vrVtableIndex, a_self, std::forward<Args>(a_args)...);
+	}
+
+	/**
+	 * Gets a member variable in a cross-platform way, using runtime-specific memory offsets.
+	 *
+	 * <p>
+	 * This function handles the variant memory structures used in Skyrim VR as compared to versions of SE.
+	 * It allows a memory offset relative to the object's base address for SE (and AE) and a separate one for
+	 * VR. This simplifies the process of creating functions to get member variables that are at different
+	 * offsets in different runtimes from a single build.
+	 * </p>
+	 *
+	 * @tparam T the type of the member being accessed.
+	 * @tparam This the type of the target object that has the member.
+	 * @param a_self the target object that has the member.
+	 * @param a_seAndAE the memory offset of the member in Skyrim SE and AE.
+	 * @param a_vr the memory offset of the member in Skyrim VR.
+	 * @return A reference to the member.
+	 */
+	template<class T, class This>
+	[[nodiscard]] inline T& RelocateMember(This* a_self, std::ptrdiff_t a_seAndAE, std::ptrdiff_t a_vr)
+	{
+		return *reinterpret_cast<T*>(reinterpret_cast<uintptr_t>(a_self) + Relocate(a_seAndAE, a_seAndAE, a_vr));
+	}
+
 	template<class T, class This>
 	[[nodiscard]] inline T& RelocateMember(This* a_self, std::ptrdiff_t offset)
 	{
 		return *reinterpret_cast<T*>(reinterpret_cast<uintptr_t>(a_self) + offset);
+	}
+
+	template<class T, class This>
+	[[nodiscard]] inline T& RelocateMemberIf(bool condition, This* a_self, std::ptrdiff_t a, std::ptrdiff_t b)
+	{
+		return *reinterpret_cast<T*>(reinterpret_cast<uintptr_t>(a_self) + (condition ? a : b));
+	}
+
+	template<class T, class This>
+	[[nodiscard]] inline T& RelocateMemberIfNewer(Version v, This* a_self, std::ptrdiff_t older, std::ptrdiff_t newer)
+	{
+		return *reinterpret_cast<T*>(reinterpret_cast<uintptr_t>(a_self) +
+									 (REL::Module::get().version().compare(v) == std::strong_ordering::less ? older : newer));
 	}
 }
 

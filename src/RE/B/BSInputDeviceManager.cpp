@@ -85,7 +85,7 @@ namespace RE
 	void BSInputDeviceManager::ProcessGamepadEnabledChange()
 	{
 		if (GetRuntimeData().valueQueued) {
-			bool* pGamepadEnable = reinterpret_cast<bool*>(REL::ID(388465).address());
+			bool* pGamepadEnable = reinterpret_cast<bool*>(RELOCATION_ID(511901, 388465).address());
 			*pGamepadEnable = true;
 			GetRuntimeData().valueQueued = false;
 		}
@@ -137,7 +137,7 @@ namespace RE
 		// Emits the last InputEvent
 		// resets the global BSInputEventQueue
 		using func_t = decltype(&BSInputDeviceManager::PollInputDevices);
-		REL::Relocation<func_t> func{ REL::ID(68617) };
+		REL::Relocation<func_t> func{ RELOCATION_ID(67315, 68617) };
 		return func(this, a_secsSinceLastFrame);
 	}
 }

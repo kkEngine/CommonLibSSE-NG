@@ -63,7 +63,7 @@ namespace RE
 
 	AmiiboEvent* InputEvent::AsAmiiboEvent()
 	{
-		return GetEventType() == INPUT_EVENT_TYPE::kAmiibo ? static_cast<AmiiboEvent*>(this) : nullptr;
+		return REL::Module::IsAtLeast(SKSE::RUNTIME_SSE_1_7_99) && GetEventType() == INPUT_EVENT_TYPE::kAmiibo ? static_cast<AmiiboEvent*>(this) : nullptr;
 	}
 
 	const AmiiboEvent* InputEvent::AsAmiiboEvent() const
@@ -73,7 +73,7 @@ namespace RE
 
 	MotionGestureEvent* InputEvent::AsMotionGestureEvent()
 	{
-		return GetEventType() == INPUT_EVENT_TYPE::kMotionGesture ? static_cast<MotionGestureEvent*>(this) : nullptr;
+		return REL::Module::IsAtLeast(SKSE::RUNTIME_SSE_1_7_99) && GetEventType() == INPUT_EVENT_TYPE::kMotionGesture ? static_cast<MotionGestureEvent*>(this) : nullptr;
 	}
 
 	const MotionGestureEvent* InputEvent::AsMotionGestureEvent() const
@@ -83,7 +83,7 @@ namespace RE
 
 	SixaxisEvent* InputEvent::AsSixaxisEvent()
 	{
-		return GetEventType() == INPUT_EVENT_TYPE::kSixaxis ? static_cast<SixaxisEvent*>(this) : nullptr;
+		return REL::Module::IsAtLeast(SKSE::RUNTIME_SSE_1_7_99) && GetEventType() == INPUT_EVENT_TYPE::kSixaxis ? static_cast<SixaxisEvent*>(this) : nullptr;
 	}
 
 	const SixaxisEvent* InputEvent::AsSixaxisEvent() const

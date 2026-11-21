@@ -26,7 +26,7 @@ namespace RE
 
 		[[nodiscard]] GFxFunctionHandler* AsGFxFunctionHandler() noexcept
 		{
-			return &REL::RelocateMember<GFxFunctionHandler>(this, 0x30);
+			return &REL::RelocateMember<GFxFunctionHandler>(this, 0x30, 0x40);
 		}
 
 		[[nodiscard]] const GFxFunctionHandler* AsGFxFunctionHandler() const noexcept

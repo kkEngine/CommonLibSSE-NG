@@ -67,12 +67,12 @@ namespace RE
 
 		[[nodiscard]] inline CONE_RUNTIME_DATA& GetConeRuntimeData() noexcept
 		{
-			return REL::RelocateMember<CONE_RUNTIME_DATA>(this, 0x1E0);
+			return REL::RelocateMemberIfNewer<CONE_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x1D8, 0x1E0);
 		}
 
 		[[nodiscard]] inline const CONE_RUNTIME_DATA& GetConeRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<CONE_RUNTIME_DATA>(this, 0x1E0);
+			return REL::RelocateMemberIfNewer<CONE_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x1D8, 0x1E0);
 		}
 
 		// members

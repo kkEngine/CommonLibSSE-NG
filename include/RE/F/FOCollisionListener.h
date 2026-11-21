@@ -36,7 +36,7 @@ namespace RE
 
 		static FOCollisionListener* GetSingleton()
 		{
-			REL::Relocation<FOCollisionListener**> singleton{ REL::ID(400444) };
+			REL::Relocation<FOCollisionListener**> singleton{ RELOCATION_ID(514284, 400444) };
 			return *singleton;
 		}
 

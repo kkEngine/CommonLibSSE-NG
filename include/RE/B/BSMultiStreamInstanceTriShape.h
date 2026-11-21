@@ -45,12 +45,12 @@ namespace RE
 
 		[[nodiscard]] inline MULTISTREAM_TRISHAPE_RUNTIME_DATA& GetMultiStreamTrishapeRuntimeData() noexcept
 		{
-			return REL::RelocateMember<MULTISTREAM_TRISHAPE_RUNTIME_DATA>(this, 0x160);
+			return REL::RelocateMember<MULTISTREAM_TRISHAPE_RUNTIME_DATA>(this, 0x160, 0x1A8);
 		}
 
 		[[nodiscard]] inline const MULTISTREAM_TRISHAPE_RUNTIME_DATA& GetMultiStreamTrishapeRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<MULTISTREAM_TRISHAPE_RUNTIME_DATA>(this, 0x160);
+			return REL::RelocateMember<MULTISTREAM_TRISHAPE_RUNTIME_DATA>(this, 0x160, 0x1A8);
 		}
 
 		// members

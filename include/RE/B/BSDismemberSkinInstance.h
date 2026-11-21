@@ -50,18 +50,18 @@ namespace RE
 		void UpdateDismemberPartion(std::uint16_t a_slot, bool a_enable)
 		{
 			using func_t = decltype(&BSDismemberSkinInstance::UpdateDismemberPartion);
-			REL::Relocation<func_t> func{ REL::ID(15753) };
+			REL::Relocation<func_t> func{ RELOCATION_ID(15576, 15753) };
 			return func(this, a_slot, a_enable);
 		}
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x88);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x88, 0x68);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x88);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x88, 0x68);
 		}
 
 		// members

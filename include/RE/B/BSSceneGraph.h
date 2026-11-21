@@ -37,12 +37,12 @@ namespace RE
 
 		[[nodiscard]] inline BS_SCENE_GRAPH_RUNTIME_DATA& GetRuntimeData() noexcept
 		{
-			return REL::RelocateMember<BS_SCENE_GRAPH_RUNTIME_DATA>(this, 0x128);
+			return REL::RelocateMember<BS_SCENE_GRAPH_RUNTIME_DATA>(this, 0x128, 0x150);
 		}
 
 		[[nodiscard]] inline const BS_SCENE_GRAPH_RUNTIME_DATA& GetRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<BS_SCENE_GRAPH_RUNTIME_DATA>(this, 0x128);
+			return REL::RelocateMember<BS_SCENE_GRAPH_RUNTIME_DATA>(this, 0x128, 0x150);
 		}
 
 		RUNTIME_DATA_CONTENT

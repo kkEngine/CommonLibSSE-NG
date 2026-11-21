@@ -44,7 +44,7 @@ namespace RE
 
 		static BSUtilityShader* GetSingleton()
 		{
-			REL::Relocation<BSUtilityShader**> singleton{ REL::ID(415300) };
+			REL::Relocation<BSUtilityShader**> singleton{ RELOCATION_ID(528354, 415300) };
 			return *singleton;
 		}
 		~BSUtilityShader() override;  // 00

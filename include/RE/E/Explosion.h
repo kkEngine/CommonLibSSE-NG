@@ -86,12 +86,12 @@ namespace RE
 
 		[[nodiscard]] inline EXPLOSION_RUNTIME_DATA& GetExplosionRuntimeData() noexcept
 		{
-			return REL::RelocateMember<EXPLOSION_RUNTIME_DATA>(this, 0xA0);
+			return REL::RelocateMemberIfNewer<EXPLOSION_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x98, 0xA0);
 		}
 
 		[[nodiscard]] inline const EXPLOSION_RUNTIME_DATA& GetExplosionRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<EXPLOSION_RUNTIME_DATA>(this, 0xA0);
+			return REL::RelocateMemberIfNewer<EXPLOSION_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x98, 0xA0);
 		}
 
 		// members

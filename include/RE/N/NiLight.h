@@ -35,12 +35,12 @@ namespace RE
 
 		[[nodiscard]] inline LIGHT_RUNTIME_DATA& GetLightRuntimeData() noexcept
 		{
-			return REL::RelocateMember<LIGHT_RUNTIME_DATA>(this, 0x110);
+			return REL::RelocateMember<LIGHT_RUNTIME_DATA>(this, 0x110, 0x138);
 		}
 
 		[[nodiscard]] inline const LIGHT_RUNTIME_DATA& GetLightRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<LIGHT_RUNTIME_DATA>(this, 0x110);
+			return REL::RelocateMember<LIGHT_RUNTIME_DATA>(this, 0x110, 0x138);
 		}
 
 		// members

@@ -16,7 +16,7 @@ namespace RE
 	public:
 		static BGSDecalManager* GetSingleton()
 		{
-			REL::Relocation<BGSDecalManager**> singleton{ REL::ID(400561) };
+			REL::Relocation<BGSDecalManager**> singleton{ RELOCATION_ID(514414, 400561) };
 			return *singleton;
 		}
 

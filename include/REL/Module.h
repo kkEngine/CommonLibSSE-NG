@@ -57,6 +57,29 @@ namespace REL
 	class Module
 	{
 	public:
+		/**
+		 * Identifies a Skyrim runtime.
+		 */
+		enum class Runtime : uint8_t
+		{
+			Unknown = 0,
+
+			/**
+			 * The Skyrim runtime is a post-Anniversary Edition Skyrim SE release (version 1.6.x and later).
+			 */
+			AE = 1 << 0,
+
+			/**
+			 * The Skyrim runtime is a pre-Anniversary Edition Skyrim SE release (version 1.5.97 and prior).
+			 */
+			SE = 1 << 1,
+
+			/**
+			 * The Skyrim runtime is Skyrim VR.
+			 */
+			VR = 1 << 2
+		};
+
 		[[nodiscard]] static Module &get()
 		{
 			if (_initialized.load(std::memory_order_relaxed)) {
@@ -87,22 +110,47 @@ namespace REL
 			return _instance.init(a_filePath);
 		}
 
-		static bool inject()
+		/**
+		 * Forcibly set the singleton <code>Module</code> instance to an installed Skyrim executable.
+		 *
+		 * <p>
+		 * This overload accepts only a <code>Runtime</code> value, and based on that value attempts to find the
+		 * executable, using the Windows registry to find an installed copy of Skyrim of the given runtime. Using
+		 * <code>Runtime::Unknown</code> causes an attempt to discover Skyrim Special Edition first, and if that fails,
+		 * attempts to discover Skyrim VR.
+		 * </p>
+		 *
+		 * <p>
+		 * This function should only be used in a unit testing environment, where there is no Skyrim process hosting
+		 * the SKSE plugin. It is not thread-safe and assumes it will be run synchronously with serial test execution.
+		 * </p>
+		 *
+		 * @param a_runtime The type of Skyrim runtime to inject.
+		 */
+		static bool inject(Runtime a_runtime = Runtime::Unknown)
 		{
+			if (a_runtime == Runtime::Unknown) {
+				return inject(Runtime::SE) || inject(Runtime::VR);
+			}
+
 			constexpr std::size_t bufferSize = 4096;  // Max NTFS path length.
-			const wchar_t* subKey = LR"(SOFTWARE\Bethesda Softworks\Skyrim Special Edition)";
+			const wchar_t* subKey =
+					a_runtime == Runtime::VR ?
+					LR"(SOFTWARE\Bethesda Softworks\Skyrim VR)" :
+					LR"(SOFTWARE\Bethesda Softworks\Skyrim Special Edition)";
 			std::uint32_t length = bufferSize * sizeof(wchar_t);
 			std::uint8_t value[bufferSize];
 			if (REX::W32::RegGetValueW(REX::W32::HKEY_LOCAL_MACHINE, subKey, L"Installed Path", 0x20002u, nullptr, value, &length) != 0) {
 				return false;
 			}
 			std::filesystem::path installPath(reinterpret_cast<wchar_t *>(value));
-			installPath /= L"SkyrimSE.exe";
+			installPath /= a_runtime == Runtime::VR ? L"SkyrimVR.exe" : L"SkyrimSE.exe";
 			return inject(installPath.c_str());
 		}
 
 		static bool mock(
 			REL::Version a_version,
+			Runtime a_runtime = Runtime::Unknown,
 			std::wstring_view a_filename = L"SkyrimSE.exe"sv,
 			std::uintptr_t a_base = 0,
 			std::array<std::uintptr_t, Segment::total> a_segmentSizes = {0x1603000, 0, 0x8ee000, 0x1887000, 0x15c000, 0x3000, 0x2000, 0x1000})
@@ -116,6 +164,18 @@ namespace REL
 
 			_instance._filename = _instance._filePath = a_filename.data();
 			_instance._version = a_version;
+			if (a_runtime == Runtime::Unknown) {
+				// Minor version 4 = VR, 5 = SE, 6+ = AE (1.7.99 bumped the minor version).
+				if (a_version[1] == 4) {
+					_instance._runtime = Runtime::VR;
+				} else if (a_version[1] >= 6) {
+					_instance._runtime = Runtime::AE;
+				} else {
+					_instance._runtime = Runtime::SE;
+				}
+			} else {
+				_instance._runtime = a_runtime;
+			}
 			_instance._base = a_base;
 
 			auto currentAddress = a_base + 0x1000;
@@ -153,6 +213,46 @@ namespace REL
 		[[nodiscard]] T* pointer() const noexcept
 		{
 			return static_cast<T*>(pointer());
+		}
+
+		/**
+		 * Get the type of runtime the currently-loaded Skyrim module is.
+		 */
+		[[nodiscard]] static constexpr Runtime GetRuntime() noexcept
+		{
+			return Runtime::AE;
+		}
+
+		/**
+		 * Returns whether the current Skyrim runtime is a post-Anniversary Edition Skyrim SE release.
+		 */
+		[[nodiscard]] static constexpr bool IsAE() noexcept
+		{
+			return GetRuntime() == Runtime::AE;
+		}
+
+		/**
+		 * Returns whether the current Skyrim runtime is an Anniversary Edition release at or above the given version.
+		 */
+		[[nodiscard]] static bool IsAtLeast(Version a_version) noexcept
+		{
+			return IsAE() && get().version() >= a_version;
+		}
+
+		/**
+		 * Returns whether the current Skyrim runtime is a pre-Anniversary Edition Skyrim SE release.
+		 */
+		[[nodiscard]] static constexpr bool IsSE() noexcept
+		{
+			return GetRuntime() == Runtime::SE;
+		}
+
+		/**
+		 * Returns whether the current Skyrim runtime is a Skyrim VR release.
+		 */
+		[[nodiscard]] static constexpr bool IsVR() noexcept
+		{
+			return false;
 		}
 
 	private:
@@ -228,6 +328,14 @@ namespace REL
 			const auto version = GetFileVersion(_filePath);
 			if (version) {
 				_version = *version;
+				// Minor version 4 = VR, 5 = SE, 6+ = AE (1.7.99 bumped the minor version).
+				if (_version[1] == 4) {
+					_runtime = Runtime::VR;
+				} else if (_version[1] >= 6) {
+					_runtime = Runtime::AE;
+				} else {
+					_runtime = Runtime::SE;
+				}
 				return true;
 			}
 			return stl::report_and_error(
@@ -251,8 +359,8 @@ namespace REL
 		};
 
 		static constexpr auto ENVIRONMENT = L"SKSE_RUNTIME"sv;
-		static constexpr std::array<std::wstring_view, 1> RUNTIMES{
-			{L"SkyrimSE.exe"}
+		static constexpr std::array<std::wstring_view, 2> RUNTIMES{
+			{L"SkyrimVR.exe", L"SkyrimSE.exe"}
 		};
 
 		static Module                       _instance;
@@ -264,5 +372,6 @@ namespace REL
 		std::array<Segment, Segment::total> _segments;
 		Version                             _version;
 		std::uintptr_t                      _base{0};
+		Runtime                             _runtime{Runtime::AE};
 	};
 }

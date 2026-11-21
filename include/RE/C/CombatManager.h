@@ -25,7 +25,7 @@ namespace RE
 	public:
 		[[nodiscard]] static CombatManager* GetSingleton()
 		{
-			REL::Relocation<CombatManager**> singleton{ REL::ID(405246) };
+			REL::Relocation<CombatManager**> singleton{ RELOCATION_ID(518706, 405246) };
 			return *singleton;
 		}
 

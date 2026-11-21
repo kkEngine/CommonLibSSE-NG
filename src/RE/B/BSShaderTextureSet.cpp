@@ -11,8 +11,17 @@ namespace RE
 
 	BSShaderTextureSet* BSShaderTextureSet::Create()
 	{
-		using func_t = decltype(&BSShaderTextureSet::Create);
-		REL::Relocation<func_t> func{ REL::ID(107172) };
-		return func();
+		if constexpr (REL::Module::IsAE()) {
+			using func_t = decltype(&BSShaderTextureSet::Create);
+			REL::Relocation<func_t> func{ REL::ID(107172) };
+			return func();
+		} else {
+			auto textureset = malloc<BSShaderTextureSet>();
+			std::memset(reinterpret_cast<void*>(textureset), 0, sizeof(BSShaderTextureSet));
+			if (textureset) {
+				textureset->Ctor();
+			}
+			return textureset;
+		}
 	}
 }

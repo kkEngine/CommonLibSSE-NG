@@ -51,12 +51,12 @@ namespace RE
 
 		[[nodiscard]] inline MULTI_INDEX_TRISHAPE_RUNTIME_DATA& GetMultiIndexTrishapeRuntimeData() noexcept
 		{
-			return REL::RelocateMember<MULTI_INDEX_TRISHAPE_RUNTIME_DATA>(this, 0x160);
+			return REL::RelocateMember<MULTI_INDEX_TRISHAPE_RUNTIME_DATA>(this, 0x160, 0x1A8);
 		}
 
 		[[nodiscard]] inline const MULTI_INDEX_TRISHAPE_RUNTIME_DATA& GetMultiIndexTrishapeRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<MULTI_INDEX_TRISHAPE_RUNTIME_DATA>(this, 0x160);
+			return REL::RelocateMember<MULTI_INDEX_TRISHAPE_RUNTIME_DATA>(this, 0x160, 0x1A8);
 		}
 
 		// members

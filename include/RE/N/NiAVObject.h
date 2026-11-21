@@ -139,12 +139,12 @@ namespace RE
 
 		[[nodiscard]] inline stl::enumeration<Flag, std::uint32_t>& GetFlags() noexcept
 		{
-			return REL::RelocateMember<stl::enumeration<Flag, std::uint32_t>>(this, 0x0F4);
+			return REL::RelocateMember<stl::enumeration<Flag, std::uint32_t>>(this, 0x0F4, 0x10C);
 		}
 
 		[[nodiscard]] inline const stl::enumeration<Flag, std::uint32_t>& GetFlags() const noexcept
 		{
-			return REL::RelocateMember<stl::enumeration<Flag, std::uint32_t>>(this, 0x0F4);
+			return REL::RelocateMember<stl::enumeration<Flag, std::uint32_t>>(this, 0x0F4, 0x10C);
 		}
 
 		// members

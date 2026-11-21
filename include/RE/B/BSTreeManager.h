@@ -29,7 +29,7 @@ namespace RE
 
 		static BSTreeManager* GetSingleton()
 		{
-			REL::Relocation<BSTreeManager**> singleton{ REL::ID(400330) };
+			REL::Relocation<BSTreeManager**> singleton{ RELOCATION_ID(514181, 400330) };
 			return *singleton;
 		}
 

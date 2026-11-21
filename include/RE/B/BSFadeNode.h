@@ -15,7 +15,7 @@ namespace RE
 
 		static BSFadeNode* GetFadeNodeAnim()
 		{
-			REL::Relocation<BSFadeNode**> node{ REL::ID(414561) };
+			REL::Relocation<BSFadeNode**> node{ RELOCATION_ID(527632, 414561) };
 			return *node;
 		}
 
@@ -64,12 +64,12 @@ namespace RE
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x128);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x128, 0x150);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x128);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x128, 0x150);
 		}
 
 		// members

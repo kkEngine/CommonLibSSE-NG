@@ -39,7 +39,7 @@ namespace RE
 
 		static BSEffectShader* GetSingleton()
 		{
-			REL::Relocation<BSEffectShader**> singleton{ REL::ID(415166) };
+			REL::Relocation<BSEffectShader**> singleton{ RELOCATION_ID(528216, 415166) };
 			return *singleton;
 		}
 

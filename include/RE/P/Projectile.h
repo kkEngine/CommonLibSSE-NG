@@ -288,12 +288,12 @@ namespace RE
 
 		[[nodiscard]] inline PROJECTILE_RUNTIME_DATA& GetProjectileRuntimeData() noexcept
 		{
-			return REL::RelocateMember<PROJECTILE_RUNTIME_DATA>(this, 0xA0);
+			return REL::RelocateMemberIfNewer<PROJECTILE_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x98, 0xA0);
 		}
 
 		[[nodiscard]] inline const PROJECTILE_RUNTIME_DATA& GetProjectileRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<PROJECTILE_RUNTIME_DATA>(this, 0xA0);
+			return REL::RelocateMemberIfNewer<PROJECTILE_RUNTIME_DATA>(SKSE::RUNTIME_SSE_1_6_629, this, 0x98, 0xA0);
 		}
 
 		// members

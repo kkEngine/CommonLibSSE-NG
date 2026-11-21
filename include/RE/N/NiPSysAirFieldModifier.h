@@ -27,7 +27,7 @@ namespace RE
 		void SetDirection(const NiPoint3& aDirection)
 		{
 			using func_t = decltype(&NiPSysAirFieldModifier::SetDirection);
-			REL::Relocation<func_t> func{ REL::ID(74796) };
+			REL::Relocation<func_t> func{ RELOCATION_ID(73098, 74796) };
 			func(this, aDirection);
 		}
 

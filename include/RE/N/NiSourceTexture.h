@@ -43,7 +43,7 @@ namespace RE
 		static void Load(const BSFixedString& path, bool unk01, NiPointer<NiSourceTexture>& texture, bool isCubemap)
 		{
 			using func_t = decltype(&NiSourceTexture::Load);
-			REL::Relocation<func_t> func{ REL::ID(105640) };
+			REL::Relocation<func_t> func{ RELOCATION_ID(98986, 105640) };
 			func(path, unk01, texture, isCubemap);
 		}
 

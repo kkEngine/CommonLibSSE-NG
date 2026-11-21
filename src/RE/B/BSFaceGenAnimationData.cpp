@@ -106,7 +106,7 @@ namespace RE
 	void BSFaceGenAnimationData::SetExpressionOverride(std::uint32_t a_idx, float a_value)
 	{
 		using func_t = decltype(&BSFaceGenAnimationData::SetExpressionOverride);
-		REL::Relocation<func_t> func(REL::ID(26594));
+		REL::Relocation<func_t> func(RELOCATION_ID(0, 26594));
 		func(this, a_idx, a_value);
 	}
 
@@ -118,7 +118,7 @@ namespace RE
 	void BSFaceGenAnimationData::Reset(float a_timer, bool a_resetExpression, bool a_resetModifierAndPhoneme, bool a_resetCustom, bool a_closeEyes)
 	{
 		using func_t = decltype(&BSFaceGenAnimationData::Reset);
-		REL::Relocation<func_t> func{ REL::ID(26586) };
+		REL::Relocation<func_t> func{ RELOCATION_ID(25977, 26586) };
 		return func(this, a_timer, a_resetExpression, a_resetModifierAndPhoneme, a_resetCustom, a_closeEyes);
 	}
 

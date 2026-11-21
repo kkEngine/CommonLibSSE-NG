@@ -55,7 +55,7 @@ namespace RE
 
 		[[nodiscard]] BSTEventSink<BSSystemEvent>* AsBSSystemEventSink() noexcept
 		{
-			return &REL::RelocateMember<BSTEventSink<BSSystemEvent>>(this, 0x30);
+			return &REL::RelocateMember<BSTEventSink<BSSystemEvent>>(this, 0x30, 0x40);
 		}
 
 		[[nodiscard]] const BSTEventSink<BSSystemEvent>* AsBSSystemEventSink() const noexcept
@@ -65,7 +65,7 @@ namespace RE
 
 		[[nodiscard]] BSTEventSink<BSSaveDataEvent>* AsBSSaveDataEventSink() noexcept
 		{
-			return &REL::RelocateMember<BSTEventSink<BSSaveDataEvent>>(this, 0x38);
+			return &REL::RelocateMember<BSTEventSink<BSSaveDataEvent>>(this, 0x38, 0x48);
 		}
 
 		[[nodiscard]] const BSTEventSink<BSSaveDataEvent>* AsBSSaveDataEventSink() const noexcept
@@ -75,7 +75,7 @@ namespace RE
 
 		[[nodiscard]] GFxFunctionHandler* AsGFxFunctionHandler() noexcept
 		{
-			return &REL::RelocateMember<GFxFunctionHandler>(this, 0x40);
+			return &REL::RelocateMember<GFxFunctionHandler>(this, 0x40, 0x50);
 		}
 
 		[[nodiscard]] const GFxFunctionHandler* AsGFxFunctionHandler() const noexcept
@@ -85,12 +85,12 @@ namespace RE
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x50);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x50, 0x60);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x50);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x50, 0x60);
 		}
 
 		// members

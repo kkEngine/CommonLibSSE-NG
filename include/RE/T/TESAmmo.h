@@ -93,52 +93,52 @@ namespace RE
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x110);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x110, 0x100);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x110);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x110, 0x100);
 		}
 
 		[[nodiscard]] inline BGSDestructibleObjectForm* AsDestructibleObjectForm() noexcept
 		{
-			return &REL::RelocateMember<BGSDestructibleObjectForm>(this, 0xC0);
+			return &REL::RelocateMember<BGSDestructibleObjectForm>(this, 0xC0, 0xB0);
 		}
 
 		[[nodiscard]] inline const BGSDestructibleObjectForm* AsDestructibleObjectForm() const noexcept
 		{
-			return &REL::RelocateMember<BGSDestructibleObjectForm>(this, 0xC0);
+			return &REL::RelocateMember<BGSDestructibleObjectForm>(this, 0xC0, 0xB0);
 		}
 
 		[[nodiscard]] inline BGSPickupPutdownSounds* AsPickupPutdownSoundsForm() noexcept
 		{
-			return &REL::RelocateMember<BGSPickupPutdownSounds>(this, 0xD0);
+			return &REL::RelocateMember<BGSPickupPutdownSounds>(this, 0xD0, 0xC0);
 		}
 
 		[[nodiscard]] inline const BGSPickupPutdownSounds* AsPickupPutdownSoundsForm() const noexcept
 		{
-			return &REL::RelocateMember<BGSPickupPutdownSounds>(this, 0xD0);
+			return &REL::RelocateMember<BGSPickupPutdownSounds>(this, 0xD0, 0xC0);
 		}
 
 		[[nodiscard]] inline TESDescription* AsDescriptionForm() noexcept
 		{
-			return &REL::RelocateMember<TESDescription>(this, 0xE8);
+			return &REL::RelocateMember<TESDescription>(this, 0xE8, 0xD8);
 		}
 
 		[[nodiscard]] inline const TESDescription* AsDescriptionForm() const noexcept
 		{
-			return &REL::RelocateMember<TESDescription>(this, 0xE8);
+			return &REL::RelocateMember<TESDescription>(this, 0xE8, 0xD8);
 		}
 
 		[[nodiscard]] inline BGSKeywordForm* AsKeywordForm() noexcept
 		{
-			return &REL::RelocateMember<BGSKeywordForm>(this, 0xF8);
+			return &REL::RelocateMember<BGSKeywordForm>(this, 0xF8, 0xE8);
 		}
 
 		[[nodiscard]] inline const BGSKeywordForm* AsKeywordForm() const noexcept
 		{
-			return &REL::RelocateMember<BGSKeywordForm>(this, 0xF8);
+			return &REL::RelocateMember<BGSKeywordForm>(this, 0xF8, 0xE8);
 		}
 
 		// members

@@ -22,18 +22,18 @@ namespace RE
 
 		[[nodiscard]] inline GFxValue GetRoot() const noexcept
 		{
-			return REL::RelocateMember<GFxValue>(this, 0x30);
+			return REL::RelocateMember<GFxValue>(this, 0x30, 0x40);
 		}
 
 		inline void SetRoot(GFxValue a_root) noexcept
 		{
-			REL::RelocateMember<GFxValue>(this, 0x30) = a_root;
+			REL::RelocateMember<GFxValue>(this, 0x30, 0x40) = a_root;
 		}
 
 		static void OpenTutorialMenu(DEFAULT_OBJECT a_tutorial)
 		{
 			using func_t = decltype(&TutorialMenu::OpenTutorialMenu);
-			REL::Relocation<func_t> func{ REL::ID(52692) };
+			REL::Relocation<func_t> func{ RELOCATION_ID(51818, 52692) };
 			return func(a_tutorial);
 		}
 

@@ -21,7 +21,7 @@ namespace RE
 
 	bool PlayerCharacter::IsGodMode()
 	{
-		REL::Relocation<bool*> singleton{ REL::ID(404238) };
+		REL::Relocation<bool*> singleton{ RELOCATION_ID(517711, 404238) };
 		return *singleton;
 	}
 
@@ -35,14 +35,14 @@ namespace RE
 	void PlayerCharacter::AddPlayerAddItemEvent(TESObject* a_object, TESForm* a_owner, TESObjectREFR* a_container, AQUIRE_TYPE a_type)
 	{
 		using func_t = decltype(&PlayerCharacter::AddPlayerAddItemEvent);
-		REL::Relocation<func_t> func{ REL::ID(40456) };
+		REL::Relocation<func_t> func{ RELOCATION_ID(39384, 40456) };
 		return func(this, a_object, a_owner, a_container, a_type);
 	}
 
 	bool PlayerCharacter::AttemptPickpocket(TESObjectREFR* a_containerRef, InventoryEntryData* a_entry, std::int32_t a_number, bool a_fromContainer)
 	{
 		using func_t = decltype(&PlayerCharacter::AttemptPickpocket);
-		REL::Relocation<func_t> func{ REL::ID(40654) };
+		REL::Relocation<func_t> func{ RELOCATION_ID(39568, 40654) };
 		return func(this, a_containerRef, a_entry, a_number, a_fromContainer);
 	}
 
@@ -59,14 +59,14 @@ namespace RE
 	bool PlayerCharacter::CheckCast(MagicItem* a_spell, Effect* a_effect, MagicSystem::CannotCastReason& a_reason)
 	{
 		using func_t = decltype(&PlayerCharacter::CheckCast);
-		REL::Relocation<func_t> func{ REL::ID(40484) };
+		REL::Relocation<func_t> func{ RELOCATION_ID(39409, 40484) };
 		return func(this, a_spell, a_effect, a_reason);
 	}
 
 	void PlayerCharacter::DestroyMouseSprings()
 	{
 		using func_t = decltype(&PlayerCharacter::DestroyMouseSprings);
-		REL::Relocation<func_t> func{ REL::ID(40557) };
+		REL::Relocation<func_t> func{ RELOCATION_ID(39480, 40557) };
 		return func(this);
 	}
 
@@ -79,7 +79,11 @@ namespace RE
 
 	NiPointer<Actor> PlayerCharacter::GetActorDoingPlayerCommand() const
 	{
-        return REL::RelocateMember<ActorHandle>(this, 0x8A4).get();
+        if constexpr (REL::Module::IsVR()) {
+            return REL::RelocateMember<ActorHandle>(this, 0, 0xE8C).get();
+        } else {
+            return REL::RelocateMemberIfNewer<ActorHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x894, AE1799Shift(0x89C)).get();
+        }
 	}
 
 	float PlayerCharacter::GetArmorValue(InventoryEntryData* a_form)
@@ -98,13 +102,17 @@ namespace RE
 
 	NiPointer<TESObjectREFR> PlayerCharacter::GetGrabbedRef()
 	{
-		return REL::RelocateMember<ObjectRefHandle>(this, 0x8D8).get();
+		if constexpr (Module::IsVR()) {
+			return nullptr;
+		} else {
+			return REL::RelocateMemberIfNewer<ObjectRefHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x8C8, AE1799Shift(0x8D0)).get();
+		}
 	}
 
 	std::int32_t PlayerCharacter::GetItemCount(TESBoundObject* a_object)
 	{
 		using func_t = decltype(&PlayerCharacter::GetItemCount);
-		REL::Relocation<func_t> func{ REL::ID(19701) };
+		REL::Relocation<func_t> func{ RELOCATION_ID(19275, 19701) };
 		return func(this, a_object);
 	}
 
@@ -117,48 +125,69 @@ namespace RE
 
 	TintMask* PlayerCharacter::GetOverlayTintMask(TintMask* a_original)
 	{
-		auto* tryOverlayTintMasks = REL::RelocateMember<BSTArray<TintMask*>*>(this, 0xB38);
-		if (!tryOverlayTintMasks) {
+		if constexpr (REL::Module::IsVR()) {
+			return nullptr;
+		} else {
+			auto* tryOverlayTintMasks = REL::RelocateMemberIfNewer<BSTArray<TintMask*>*>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB28, AE1799Shift(0xB30));
+			if (!tryOverlayTintMasks) {
+				return nullptr;
+			}
+
+			auto& tintMasksValue = REL::RelocateMemberIfNewer<BSTArray<TintMask*>>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB10, AE1799Shift(0xB18));
+			for (std::uint32_t i = 0; i < tintMasksValue.size(); ++i) {
+				if (tintMasksValue[i] == a_original) {
+					return i < tryOverlayTintMasks->size() ? (*tryOverlayTintMasks)[i] : nullptr;
+				}
+			}
+
 			return nullptr;
 		}
-
-		auto& tintMasksValue = REL::RelocateMember<BSTArray<TintMask*>>(this, 0xB20);
-		for (std::uint32_t i = 0; i < tintMasksValue.size(); ++i) {
-			if (tintMasksValue[i] == a_original) {
-				return i < tryOverlayTintMasks->size() ? (*tryOverlayTintMasks)[i] : nullptr;
-			}
-		}
-
-		return nullptr;
 	}
 
 	BSTArray<TintMask*>* PlayerCharacter::GetTintList()
 	{
-		auto* tryOverlayTintMasks = REL::RelocateMember<BSTArray<TintMask*>*>(this, 0xB38);
-		return tryOverlayTintMasks ? tryOverlayTintMasks : &REL::RelocateMember<BSTArray<TintMask*>>(this, 0xB20);
+		if constexpr (REL::Module::IsVR()) {
+			return nullptr;
+		} else {
+			auto* tryOverlayTintMasks = REL::RelocateMemberIfNewer<BSTArray<TintMask*>*>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB28, AE1799Shift(0xB30));
+			return tryOverlayTintMasks ? tryOverlayTintMasks : &REL::RelocateMemberIfNewer<BSTArray<TintMask*>>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB10, AE1799Shift(0xB18));
+		}
 	}
 
 	TintMask* PlayerCharacter::GetTintMask(std::uint32_t a_tintType, std::uint32_t a_index)
 	{
-		using func_t = decltype(&PlayerCharacter::GetTintMask);
-		REL::Relocation<func_t> func{ Offset::PlayerCharacter::GetTintMask };
-		return func(this, a_tintType, a_index);
+		if constexpr (REL::Module::IsVR()) {
+			return nullptr;
+		} else {
+			using func_t = decltype(&PlayerCharacter::GetTintMask);
+			REL::Relocation<func_t> func{ Offset::PlayerCharacter::GetTintMask };
+			return func(this, a_tintType, a_index);
+		}
 	}
 
 	bool PlayerCharacter::HasActorDoingCommand() const
 	{
-        return static_cast<bool>(REL::RelocateMember<ActorHandle>(this, 0x8A4));
+        if constexpr (REL::Module::IsVR()) {
+            return static_cast<bool>(REL::RelocateMember<ActorHandle>(this, 0, 0xE8C));
+        }
+        else {
+            return static_cast<bool>(REL::RelocateMemberIfNewer<ActorHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x894, AE1799Shift(0x89C)));
+        }
 	}
 
 	bool PlayerCharacter::IsGrabbing() const
 	{
-		return static_cast<bool>(REL::RelocateMember<ObjectRefHandle>(this, 0x8D8));
+		if constexpr (Module::IsVR()) {
+			return false;
+		} else {
+			return static_cast<bool>(REL::RelocateMemberIfNewer<ObjectRefHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x8C8, AE1799Shift(0x8D0)));
+		}
 	}
 
 	void PlayerCharacter::PlayMagicFailureSound(MagicSystem::SpellType a_spellType)
 	{
 		using func_t = decltype(&PlayerCharacter::PlayMagicFailureSound);
-		REL::Relocation<func_t> func{ REL::ID(40565) };
+		REL::Relocation<func_t> func{ RELOCATION_ID(39486, 40565) };
 		return func(this, a_spellType);
 	}
 
@@ -172,14 +201,14 @@ namespace RE
 	void PlayerCharacter::SetAIDriven(bool a_enable)
 	{
 		using func_t = decltype(&PlayerCharacter::SetAIDriven);
-		REL::Relocation<func_t> func{ REL::ID(40586) };
+		REL::Relocation<func_t> func{ RELOCATION_ID(39507, 40586) };
 		return func(this, a_enable);
 	}
 
 	void PlayerCharacter::SetEscaping(bool a_flag, bool a_escaped)
 	{
 		using func_t = decltype(&PlayerCharacter::SetEscaping);
-		REL::Relocation<func_t> func{ REL::ID(40660) };
+		REL::Relocation<func_t> func{ RELOCATION_ID(39574, 40660) };
 		return func(this, a_flag, a_escaped);
 	}
 
@@ -193,21 +222,46 @@ namespace RE
 	void PlayerCharacter::UpdateCrosshairs()
 	{
 		using func_t = decltype(&PlayerCharacter::UpdateCrosshairs);
-		REL::Relocation<func_t> func(REL::ID(40621));
+		REL::Relocation<func_t> func(RELOCATION_ID(39535, 40621));
 		return func(this);
 	}
 
 	bool PlayerCharacter::CenterOnCell_Impl(const char* a_cellName, RE::TESObjectCELL* a_cell)
 	{
 		using func_t = decltype(&PlayerCharacter::CenterOnCell_Impl);
-		REL::Relocation<func_t> func{ REL::ID(40437) };
+		REL::Relocation<func_t> func{ RELOCATION_ID(39365, 40437) };
 		return func(this, a_cellName, a_cell);
 	}
 
 	void PlayerCharacter::AddSkillExperience(ActorValue a_skill, float a_experience)
 	{
 		using func_t = decltype(&PlayerCharacter::AddSkillExperience);
-		REL::Relocation<func_t> func(REL::ID(40488));
+		REL::Relocation<func_t> func(RELOCATION_ID(39413, 40488));
 		return func(this, a_skill, a_experience);
+	}
+
+	void PlayerCharacter::Unk_12A()
+	{
+		return RelocateVirtual<decltype(&PlayerCharacter::Unk_12A)>(0x12A, 0x12C, this);
+	}
+
+	std::uint32_t PlayerCharacter::GetViolentCrimeGoldValue(const TESFaction* a_faction) const
+	{
+		return RelocateVirtual<decltype(&PlayerCharacter::GetViolentCrimeGoldValue)>(0x12B, 0x12D, this, a_faction);
+	}
+
+	std::uint32_t PlayerCharacter::GetNonViolentCrimeGoldValue(const TESFaction* a_faction) const
+	{
+		return RelocateVirtual<decltype(&PlayerCharacter::GetNonViolentCrimeGoldValue)>(0x12C, 0x12E, this, a_faction);
+	}
+
+	void PlayerCharacter::ClearAllCrimeGold(TESFaction* a_faction)
+	{
+		RelocateVirtual<decltype(&PlayerCharacter::ClearAllCrimeGold)>(0x12D, 0x12F, this, a_faction);
+	}
+
+	void PlayerCharacter::Unk_12E()
+	{
+		return RelocateVirtual<decltype(&PlayerCharacter::Unk_12E)>(0x12E, 0x130, this);
 	}
 }

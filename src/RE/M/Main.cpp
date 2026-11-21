@@ -13,27 +13,27 @@ namespace RE
 
 	float Main::QFrameAnimTime()
 	{
-		REL::Relocation<float*> data{ REL::ID(403447) };
+		REL::Relocation<float*> data{ RELOCATION_ID(516940, 403447) };
 		return *data;
 	}
 
 	NiCamera* Main::WorldRootCamera()
 	{
 		using func_t = decltype(&Main::WorldRootCamera);
-		REL::Relocation<func_t> func{ REL::ID(36609) };
+		REL::Relocation<func_t> func{ RELOCATION_ID(35601, 36609) };
 		return func();
 	}
 
 	Scenegraph* Main::WorldRootNode()
 	{
-		REL::Relocation<NiPointer<Scenegraph>*> nodePtr{ REL::ID(403513) };
+		REL::Relocation<NiPointer<Scenegraph>*> nodePtr{ RELOCATION_ID(517006, 403513) };
 		return nodePtr->get();
 	}
 
 	void Main::SetActive(bool a_active)
 	{
 		using func_t = decltype(&Main::SetActive);
-		REL::Relocation<func_t> func{ REL::ID(36606) };
+		REL::Relocation<func_t> func{ RELOCATION_ID(35598, 36606) };
 		return func(this, a_active);
 	}
 }

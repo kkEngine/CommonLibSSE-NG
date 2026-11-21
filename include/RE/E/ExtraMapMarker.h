@@ -100,7 +100,7 @@ namespace RE
 		inline MapMarkerData* Ctor()
 		{
 			using func_t = decltype(&MapMarkerData::Ctor);
-			static REL::Relocation<func_t> func{ REL::ID(12945) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(12814, 12945) };
 			return func(this);
 		}
 
@@ -144,14 +144,14 @@ namespace RE
 		inline ExtraMapMarker* Ctor()
 		{
 			using func_t = decltype(&ExtraMapMarker::Ctor);
-			static REL::Relocation<func_t> func{ REL::ID(12426) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(12292, 12426) };
 			return func(this);
 		}
 
 		inline ExtraMapMarker* Ctor2(MapMarkerData* a_data)
 		{
 			using func_t = decltype(&ExtraMapMarker::Ctor2);
-			static REL::Relocation<func_t> func{ REL::ID(12425) };
+			static REL::Relocation<func_t> func{ RELOCATION_ID(12291, 12425) };
 			return func(this, a_data);
 		}
 

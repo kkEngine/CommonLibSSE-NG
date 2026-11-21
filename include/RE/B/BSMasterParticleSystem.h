@@ -44,12 +44,12 @@ namespace RE
 
 		[[nodiscard]] inline MASTER_PARTICLE_SYSTEM_RUNTIME_DATA& GetMasterParticleSystemRuntimeData() noexcept
 		{
-			return REL::RelocateMember<MASTER_PARTICLE_SYSTEM_RUNTIME_DATA>(this, 0x128);
+			return REL::RelocateMember<MASTER_PARTICLE_SYSTEM_RUNTIME_DATA>(this, 0x128, 0x150);
 		}
 
 		[[nodiscard]] inline const MASTER_PARTICLE_SYSTEM_RUNTIME_DATA& GetMasterParticleSystemRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<MASTER_PARTICLE_SYSTEM_RUNTIME_DATA>(this, 0x128);
+			return REL::RelocateMember<MASTER_PARTICLE_SYSTEM_RUNTIME_DATA>(this, 0x128, 0x150);
 		}
 
 		// members

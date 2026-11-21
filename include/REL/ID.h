@@ -61,6 +61,14 @@ namespace REL
         };
 
     public:
+        enum class Format
+        {
+            SSEv1,
+            SSEv2,
+            VR,
+            SSEv5  // AE 1.7.99+: dense uint32 array indexed by id
+        };
+
         class Offset2ID
         {
         public:
@@ -132,16 +140,25 @@ namespace REL
         }
 
 #ifdef ENABLE_COMMONLIBSSE_TESTING
-        [[nodiscard]] static bool inject(std::wstring_view a_filePath)
+        [[nodiscard]] static bool inject(std::wstring_view a_filePath, Format a_format)
         {
-            return inject(a_filePath, Module::get().version());
+            return inject(a_filePath, a_format, Module::get().version());
         }
 
-        [[nodiscard]] static bool inject(std::wstring_view a_filePath, Version a_version)
+        [[nodiscard]] static bool inject(std::wstring_view a_filePath, Format a_format, Version a_version)
         {
             _initialized = true;
             _instance.clear();
-            return _instance.load_file(a_filePath.data(), a_version, false);
+            switch (a_format) {
+                case Format::SSEv1:
+                    return _instance.load_file(a_filePath.data(), a_version, 1, false);
+                case Format::SSEv2:
+                    return _instance.load_file(a_filePath.data(), a_version, 2, false);
+                case Format::SSEv5:
+                    return _instance.load_file(a_filePath.data(), a_version, 5, false);
+                default:
+                    return false;
+            }
         }
 
         static void reset()
@@ -229,9 +246,52 @@ namespace REL
             stream_type _stream;
         };
 
-        // Header of the address library format 5: fixed 64-byte name, pointer size,
-        // reserved data format and the element count of the dense offset array.
         class header_t
+        {
+        public:
+            void read(istream_t &a_in, std::uint8_t a_formatVersion)
+            {
+                std::int32_t format{};
+                a_in.readin(format);
+                if (format != a_formatVersion) {
+                    stl::report_and_fail(
+                            std::format(
+                                    "Unsupported address library format: {}\n"
+                                    "This means this script extender plugin is incompatible with the address "
+                                    "library available for this version of the game, and thus does not "
+                                    "support it."sv,
+                                    format));
+                }
+
+                std::int32_t version[4]{};
+                std::int32_t nameLen{};
+                a_in.readin(version);
+                a_in.readin(nameLen);
+                a_in.ignore(nameLen);
+
+                a_in.readin(_pointerSize);
+                a_in.readin(_addressCount);
+
+                for (std::size_t i = 0; i < std::extent_v<decltype(version)>; ++i) {
+                    _version[i] = static_cast<std::uint16_t>(version[i]);
+                }
+            }
+
+            [[nodiscard]] std::size_t address_count() const noexcept { return static_cast<std::size_t>(_addressCount); }
+
+            [[nodiscard]] std::uint64_t pointer_size() const noexcept { return static_cast<std::uint64_t>(_pointerSize); }
+
+            [[nodiscard]] Version version() const noexcept { return _version; }
+
+        private:
+            Version      _version;
+            std::int32_t _pointerSize{0};
+            std::int32_t _addressCount{0};
+        };
+
+        // Header of format 5 (AE 1.7.99+): fixed 64-byte name, pointer size,
+        // reserved data format and the element count of the dense offset array.
+        class header_v5_t
         {
         public:
             void read(istream_t &a_in)
@@ -272,14 +332,105 @@ namespace REL
         void load()
         {
             const auto version = Module::get().version();
-            const auto filename =
-                    stl::utf8_to_utf16(
-                        std::format("Data/SKSE/Plugins/versionlib-{}.bin"sv, version.string()))
-                        .value_or(L"<unknown filename>"s);
-            load_file(filename, version, true);
+                const auto filename =
+                        stl::utf8_to_utf16(
+                            Module::IsAE() ?
+                                std::format("Data/SKSE/Plugins/versionlib-{}.bin"sv, version.string()) :
+                                std::format("Data/SKSE/Plugins/version-{}.bin"sv, version.string()))
+                                .value_or(L"<unknown filename>"s);
+                // AE 1.7.99+ ships format 5, older AE format 2, SE format 1.
+                load_file(filename, version, Module::IsAE() ? (version >= Version(1, 7, 99, 0) ? 5 : 2) : 1, true);
         }
 
-        bool load_file(stl::zwstring a_filename, Version a_version, bool a_failOnError);
+        bool load_file(stl::zwstring a_filename, Version a_version, std::uint8_t a_formatVersion, bool a_failOnError);
+
+        bool load_v5(istream_t &a_in, Version a_version, bool a_failOnError);
+
+
+        bool unpack_file(istream_t &a_in, header_t a_header, bool a_failOnError)
+        {
+            std::uint8_t type = 0;
+            std::uint64_t id = 0;
+            std::uint64_t offset = 0;
+            std::uint64_t prevID = 0;
+            std::uint64_t prevOffset = 0;
+            for (auto& mapping: _id2offset) {
+                a_in.readin(type);
+                const auto lo = static_cast<std::uint8_t>(type & 0xF);
+                const auto hi = static_cast<std::uint8_t>(type >> 4);
+
+                switch (lo) {
+                    case 0:
+                        a_in.readin(id);
+                        break;
+                    case 1:
+                        id = prevID + 1;
+                        break;
+                    case 2:
+                        id = prevID + a_in.readout<std::uint8_t>();
+                        break;
+                    case 3:
+                        id = prevID - a_in.readout<std::uint8_t>();
+                        break;
+                    case 4:
+                        id = prevID + a_in.readout<std::uint16_t>();
+                        break;
+                    case 5:
+                        id = prevID - a_in.readout<std::uint16_t>();
+                        break;
+                    case 6:
+                        id = a_in.readout<std::uint16_t>();
+                        break;
+                    case 7:
+                        id = a_in.readout<std::uint32_t>();
+                        break;
+                    default:
+                        return stl::report_and_error("unhandled type"sv, a_failOnError);
+                }
+
+                const std::uint64_t tmp = (hi & 8) != 0 ? (prevOffset / a_header.pointer_size()) : prevOffset;
+
+                switch (hi & 7) {
+                    case 0:
+                        a_in.readin(offset);
+                        break;
+                    case 1:
+                        offset = tmp + 1;
+                        break;
+                    case 2:
+                        offset = tmp + a_in.readout<std::uint8_t>();
+                        break;
+                    case 3:
+                        offset = tmp - a_in.readout<std::uint8_t>();
+                        break;
+                    case 4:
+                        offset = tmp + a_in.readout<std::uint16_t>();
+                        break;
+                    case 5:
+                        offset = tmp - a_in.readout<std::uint16_t>();
+                        break;
+                    case 6:
+                        offset = a_in.readout<std::uint16_t>();
+                        break;
+                    case 7:
+                        offset = a_in.readout<std::uint32_t>();
+                        break;
+                    default:
+                        return stl::report_and_error("unhandled type"sv, a_failOnError);
+                }
+
+                if ((hi & 8) != 0) {
+                    offset *= a_header.pointer_size();
+                }
+
+                mapping = {id, offset};
+
+                prevOffset = offset;
+                prevID = id;
+            }
+
+            return true;
+        }
 
         void clear()
         {
@@ -319,5 +470,92 @@ namespace REL
         [[nodiscard]] static std::uintptr_t base() { return Module::get().base(); }
 
         std::uint64_t _id{0};
+    };
+
+    class RelocationID
+    {
+    public:
+        constexpr RelocationID() noexcept = default;
+
+        explicit constexpr RelocationID(
+            [[maybe_unused]] std::uint64_t a_seID,
+            [[maybe_unused]] std::uint64_t a_aeID) noexcept
+        {
+            _aeID = a_aeID;
+        }
+
+        explicit constexpr RelocationID(
+            [[maybe_unused]] std::uint64_t a_seID,
+            [[maybe_unused]] std::uint64_t a_aeID,
+            [[maybe_unused]] std::uint64_t a_vrID) noexcept
+        {
+            _aeID = a_aeID;
+        }
+
+        [[nodiscard]] std::uintptr_t address() const
+        {
+            auto thisOffset = offset();
+            return thisOffset ? base() + offset() : 0;
+        }
+
+        [[nodiscard]] std::size_t offset() const
+        {
+            auto thisID = id();
+            return thisID ? IDDatabase::get().id2offset(thisID) : 0;
+        }
+
+        [[nodiscard]] constexpr std::uint64_t id() const noexcept
+        {
+            switch (Module::GetRuntime()) {
+                case Module::Runtime::AE:
+                    return _aeID;
+                default:
+                    return 0;
+            }
+        }
+
+        [[nodiscard]] constexpr explicit operator ID() const noexcept {
+            return ID(id());
+        }
+
+    private:
+        [[nodiscard]] static std::uintptr_t base() { return Module::get().base(); }
+
+        std::uint64_t _aeID{0};
+    };
+
+    class VariantID
+    {
+    public:
+        constexpr VariantID() noexcept = default;
+
+        explicit constexpr VariantID(
+            [[maybe_unused]] std::uint64_t a_seID,
+            [[maybe_unused]] std::uint64_t a_aeID,
+            [[maybe_unused]] std::uint64_t a_vrOffset) noexcept
+        {
+            _aeID = a_aeID;
+        }
+
+        [[nodiscard]] std::uintptr_t address() const
+        {
+            auto thisOffset = offset();
+            return thisOffset ? base() + offset() : 0;
+        }
+
+        [[nodiscard]] std::size_t offset() const
+        {
+            switch (Module::GetRuntime()) {
+                case Module::Runtime::AE:
+                    return _aeID ? IDDatabase::get().id2offset(_aeID) : 0;
+                default:
+                    return 0;
+            }
+        }
+
+    private:
+        [[nodiscard]] static std::uintptr_t base() { return Module::get().base(); }
+
+        std::uint64_t _aeID{0};
     };
 }

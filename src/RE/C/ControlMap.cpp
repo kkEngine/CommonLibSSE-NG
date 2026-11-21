@@ -71,14 +71,14 @@ namespace RE
 	void ControlMap::PopInputContext(InputContextID a_context)
 	{
 		using func_t = decltype(&ControlMap::PopInputContext);
-		REL::Relocation<func_t> func{ REL::ID(68544) };
+		REL::Relocation<func_t> func{ RELOCATION_ID(67244, 68544) };
 		return func(this, a_context);
 	}
 
 	void ControlMap::PushInputContext(InputContextID a_context)
 	{
 		using func_t = decltype(&ControlMap::PushInputContext);
-		REL::Relocation<func_t> func{ REL::ID(68543) };
+		REL::Relocation<func_t> func{ RELOCATION_ID(67243, 68543) };
 		return func(this, a_context);
 	}
 

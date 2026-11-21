@@ -7,28 +7,28 @@ namespace RE
 		const char* GetExpressionName(std::uint32_t a_expression)
 		{
 			using func_t = decltype(&GetExpressionName);
-			REL::Relocation<func_t> func(REL::ID(27007));
+			REL::Relocation<func_t> func(RELOCATION_ID(0, 27007));
 			return func(a_expression);
 		}
 
 		const char* GetModifierName(std::uint32_t a_modifier)
 		{
 			using func_t = decltype(&GetModifierName);
-			REL::Relocation<func_t> func(REL::ID(27008));
+			REL::Relocation<func_t> func(RELOCATION_ID(0, 27008));
 			return func(a_modifier);
 		}
 
 		const char* GetPhonemeName(std::uint32_t a_phoneme)
 		{
 			using func_t = decltype(&GetPhonemeName);
-			REL::Relocation<func_t> func(REL::ID(27009));
+			REL::Relocation<func_t> func(RELOCATION_ID(0, 27009));
 			return func(a_phoneme);
 		}
 
 		const char* GetCustomName(std::uint32_t a_custom)
 		{
 			using func_t = decltype(&GetCustomName);
-			REL::Relocation<func_t> func(REL::ID(27010));
+			REL::Relocation<func_t> func(RELOCATION_ID(0, 27010));
 			return func(a_custom);
 		}
 	}

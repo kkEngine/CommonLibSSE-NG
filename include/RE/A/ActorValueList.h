@@ -10,7 +10,7 @@ namespace RE
 	public:
 		[[nodiscard]] static ActorValueList* GetSingleton()
 		{
-			REL::Relocation<ActorValueList**> singleton{ REL::ID(400267) };
+			REL::Relocation<ActorValueList**> singleton{ RELOCATION_ID(514139, 400267) };
 			return *singleton;
 		}
 

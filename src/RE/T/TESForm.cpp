@@ -39,7 +39,7 @@ namespace RE
 	float TESForm::GetWeight() const
 	{
 		using func_t = decltype(&TESForm::GetWeight);
-		REL::Relocation<func_t> func{ REL::ID(14988) };
+		REL::Relocation<func_t> func{ RELOCATION_ID(14809, 14988) };
 		return func(this);
 	}
 
@@ -156,25 +156,36 @@ namespace RE
 		std::uint32_t fullMasters = 0;
 		std::uint32_t smallMasters = 0;
 
-		for (std::uint32_t i = 0; i < modFile->masterCount; ++i) {
-			const auto* master = modFile->masterPtrs[i];
-			if (master == expectedFile) {
-				if (master->compileIndex == 0xFE) {
-					return 0xFE000000 | (smallMasters << 12) | (formID & 0x00000FFF);
-				} else {
+		if constexpr (REL::Module::IsVR()) {
+			for (std::uint32_t i = 0; i < modFile->masterCount; ++i) {
+				const auto* master = modFile->masterPtrs[i];
+				if (master == expectedFile) {
 					return (fullMasters << 24) | (formID & 0x00FFFFFF);
 				}
-			}
-			if (master->compileIndex == 0xFE) {
-				++smallMasters;
-			} else {
 				++fullMasters;
 			}
-		}
-		if (modFile->compileIndex == 0xFE) {
-			return (formID & 0x00000FFF) | 0xFE000000 | (smallMasters << 12);
-		} else {
 			return (formID & 0x00FFFFFF) | (fullMasters << 24);
+		} else {
+			for (std::uint32_t i = 0; i < modFile->masterCount; ++i) {
+				const auto* master = modFile->masterPtrs[i];
+				if (master == expectedFile) {
+					if (master->compileIndex == 0xFE) {
+						return 0xFE000000 | (smallMasters << 12) | (formID & 0x00000FFF);
+					} else {
+						return (fullMasters << 24) | (formID & 0x00FFFFFF);
+					}
+				}
+				if (master->compileIndex == 0xFE) {
+					++smallMasters;
+				} else {
+					++fullMasters;
+				}
+			}
+			if (modFile->compileIndex == 0xFE) {
+				return (formID & 0x00000FFF) | 0xFE000000 | (smallMasters << 12);
+			} else {
+				return (formID & 0x00FFFFFF) | (fullMasters << 24);
+			}
 		}
 	}
 
@@ -205,7 +216,7 @@ namespace RE
 	void TESForm::SetPlayerKnows(bool a_known)
 	{
 		using func_t = decltype(&TESForm::SetPlayerKnows);
-		REL::Relocation<func_t> func{ REL::ID(14639) };
+		REL::Relocation<func_t> func{ RELOCATION_ID(14482, 14639) };
 		return func(this, a_known);
 	}
 }
