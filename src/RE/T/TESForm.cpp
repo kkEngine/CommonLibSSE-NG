@@ -156,36 +156,25 @@ namespace RE
 		std::uint32_t fullMasters = 0;
 		std::uint32_t smallMasters = 0;
 
-		if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
-			for (std::uint32_t i = 0; i < modFile->masterCount; ++i) {
-				const auto* master = modFile->masterPtrs[i];
-				if (master == expectedFile) {
+		for (std::uint32_t i = 0; i < modFile->masterCount; ++i) {
+			const auto* master = modFile->masterPtrs[i];
+			if (master == expectedFile) {
+				if (master->compileIndex == 0xFE) {
+					return 0xFE000000 | (smallMasters << 12) | (formID & 0x00000FFF);
+				} else {
 					return (fullMasters << 24) | (formID & 0x00FFFFFF);
 				}
+			}
+			if (master->compileIndex == 0xFE) {
+				++smallMasters;
+			} else {
 				++fullMasters;
 			}
-			return (formID & 0x00FFFFFF) | (fullMasters << 24);
+		}
+		if (modFile->compileIndex == 0xFE) {
+			return (formID & 0x00000FFF) | 0xFE000000 | (smallMasters << 12);
 		} else {
-			for (std::uint32_t i = 0; i < modFile->masterCount; ++i) {
-				const auto* master = modFile->masterPtrs[i];
-				if (master == expectedFile) {
-					if (master->compileIndex == 0xFE) {
-						return 0xFE000000 | (smallMasters << 12) | (formID & 0x00000FFF);
-					} else {
-						return (fullMasters << 24) | (formID & 0x00FFFFFF);
-					}
-				}
-				if (master->compileIndex == 0xFE) {
-					++smallMasters;
-				} else {
-					++fullMasters;
-				}
-			}
-			if (modFile->compileIndex == 0xFE) {
-				return (formID & 0x00000FFF) | 0xFE000000 | (smallMasters << 12);
-			} else {
-				return (formID & 0x00FFFFFF) | (fullMasters << 24);
-			}
+			return (formID & 0x00FFFFFF) | (fullMasters << 24);
 		}
 	}
 

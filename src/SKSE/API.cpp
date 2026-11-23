@@ -76,6 +76,22 @@ namespace SKSE
 		}
 
 		(void)REL::Module::get();
+		// One build, one runtime (see CMakeLists.txt): compare the running game with what this plugin was built for.
+		// The actual file version is used, the runtime REL::Module reports follows the build configuration.
+		{
+			const auto version = REL::Module::get().version();
+#ifdef SKYRIM_AE_1799
+			// Classes like MenuEventHandler are declared with the 1.7.99+ vtables in this build;
+			// on an older runtime every overridden or called vfunc past the insertion point would be wrong.
+			if (version < SKSE::RUNTIME_SSE_1_7_99) {
+				stl::report_and_fail("This plugin was built for Skyrim AE 1.7.99 or newer and can't run on this version of the game."sv);
+			}
+#else
+			if (version != SKSE::RUNTIME_SSE_1_5_97) {
+				stl::report_and_fail("This plugin was built for Skyrim SE 1.5.97 and can't run on this version of the game."sv);
+			}
+#endif
+		}
 		(void)REL::IDDatabase::get();
 
 		auto&       storage = detail::APIStorage::get();

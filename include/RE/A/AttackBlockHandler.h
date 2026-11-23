@@ -25,6 +25,10 @@ namespace RE
 		void SetHeldStateActive(bool a_flag) override;                                  // 06
 
 		// members
+#ifdef SKYRIM_AE_1799
+		// AE 1.7.99 put 0x40 bytes in front and 0x3C bytes before the flags (offsets checked in its vfuncs)
+		std::uint8_t  unk18[0x40];                 // 18
+#endif
 		std::uint32_t heldTimeMs;                  // 18
 		std::uint32_t unk1C;                       // 1C
 		BSFixedString controlID;                   // 20
@@ -35,11 +39,24 @@ namespace RE
 		float         initialPowerAttackDelay;     // 30
 		std::uint32_t pad34;                       // 34
 		float         subsequentPowerAttackDelay;  // 38
+#ifdef SKYRIM_AE_1799
+		std::uint8_t  unk7C[0x3C];                 // 7C
+#else
+		std::uint32_t pad3C;                       // 3C - the flags are read at 40 in 1.6.1170
+#endif
 		bool          ignore;                      // 40
 		bool          unk41;                       // 41
 		bool          heldLeft;                    // 42
 		bool          heldRight;                   // 43
 		std::uint32_t unk44;                       // 44
 	};
+#ifdef SKYRIM_AE_1799
+	static_assert(offsetof(AttackBlockHandler, heldTimeMs) == 0x58);
+	static_assert(offsetof(AttackBlockHandler, controlID) == 0x60);
+	static_assert(offsetof(AttackBlockHandler, ignore) == 0xB8);
+	static_assert(sizeof(AttackBlockHandler) == 0xC0);
+#else
+	static_assert(offsetof(AttackBlockHandler, ignore) == 0x40);
 	static_assert(sizeof(AttackBlockHandler) == 0x48);
+#endif
 }

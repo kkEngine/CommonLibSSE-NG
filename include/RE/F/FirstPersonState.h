@@ -30,7 +30,7 @@ namespace RE
 
 		// override (PlayerInputHandler)
 		bool CanProcess(InputEvent* a_event) override;                                          // 01
-		void ProcessButton(ButtonEvent* a_event, PlayerControlsData* a_movementData) override;  // 04
+		void ProcessButton(ButtonEvent* a_event, PlayerControlsData* a_movementData) override;  // 04 (06 on AE 1.7.99+)
 
 		// members
 		NiPoint3      lastPosition;             // 30
@@ -44,12 +44,28 @@ namespace RE
 		float         unk70;                    // 70
 		float         currentPitchOffset;       // 74 - [-100, 100]
 		float         targetPitchOffset;        // 78 - [-100, 100]
+#ifdef SKYRIM_AE_1799
+		// AE 1.7.99 added a dword before cameraOverride
+		std::uint32_t unk7C;                // 7C
+		float         unk80;                // 80
+		std::uint32_t unk84;                // 84
+		bool          cameraOverride;       // 88
+		bool          cameraPitchOverride;  // 89
+		std::uint16_t unk8A;                // 8A
+		std::uint32_t pad8C;                // 8C
+		std::uint64_t unk90;                // 90
+#else
 		float         unk7C;                    // 7C
 		std::uint32_t unk80;                    // 80
 		bool          cameraOverride;           // 84
 		bool          cameraPitchOverride;      // 85
 		std::uint16_t unk86;                    // 86
 		std::uint64_t unk88;                    // 88
+#endif
 	};
+#ifdef SKYRIM_AE_1799
+	static_assert(sizeof(FirstPersonState) == 0x98);
+#else
 	static_assert(sizeof(FirstPersonState) == 0x90);
+#endif
 }

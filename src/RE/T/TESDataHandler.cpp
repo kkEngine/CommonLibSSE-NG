@@ -44,15 +44,10 @@ namespace RE
 			return 0;
 		}
 
-		if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
-			// Use SkyrimVR lookup logic, ignore light plugin index which doesn't exist in VR
-			return (a_localFormID & 0xFFFFFF) | (file->compileIndex << 24);
-		} else {
-			FormID formID = file->compileIndex << (3 * 8);
-			formID += file->smallFileCompileIndex << ((1 * 8) + 4);
-			formID += a_localFormID;
-			return formID;
-		}
+		FormID formID = file->compileIndex << (3 * 8);
+		formID += file->smallFileCompileIndex << ((1 * 8) + 4);
+		formID += a_localFormID;
+		return formID;
 	}
 
 	FormID TESDataHandler::LookupFormIDRaw(FormID a_rawFormID, std::string_view a_modName)
@@ -63,29 +58,21 @@ namespace RE
 		}
 
 		auto rawIndex = (a_rawFormID & 0xFF000000) >> 24;
-		if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
-			if (rawIndex >= file->masterCount) {
-				return 0;
-			}
-			auto* master = file->masterPtrs[rawIndex];
-			return (a_rawFormID & 0x00FFFFFF) | (master->compileIndex << 24);
-		} else {
-			bool isLight = rawIndex == 0xFE;
-			if (isLight) {
-				rawIndex = (a_rawFormID & 0x00FFF000) >> 12;
-			}
-			std::uint32_t index = 0;
-			for (std::uint32_t i = 0; i < file->masterCount; ++i) {
-				auto* master = file->masterPtrs[i];
-				if ((master->compileIndex == 0xFE) != isLight) {
-					continue;
-				}
-				if (index++ == rawIndex) {
-					return (a_rawFormID & 0x00FFFFFF) | (master->compileIndex << 24);
-				}
-			}
-			return 0;
+		bool isLight = rawIndex == 0xFE;
+		if (isLight) {
+			rawIndex = (a_rawFormID & 0x00FFF000) >> 12;
 		}
+		std::uint32_t index = 0;
+		for (std::uint32_t i = 0; i < file->masterCount; ++i) {
+			auto* master = file->masterPtrs[i];
+			if ((master->compileIndex == 0xFE) != isLight) {
+				continue;
+			}
+			if (index++ == rawIndex) {
+				return (a_rawFormID & 0x00FFFFFF) | (master->compileIndex << 24);
+			}
+		}
+		return 0;
 	}
 
 	const TESFile* TESDataHandler::LookupModByName(std::string_view a_modName)

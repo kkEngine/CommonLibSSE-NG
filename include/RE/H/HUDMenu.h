@@ -4,7 +4,6 @@
 #include "RE/B/BSTEvent.h"
 #include "RE/G/GFxValue.h"
 #include "RE/I/IMenu.h"
-#include "RE/W/WorldSpaceMenu.h"
 
 namespace RE
 {
@@ -19,17 +18,9 @@ namespace RE
 	// flags = kAlwaysOpen | kRequiresUpdate | kAllowSaving | kCustomRendering | kAssignCursorToRenderer
 	// context = kNone
 	class HUDMenu :
-#if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-		public WorldSpaceMenu,                       // 00
-		public BSTEventSink<UserEventEnabledEvent>,  // 58
-		public BSTEventSink<BSRemoteGamepadEvent>    // 60
-#elif !defined(ENABLE_SKYRIM_VR)
 		public IMenu,                                // 00
 		public BSTEventSink<UserEventEnabledEvent>,  // 30
 		public BSTEventSink<BSRemoteGamepadEvent>    // 38
-#else
-		public IMenu  // 00
-#endif
 	{
 	public:
 		inline static constexpr auto      RTTI = RTTI_HUDMenu;
@@ -58,30 +49,15 @@ namespace RE
 		void               AdvanceMovie(float a_interval, std::uint32_t a_currentTime) override;  // 05
 		void               RefreshPlatform() override;                                            // 08
 
-#ifndef SKYRIM_CROSS_VR
 		// override (BSTEventSink<UserEventEnabledEvent>)
 		BSEventNotifyControl ProcessEvent(const UserEventEnabledEvent* a_event, BSTEventSource<UserEventEnabledEvent>* a_eventSource) override;  // 01
 
 		// override (BSTEventSink<BSRemoteGamepadEvent>)
 		BSEventNotifyControl ProcessEvent(const BSRemoteGamepadEvent* a_event, BSTEventSource<BSRemoteGamepadEvent>* a_eventSource) override;  // 01
-#endif
-
-		[[nodiscard]] WorldSpaceMenu* AsWorldSpaceMenu() noexcept
-		{
-			if SKYRIM_REL_CONSTEXPR (!REL::Module::IsVR()) {
-				return nullptr;
-			}
-			return &REL::RelocateMember<WorldSpaceMenu>(this, 0, 0);
-		}
-
-		[[nodiscard]] const WorldSpaceMenu* AsWorldSpaceMenu() const noexcept
-		{
-			return const_cast<HUDMenu*>(this)->AsWorldSpaceMenu();
-		}
 
 		[[nodiscard]] BSTEventSink<UserEventEnabledEvent>* AsUserEventEnabledEventSink() noexcept
 		{
-			return &REL::RelocateMember<BSTEventSink<UserEventEnabledEvent>>(this, 0x30, 0x58);
+			return &REL::RelocateMember<BSTEventSink<UserEventEnabledEvent>>(this, 0x30);
 		}
 
 		[[nodiscard]] const BSTEventSink<UserEventEnabledEvent>* AsUserEventEnabledEventSink() const noexcept
@@ -91,7 +67,7 @@ namespace RE
 
 		[[nodiscard]] BSTEventSink<BSRemoteGamepadEvent>* AsBSRemoteGamepadEventSink() noexcept
 		{
-			return &REL::RelocateMember<BSTEventSink<BSRemoteGamepadEvent>>(this, 0x38, 0x60);
+			return &REL::RelocateMember<BSTEventSink<BSRemoteGamepadEvent>>(this, 0x38);
 		}
 
 		[[nodiscard]] const BSTEventSink<BSRemoteGamepadEvent>* AsBSRemoteGamepadEventSink() const noexcept
@@ -101,12 +77,12 @@ namespace RE
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40, 0x70);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40, 0x70);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x40);
 		}
 
 		static void FlashMeter(ActorValue a_actorValue)
@@ -124,17 +100,8 @@ namespace RE
 		}
 
 		// members
-#ifndef SKYRIM_CROSS_VR
-#	if !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-		std::uint64_t pad68;  // 68
-#	endif
 		RUNTIME_DATA_CONTENT  // 40, 70
-#endif
 	};
-#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(HUDMenu) == 0x98);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(HUDMenu) == 0xC8);
-#endif
 }
 #undef RUNTIME_DATA_CONTENT

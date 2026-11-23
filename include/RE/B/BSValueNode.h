@@ -22,9 +22,7 @@ namespace RE
 		bool          RegisterStreamables(NiStream& a_stream) override;   // 1A
 		void          SaveBinary(NiStream& a_stream) override;            // 1B
 		bool          IsEqual(NiObject* a_object) override;               // 1C
-#ifndef SKYRIM_CROSS_VR
 		void UpdateWorldData(NiUpdateData* a_data) override;              // 30
-#endif
 
 		// add
 		virtual bool ParseNameForValue();  // 35
@@ -39,18 +37,16 @@ namespace RE
 
 		[[nodiscard]] inline VALUE_NODE_RUNTIME_DATA& GetValueNodeRuntimeData() noexcept
 		{
-			return REL::RelocateMember<VALUE_NODE_RUNTIME_DATA>(this, 0x128, 0x150);
+			return REL::RelocateMember<VALUE_NODE_RUNTIME_DATA>(this, 0x128);
 		}
 
 		[[nodiscard]] inline const VALUE_NODE_RUNTIME_DATA& GetValueNodeRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<VALUE_NODE_RUNTIME_DATA>(this, 0x128, 0x150);
+			return REL::RelocateMember<VALUE_NODE_RUNTIME_DATA>(this, 0x128);
 		}
 
 		// members
-#ifndef SKYRIM_CROSS_VR
 		RUNTIME_DATA_CONTENT  // 128, 150
-#endif
 	};
 }
 #undef RUNTIME_DATA_CONTENT

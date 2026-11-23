@@ -98,30 +98,21 @@ namespace RE
 
 		// override (NiNode)
 		const NiRTTI* GetRTTI() const override;  // 02
-#if !defined(ENABLE_SKYRIM_VR) || (!defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_VR))
-		// The following are virtual functions past the point where VR compatibility breaks.
 		void OnVisible(NiCullingProcess& a_process) override;  // 34
-#endif
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x128, 0x150);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x128);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x128, 0x150);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x128);
 		}
 
 		// members
-#ifndef SKYRIM_CROSS_VR
 		RUNTIME_DATA_CONTENT  // 128, 150
-#endif
 	};
-#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(ShadowSceneNode) == 0x308);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(ShadowSceneNode) == 0x330);
-#endif
 }
 #undef RUNTIME_DATA_CONTENT

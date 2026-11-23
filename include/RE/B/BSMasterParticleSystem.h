@@ -22,11 +22,9 @@ namespace RE
 		void          SaveBinary(NiStream& a_stream) override;                                          // 1B
 		void          PostLinkObject(NiStream& a_stream) override;                                      // 1E
 		bool          IsEqual(NiObject* a_object) override;                                             // 1C
-#ifndef SKYRIM_CROSS_VR
 		void          UpdateDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2) override;          // 2C
 		void          UpdateSelectedDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2) override;  // 2D
 		void          UpdateRigidDownwardPass(NiUpdateData& a_data, std::uint32_t a_arg2) override;     // 2E
-#endif
 
 		struct MASTER_PARTICLE_SYSTEM_RUNTIME_DATA
 		{
@@ -46,18 +44,16 @@ namespace RE
 
 		[[nodiscard]] inline MASTER_PARTICLE_SYSTEM_RUNTIME_DATA& GetMasterParticleSystemRuntimeData() noexcept
 		{
-			return REL::RelocateMember<MASTER_PARTICLE_SYSTEM_RUNTIME_DATA>(this, 0x128, 0x150);
+			return REL::RelocateMember<MASTER_PARTICLE_SYSTEM_RUNTIME_DATA>(this, 0x128);
 		}
 
 		[[nodiscard]] inline const MASTER_PARTICLE_SYSTEM_RUNTIME_DATA& GetMasterParticleSystemRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<MASTER_PARTICLE_SYSTEM_RUNTIME_DATA>(this, 0x128, 0x150);
+			return REL::RelocateMember<MASTER_PARTICLE_SYSTEM_RUNTIME_DATA>(this, 0x128);
 		}
 
 		// members
-#ifndef SKYRIM_CROSS_VR
 		RUNTIME_DATA_CONTENT  // 128, 150
-#endif
 	};
 }
 #undef RUNTIME_DATA_CONTENT

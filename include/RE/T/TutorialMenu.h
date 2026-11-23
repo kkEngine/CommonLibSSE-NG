@@ -22,12 +22,12 @@ namespace RE
 
 		[[nodiscard]] inline GFxValue GetRoot() const noexcept
 		{
-			return REL::RelocateMember<GFxValue>(this, 0x30, 0x40);
+			return REL::RelocateMember<GFxValue>(this, 0x30);
 		}
 
 		inline void SetRoot(GFxValue a_root) noexcept
 		{
-			REL::RelocateMember<GFxValue>(this, 0x30, 0x40) = a_root;
+			REL::RelocateMember<GFxValue>(this, 0x30) = a_root;
 		}
 
 		static void OpenTutorialMenu(DEFAULT_OBJECT a_tutorial)
@@ -38,13 +38,7 @@ namespace RE
 		}
 
 		// members
-#ifndef SKYRIM_CROSS_VR
 		GFxValue root;  // 30, 40 - "Menu_mc"
-#endif
 	};
-#ifndef ENABLE_SKYRIM_VR
 	static_assert(sizeof(TutorialMenu) == 0x48);
-#elif !defined(ENABLE_SKYRIM_AE) && !defined(ENABLE_SKYRIM_SE)
-	static_assert(sizeof(TutorialMenu) == 0x58);
-#endif
 }

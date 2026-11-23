@@ -15,22 +15,17 @@ set_encodings("utf-8")
 add_rules("mode.debug", "mode.release")
 
 -- define options
+-- One build targets one runtime: Skyrim SE 1.5.97 or Skyrim AE 1.7.99+ (see CMakeLists.txt).
 option("skyrim_se")
-    set_default(true)
-    set_description("Enable runtime support for Skyrim SE")
+    set_default(false)
+    set_description("Build for Skyrim SE 1.5.97")
     add_defines("ENABLE_SKYRIM_SE=1")
 option_end()
 
 option("skyrim_ae")
     set_default(true)
-    set_description("Enable runtime support for Skyrim AE")
-    add_defines("ENABLE_SKYRIM_AE=1")
-option_end()
-
-option("skyrim_vr")
-    set_default(true)
-    set_description("Enable runtime support for Skyrim VR")
-    add_defines("ENABLE_SKYRIM_VR=1")
+    set_description("Build for Skyrim AE 1.7.99+")
+    add_defines("ENABLE_SKYRIM_AE=1", "SKYRIM_AE_1799=1")
 option_end()
 
 option("skse_xbyak")
@@ -48,8 +43,8 @@ option_end()
 -- require packages
 add_requires("spdlog", { configs = { header_only = false, wchar = true, std_format = true } })
 
-if has_config("skyrim_vr") then
-    add_requires("rapidcsv")
+if has_config("skyrim_se") == has_config("skyrim_ae") then
+    raise("enable exactly one of skyrim_se (1.5.97) and skyrim_ae (1.7.99+)")
 end
 
 if has_config("skse_xbyak") then
@@ -64,16 +59,12 @@ target("commonlibsse-ng")
     -- add packages
     add_packages("spdlog", { public = true })
 
-    if has_config("skyrim_vr") then
-        add_packages("rapidcsv", { public = true })
-    end
-
     if has_config("skse_xbyak") then
         add_packages("xbyak", { public = true })
     end
 
     -- add options
-    add_options("skyrim_se", "skyrim_ae", "skyrim_vr", "skse_xbyak", "tests", { public = true })
+    add_options("skyrim_se", "skyrim_ae", "skse_xbyak", "tests", { public = true })
 
     -- add system links
     add_syslinks("advapi32", "d3d11", "d3dcompiler", "dbghelp", "dxgi", "ole32", "shell32", "user32", "version")

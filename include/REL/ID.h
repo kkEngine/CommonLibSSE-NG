@@ -65,7 +65,7 @@ namespace REL
         {
             SSEv1,
             SSEv2,
-            VR
+            SSEv5  // AE 1.7.99+: dense uint32 array indexed by id
         };
 
         class Offset2ID
@@ -153,10 +153,8 @@ namespace REL
                     return _instance.load_file(a_filePath.data(), a_version, 1, false);
                 case Format::SSEv2:
                     return _instance.load_file(a_filePath.data(), a_version, 2, false);
-#ifdef ENABLE_SKYRIM_VR
-                case Format::VR:
-                    return _instance.load_csv(a_filePath.data(), a_version, false);
-#endif
+                case Format::SSEv5:
+                    return _instance.load_file(a_filePath.data(), a_version, 5, false);
                 default:
                     return false;
             }
@@ -180,14 +178,9 @@ namespace REL
                         return a_lhs.id < a_rhs.id;
                     });
 
-            bool failed = false;
-            if (it == _id2offset.end()) {
-                failed = true;
-            } else if SKYRIM_REL_VR_CONSTEXPR (Module::IsVR()) {
-                if (it->id != a_id) {
-                    failed = true;
-                }
-            }
+            // An id missing from the library must not silently resolve to its neighbour:
+            // AE 1.7.99 retired many ids, so a stale id would otherwise patch random code.
+            const bool failed = it == _id2offset.end() || it->id != a_id;
             if (failed) {
                 stl::report_and_fail(
                     std::format(
@@ -228,6 +221,12 @@ namespace REL
             inline void readin(T &a_val)
             {
                 _stream.read(reinterpret_cast<char *>(std::addressof(a_val)), sizeof(T));
+            }
+
+            template<class T>
+            inline void readin_n(T *a_vals, std::size_t a_count)
+            {
+                _stream.read(reinterpret_cast<char *>(a_vals), static_cast<std::streamsize>(a_count * sizeof(T)));
             }
 
             template<
@@ -289,6 +288,37 @@ namespace REL
             std::int32_t _addressCount{0};
         };
 
+        // Header of format 5 (AE 1.7.99+): fixed 64-byte name, pointer size,
+        // reserved data format and the element count of the dense offset array.
+        class header_v5_t
+        {
+        public:
+            void read(istream_t &a_in)
+            {
+                std::uint32_t version[4]{};
+                char          name[64]{};
+                a_in.readin(version);
+                a_in.readin(name);
+                a_in.readin(_pointerSize);
+                a_in.readin(_dataFormat);
+                a_in.readin(_offsetCount);
+
+                for (std::size_t i = 0; i < std::extent_v<decltype(version)>; ++i) {
+                    _version[i] = static_cast<std::uint16_t>(version[i]);
+                }
+            }
+
+            [[nodiscard]] std::size_t offset_count() const noexcept { return static_cast<std::size_t>(_offsetCount); }
+
+            [[nodiscard]] Version version() const noexcept { return _version; }
+
+        private:
+            Version      _version;
+            std::int32_t _pointerSize{0};
+            std::int32_t _dataFormat{0};
+            std::int32_t _offsetCount{0};
+        };
+
         IDDatabase() = default;
         IDDatabase(const IDDatabase&) = delete;
         IDDatabase(IDDatabase&&) = delete;
@@ -301,32 +331,20 @@ namespace REL
         void load()
         {
             const auto version = Module::get().version();
-#ifdef ENABLE_SKYRIM_VR
-            if SKYRIM_REL_CONSTEXPR (Module::IsVR()) {
-                const auto filename =
-                        stl::utf8_to_utf16(
-                                std::format("Data/SKSE/Plugins/version-{}.csv"sv, version.string()))
-                                .value_or(L"<unknown filename>"s);
-                load_csv(filename, version, true);
-            } else {
-#endif
                 const auto filename =
                         stl::utf8_to_utf16(
                             Module::IsAE() ?
                                 std::format("Data/SKSE/Plugins/versionlib-{}.bin"sv, version.string()) :
                                 std::format("Data/SKSE/Plugins/version-{}.bin"sv, version.string()))
                                 .value_or(L"<unknown filename>"s);
-                load_file(filename, version, Module::IsAE() ? 2 : 1, true);
-#ifdef ENABLE_SKYRIM_VR
-            }
-#endif
+                // AE 1.7.99+ ships format 5, older AE format 2, SE format 1.
+                load_file(filename, version, Module::IsAE() ? (version >= Version(1, 7, 99, 0) ? 5 : 2) : 1, true);
         }
 
         bool load_file(stl::zwstring a_filename, Version a_version, std::uint8_t a_formatVersion, bool a_failOnError);
 
-#ifdef ENABLE_SKYRIM_VR
-        bool load_csv(stl::zwstring a_filename, Version a_version, bool a_failOnError);
-#endif
+        bool load_v5(istream_t &a_in, Version a_version, bool a_failOnError);
+
 
         bool unpack_file(istream_t &a_in, header_t a_header, bool a_failOnError)
         {
@@ -468,25 +486,6 @@ namespace REL
 #ifdef ENABLE_SKYRIM_AE
             _aeID = a_aeID;
 #endif
-#ifdef ENABLE_SKYRIM_VR
-            _vrID = a_seID;
-#endif
-        }
-
-        explicit constexpr RelocationID(
-            [[maybe_unused]] std::uint64_t a_seID,
-            [[maybe_unused]] std::uint64_t a_aeID,
-            [[maybe_unused]] std::uint64_t a_vrID) noexcept
-        {
-#ifdef ENABLE_SKYRIM_SE
-            _seID = a_seID;
-#endif
-#ifdef ENABLE_SKYRIM_AE
-            _aeID = a_aeID;
-#endif
-#ifdef ENABLE_SKYRIM_VR
-            _vrID = a_vrID;
-#endif
         }
 
         [[nodiscard]] std::uintptr_t address() const
@@ -512,10 +511,6 @@ namespace REL
                 case Module::Runtime::SE:
                     return _seID;
 #endif
-#ifdef ENABLE_SKYRIM_VR
-                case Module::Runtime::VR:
-                    return _vrID;
-#endif
                 default:
                     return 0;
             }
@@ -533,70 +528,6 @@ namespace REL
 #endif
 #ifdef ENABLE_SKYRIM_AE
         std::uint64_t _aeID{0};
-#endif
-#ifdef ENABLE_SKYRIM_VR
-        std::uint64_t _vrID{0};
-#endif
-    };
-
-    class VariantID
-    {
-    public:
-        constexpr VariantID() noexcept = default;
-
-        explicit constexpr VariantID(
-            [[maybe_unused]] std::uint64_t a_seID,
-            [[maybe_unused]] std::uint64_t a_aeID,
-            [[maybe_unused]] std::uint64_t a_vrOffset) noexcept
-        {
-#ifdef ENABLE_SKYRIM_SE
-            _seID = a_seID;
-#endif
-#ifdef ENABLE_SKYRIM_AE
-            _aeID = a_aeID;
-#endif
-#ifdef ENABLE_SKYRIM_VR
-            _vrOffset = a_vrOffset;
-#endif
-        }
-
-        [[nodiscard]] std::uintptr_t address() const
-        {
-            auto thisOffset = offset();
-            return thisOffset ? base() + offset() : 0;
-        }
-
-        [[nodiscard]] std::size_t offset() const
-        {
-            switch (Module::GetRuntime()) {
-#ifdef ENABLE_SKYRIM_AE
-                case Module::Runtime::AE:
-                    return _aeID ? IDDatabase::get().id2offset(_aeID) : 0;
-#endif
-#ifdef ENABLE_SKYRIM_SE
-                case Module::Runtime::SE:
-                    return _seID ? IDDatabase::get().id2offset(_seID) : 0;
-#endif
-#ifdef ENABLE_SKYRIM_VR
-                case Module::Runtime::VR:
-                    return _vrOffset;
-#endif
-                default:
-                    return 0;
-            }
-        }
-
-    private:
-        [[nodiscard]] static std::uintptr_t base() { return Module::get().base(); }
-
-#ifdef ENABLE_SKYRIM_SE
-        std::uint64_t _seID{0};
-#endif
-#ifdef ENABLE_SKYRIM_AE
-        std::uint64_t _aeID{0};
-#endif
-#ifdef ENABLE_SKYRIM_VR
-        std::uint64_t _vrOffset{0};
 #endif
     };
 }

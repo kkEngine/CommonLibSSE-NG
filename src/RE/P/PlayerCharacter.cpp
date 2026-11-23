@@ -70,22 +70,16 @@ namespace RE
 		return func(this);
 	}
 
-#ifndef ENABLE_SKYRIM_VR
 	void PlayerCharacter::EndGrabObject()
 	{
 		if (GetPlayerRuntimeData().grabType == GrabbingType::kNormal) {
 			DestroyMouseSprings();
 		}
 	}
-#endif
 
 	NiPointer<Actor> PlayerCharacter::GetActorDoingPlayerCommand() const
 	{
-        if SKYRIM_REL_CONSTEXPR (REL::Module::IsVR()) {
-            return REL::RelocateMember<ActorHandle>(this, 0, 0xE8C).get();
-        } else {
-            return REL::RelocateMemberIfNewer<ActorHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x894, 0x89C).get();
-        }
+        return REL::RelocateMemberIfNewer<ActorHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x894, AE1799Shift(0x89C)).get();
 	}
 
 	float PlayerCharacter::GetArmorValue(InventoryEntryData* a_form)
@@ -104,11 +98,7 @@ namespace RE
 
 	NiPointer<TESObjectREFR> PlayerCharacter::GetGrabbedRef()
 	{
-		if SKYRIM_REL_CONSTEXPR (Module::IsVR()) {
-			return nullptr;
-		} else {
-			return REL::RelocateMemberIfNewer<ObjectRefHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x8C8, 0x8D0).get();
-		}
+		return REL::RelocateMemberIfNewer<ObjectRefHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x8C8, AE1799Shift(0x8D0)).get();
 	}
 
 	std::int32_t PlayerCharacter::GetItemCount(TESBoundObject* a_object)
@@ -127,63 +117,42 @@ namespace RE
 
 	TintMask* PlayerCharacter::GetOverlayTintMask(TintMask* a_original)
 	{
-		if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
-			return nullptr;
-		} else {
-			auto* tryOverlayTintMasks = REL::RelocateMemberIfNewer<BSTArray<TintMask*>*>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB28, 0xB30);
-			if (!tryOverlayTintMasks) {
-				return nullptr;
-			}
-
-			auto& tintMasksValue = REL::RelocateMemberIfNewer<BSTArray<TintMask*>>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB10, 0xB18);
-			for (std::uint32_t i = 0; i < tintMasksValue.size(); ++i) {
-				if (tintMasksValue[i] == a_original) {
-					return i < tryOverlayTintMasks->size() ? (*tryOverlayTintMasks)[i] : nullptr;
-				}
-			}
-
+		auto* tryOverlayTintMasks = REL::RelocateMemberIfNewer<BSTArray<TintMask*>*>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB28, AE1799Shift(0xB30));
+		if (!tryOverlayTintMasks) {
 			return nullptr;
 		}
+
+		auto& tintMasksValue = REL::RelocateMemberIfNewer<BSTArray<TintMask*>>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB10, AE1799Shift(0xB18));
+		for (std::uint32_t i = 0; i < tintMasksValue.size(); ++i) {
+			if (tintMasksValue[i] == a_original) {
+				return i < tryOverlayTintMasks->size() ? (*tryOverlayTintMasks)[i] : nullptr;
+			}
+		}
+
+		return nullptr;
 	}
 
 	BSTArray<TintMask*>* PlayerCharacter::GetTintList()
 	{
-		if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
-			return nullptr;
-		} else {
-			auto* tryOverlayTintMasks = REL::RelocateMemberIfNewer<BSTArray<TintMask*>*>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB28, 0xB30);
-			return tryOverlayTintMasks ? tryOverlayTintMasks : &REL::RelocateMemberIfNewer<BSTArray<TintMask*>>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB10, 0xB18);
-		}
+		auto* tryOverlayTintMasks = REL::RelocateMemberIfNewer<BSTArray<TintMask*>*>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB28, AE1799Shift(0xB30));
+		return tryOverlayTintMasks ? tryOverlayTintMasks : &REL::RelocateMemberIfNewer<BSTArray<TintMask*>>(SKSE::RUNTIME_SSE_1_6_629, this, 0xB10, AE1799Shift(0xB18));
 	}
 
 	TintMask* PlayerCharacter::GetTintMask(std::uint32_t a_tintType, std::uint32_t a_index)
 	{
-		if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
-			return nullptr;
-		} else {
-			using func_t = decltype(&PlayerCharacter::GetTintMask);
-			REL::Relocation<func_t> func{ Offset::PlayerCharacter::GetTintMask };
-			return func(this, a_tintType, a_index);
-		}
+		using func_t = decltype(&PlayerCharacter::GetTintMask);
+		REL::Relocation<func_t> func{ Offset::PlayerCharacter::GetTintMask };
+		return func(this, a_tintType, a_index);
 	}
 
 	bool PlayerCharacter::HasActorDoingCommand() const
 	{
-        if SKYRIM_REL_VR_CONSTEXPR (REL::Module::IsVR()) {
-            return static_cast<bool>(REL::RelocateMember<ActorHandle>(this, 0, 0xE8C));
-        }
-        else {
-            return static_cast<bool>(REL::RelocateMemberIfNewer<ActorHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x894, 0x89C));
-        }
+        return static_cast<bool>(REL::RelocateMemberIfNewer<ActorHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x894, AE1799Shift(0x89C)));
 	}
 
 	bool PlayerCharacter::IsGrabbing() const
 	{
-		if SKYRIM_REL_CONSTEXPR (Module::IsVR()) {
-			return false;
-		} else {
-			return static_cast<bool>(REL::RelocateMemberIfNewer<ObjectRefHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x8C8, 0x8D0));
-		}
+		return static_cast<bool>(REL::RelocateMemberIfNewer<ObjectRefHandle>(SKSE::RUNTIME_SSE_1_6_629, this, 0x8C8, AE1799Shift(0x8D0)));
 	}
 
 	void PlayerCharacter::PlayMagicFailureSound(MagicSystem::SpellType a_spellType)
@@ -244,26 +213,26 @@ namespace RE
 
 	void PlayerCharacter::Unk_12A()
 	{
-		return RelocateVirtual<decltype(&PlayerCharacter::Unk_12A)>(0x12A, 0x12C, this);
+		return RelocateVirtual<decltype(&PlayerCharacter::Unk_12A)>(0x12A, this);
 	}
 
 	std::uint32_t PlayerCharacter::GetViolentCrimeGoldValue(const TESFaction* a_faction) const
 	{
-		return RelocateVirtual<decltype(&PlayerCharacter::GetViolentCrimeGoldValue)>(0x12B, 0x12D, this, a_faction);
+		return RelocateVirtual<decltype(&PlayerCharacter::GetViolentCrimeGoldValue)>(0x12B, this, a_faction);
 	}
 
 	std::uint32_t PlayerCharacter::GetNonViolentCrimeGoldValue(const TESFaction* a_faction) const
 	{
-		return RelocateVirtual<decltype(&PlayerCharacter::GetNonViolentCrimeGoldValue)>(0x12C, 0x12E, this, a_faction);
+		return RelocateVirtual<decltype(&PlayerCharacter::GetNonViolentCrimeGoldValue)>(0x12C, this, a_faction);
 	}
 
 	void PlayerCharacter::ClearAllCrimeGold(TESFaction* a_faction)
 	{
-		RelocateVirtual<decltype(&PlayerCharacter::ClearAllCrimeGold)>(0x12D, 0x12F, this, a_faction);
+		RelocateVirtual<decltype(&PlayerCharacter::ClearAllCrimeGold)>(0x12D, this, a_faction);
 	}
 
 	void PlayerCharacter::Unk_12E()
 	{
-		return RelocateVirtual<decltype(&PlayerCharacter::Unk_12E)>(0x12E, 0x130, this);
+		return RelocateVirtual<decltype(&PlayerCharacter::Unk_12E)>(0x12E, this);
 	}
 }

@@ -264,56 +264,6 @@ TEST_CASE("Module/SupportsSkyrimAE")
 }
 #endif
 
-#ifdef ENABLE_SKYRIM_VR
-TEST_CASE("Module/SupportsSkyrimVR")
-{
-	SECTION("Runtime is mockable")
-	{
-		REQUIRE(REL::Module::mock(SKSE::RUNTIME_VR_1_4_15, REL::Module::Runtime::VR, L"SkyrimVR.exe", 0x1000));
-	}
-	SECTION("Address Library format can be loaded")
-	{
-		CHECK(REL::IDDatabase::inject(
-			L"Data\\SKSE\\Plugins\\version-1-4-15-0.csv", REL::IDDatabase::Format::VR, SKSE::RUNTIME_VR_1_4_15));
-	}
-	SECTION("Lookup by ID returns the correct offset")
-	{
-		CHECK(REL::IDDatabase::get().id2offset(11483) == 0x11fba0);
-	}
-	SECTION("REL::ID gets correct address and offset")
-	{
-		REL::ID id(11483);
-		CHECK(id.offset() == 0x11fba0);
-		CHECK(id.address() == 0x120ba0);
-	}
-	SECTION("REL::RelocationID gets correct address and offset")
-	{
-		REL::RelocationID id(11483, 0);
-		CHECK(id.offset() == 0x11fba0);
-		CHECK(id.address() == 0x120ba0);
-
-		id = REL::RelocationID(0, 0, 11483);
-		CHECK(id.offset() == 0x11fba0);
-		CHECK(id.address() == 0x120ba0);
-	}
-	SECTION("REL::VariantID gets correct address and offset")
-	{
-		REL::VariantID id(0, 0, 0x11fba0);
-		CHECK(id.offset() == 0x11fba0);
-		CHECK(id.address() == 0x120ba0);
-	}
-	SECTION("REL::VariantOffset gets the correct address and offset")
-	{
-		REL::VariantOffset offset(0, 0, 0x11fba0);
-		CHECK(offset.offset() == 0x11fba0);
-		CHECK(offset.address() == 0x120ba0);
-	}
-	SECTION("ID database and module can be reset")
-	{
-		REL::Module::reset();
-	}
-}
-#endif
 
 TEST_CASE("IDDatabase/FailedIDLookup")
 {

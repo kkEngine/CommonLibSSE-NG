@@ -10,9 +10,6 @@ namespace RE
 
 	bool PlayerCamera::ForceFirstPerson()
 	{
-		if (REL::Module::IsVR()) {
-			return false;
-		}
 		using func_t = decltype(&PlayerCamera::ForceFirstPerson);
 		REL::Relocation<func_t> func{ RELOCATION_ID(49858, 50790) };
 		func(this);
@@ -21,9 +18,6 @@ namespace RE
 
 	bool PlayerCamera::ForceThirdPerson()
 	{
-		if (REL::Module::IsVR()) {
-			return false;
-		}
 		using func_t = decltype(&PlayerCamera::ForceThirdPerson);
 		REL::Relocation<func_t> func{ RELOCATION_ID(49863, 50796) };
 		func(this);

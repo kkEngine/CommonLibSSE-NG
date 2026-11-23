@@ -36,17 +36,13 @@ namespace REL
 
 		explicit constexpr VariantOffset(
 			[[maybe_unused]] std::size_t a_seOffset,
-			[[maybe_unused]] std::size_t a_aeOffset,
-			[[maybe_unused]] std::size_t a_vrOffset) noexcept
+			[[maybe_unused]] std::size_t a_aeOffset) noexcept
 		{
 #ifdef ENABLE_SKYRIM_SE
 			_seOffset = a_seOffset;
 #endif
 #ifdef ENABLE_SKYRIM_AE
 			_aeOffset = a_aeOffset;
-#endif
-#ifdef ENABLE_SKYRIM_VR
-			_vrOffset = a_vrOffset;
 #endif
 		}
 
@@ -67,10 +63,6 @@ namespace REL
 				case Module::Runtime::SE:
 					return _seOffset;
 #endif
-#ifdef ENABLE_SKYRIM_VR
-				case Module::Runtime::VR:
-					return _vrOffset;
-#endif
 				default:
 					return 0;
 			}
@@ -86,9 +78,6 @@ namespace REL
 #endif
 #ifdef ENABLE_SKYRIM_AE
 		std::size_t _aeOffset{0};
-#endif
-#ifdef ENABLE_SKYRIM_VR
-		std::size_t _vrOffset{0};
 #endif
 	};
 }

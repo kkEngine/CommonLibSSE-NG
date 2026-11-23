@@ -64,9 +64,12 @@ namespace RE
 
 	bool TESFile::SeekNextForm(bool a_skipIgnored)
 	{
-		using func_t = decltype(&TESFile::SeekNextForm);
+		// AE 1.7.99 reads a third argument (r8b), pass false like the game's own callers
+		constexpr bool kSkipFirstSubrecordRead = false;
+
+		using func_t = bool (*)(TESFile*, bool, bool);
 		REL::Relocation<func_t> func{ RELOCATION_ID(13894, 13979) };
-		return func(this, a_skipIgnored);
+		return func(this, a_skipIgnored, kSkipFirstSubrecordRead);
 	}
 
 	bool TESFile::SeekNextSubrecord()

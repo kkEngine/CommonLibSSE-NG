@@ -32,6 +32,21 @@ namespace RE
 			uint32_t                   unk40;                              // 040
 			uint32_t                   unk44;                              // 044
 			uint32_t                   unk48;                              // 048
+#ifdef SKYRIM_AE_1799
+			// AE 1.7.99 moved the frame fields and the textures below by 0x10 (checked against every rip-relative access)
+			float                      projectionPosScaleXUI;              // 04C
+			float                      projectionPosScaleYUI;              // 050
+			uint32_t                   uiFrameCount;                       // 054
+			uint32_t                   gUpdateCounter;                     // 058
+			uint32_t                   unk5C;                              // 05C
+			bool                       insideFrame;                        // 060
+			bool                       letterbox;                          // 061
+			bool                       unk52;                              // 062
+			bool                       unk63;                              // 063
+			bool                       compiledShaderThisFrame;            // 064
+			bool                       unk55;                              // 065 - useEarlyZ
+			std::uint8_t               unk66[0xA];                         // 066
+#else
 			uint32_t                   uiFrameCount;                       // 04C
 			bool                       insideFrame;                        // 050
 			bool                       letterbox;                          // 051
@@ -43,6 +58,7 @@ namespace RE
 			bool unk56;                                       // 056
 			bool doubleDynamicResolutionAdjustmentFrequency;  // 057
 			bool unk58;                                       // 058
+#endif
 #endif
 			NiPointer<NiSourceTexture> defaultTextureBlack;                     // 060
 			NiPointer<NiSourceTexture> defaultTextureWhite;                     // 068
@@ -66,7 +82,11 @@ namespace RE
 			bool                       canDecreaseDynamicResolution;            // 11D
 			bool                       canChangeDynamicResolution;              // 11E
 		};
-#ifdef SKYRIM_SUPPORT_AE
+#if defined(SKYRIM_AE_1799)
+		static_assert(offsetof(State, defaultTextureBlack) == 0x70);
+		static_assert(offsetof(State, dynamicResolutionWidthRatio) == 0x114);
+		static_assert(sizeof(State) == 0x130);
+#elif defined(SKYRIM_SUPPORT_AE)
 		static_assert(sizeof(State) == 0x120);
 #else
 		static_assert(sizeof(State) == 0x118);

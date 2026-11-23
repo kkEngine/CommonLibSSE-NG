@@ -1,20 +1,26 @@
 cmake_minimum_required(VERSION 3.23)
 
 option(SKSE_SUPPORT_XBYAK "Enables trampoline support for Xbyak." OFF)
-option(ENABLE_SKYRIM_SE "Enable support for Skyrim SE in the dynamic runtime feature." ON)
-option(ENABLE_SKYRIM_AE "Enable support for Skyrim AE in the dynamic runtime feature." ON)
-option(ENABLE_SKYRIM_VR "Enable support for Skyrim VR in the dynamic runtime feature." ON)
+# One build targets one runtime: Skyrim SE 1.5.97 or Skyrim AE 1.7.99+. AE 1.7.99 inserted virtual functions
+# into classes plugins derive from (MenuEventHandler, PlayerInputHandler), so the two can't share a binary.
+# AE before 1.7.99 (1.6.x) and VR are not supported.
+option(ENABLE_SKYRIM_SE "Build for Skyrim SE 1.5.97." OFF)
+option(ENABLE_SKYRIM_AE "Build for Skyrim AE 1.7.99+." ON)
 option(BUILD_TESTS "Enable building of the unit tests." ON)
 message("Options:")
 message("\tEnable Xbyak: ${SKSE_SUPPORT_XBYAK}")
-message("\tEnable Skyrim SE: ${ENABLE_SKYRIM_SE}")
-message("\tEnable Skyrim AE: ${ENABLE_SKYRIM_AE}")
-message("\tEnable Skyrim VR: ${ENABLE_SKYRIM_VR}")
+message("\tEnable Skyrim SE (1.5.97): ${ENABLE_SKYRIM_SE}")
+message("\tEnable Skyrim AE (1.7.99+): ${ENABLE_SKYRIM_AE}")
 message("\tBuild Tests: ${BUILD_TESTS}")
 
-if(NOT ENABLE_SKYRIM_SE AND NOT ENABLE_SKYRIM_AE AND NOT ENABLE_SKYRIM_VR)
-	message(FATAL_ERROR "At least one Skyrim runtime must be supported by the CommonLibSSE build.")
+if((ENABLE_SKYRIM_SE AND ENABLE_SKYRIM_AE) OR (NOT ENABLE_SKYRIM_SE AND NOT ENABLE_SKYRIM_AE))
+	message(FATAL_ERROR "Enable exactly one of ENABLE_SKYRIM_SE (1.5.97) and ENABLE_SKYRIM_AE (1.7.99+).")
 endif()
+
+if(ENABLE_SKYRIM_VR)
+	message(FATAL_ERROR "Skyrim VR is not supported by this CommonLibSSE.")
+endif()
+# ENABLE_SKYRIM_AE_1799 is implied by ENABLE_SKYRIM_AE; builds that still pass it are fine.
 
 project(
 	CommonLibSSE
@@ -33,7 +39,6 @@ if("${PROJECT_SOURCE_DIR}" STREQUAL "${PROJECT_BINARY_DIR}")
 endif()
 
 find_package(spdlog CONFIG REQUIRED)
-find_path(RAPIDCSV_INCLUDE_DIRS "rapidcsv.h")
 
 include(cmake/sourcelist.cmake)
 include(cmake/testlist.cmake)
@@ -66,7 +71,7 @@ target_compile_definitions(
 		"$<$<BOOL:${SKSE_SUPPORT_XBYAK}>:SKSE_SUPPORT_XBYAK=1>"
 		"$<$<BOOL:${ENABLE_SKYRIM_SE}>:ENABLE_SKYRIM_SE=1>"
 		"$<$<BOOL:${ENABLE_SKYRIM_AE}>:ENABLE_SKYRIM_AE=1>"
-		"$<$<BOOL:${ENABLE_SKYRIM_VR}>:ENABLE_SKYRIM_VR=1>"
+		"$<$<BOOL:${ENABLE_SKYRIM_AE}>:SKYRIM_AE_1799=1>"
 		HAS_SKYRIM_MULTI_TARGETING=1
 )
 
@@ -122,7 +127,6 @@ target_include_directories(
 	"${PROJECT_NAME}"
 	PRIVATE
 		${spdlog_INCLUDE_DIRS}
-		${RAPIDCSV_INCLUDE_DIRS}
 )
 
 target_compile_definitions(
@@ -202,7 +206,6 @@ if(BUILD_TESTS)
 		PRIVATE
 			${Catch2_INCLUDE_DIRS}
 			${spdlog_INCLUDE_DIRS}
-			${RAPIDCSV_INCLUDE_DIRS}
 	)
 
 	target_compile_definitions(

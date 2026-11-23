@@ -67,22 +67,22 @@ public:                                                                \
 
 		[[nodiscard]] inline RUNTIME_DATA& GetRuntimeData() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30, 0x40);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA& GetRuntimeData() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30, 0x40);
+			return REL::RelocateMember<RUNTIME_DATA>(this, 0x30);
 		}
 
 		[[nodiscard]] inline RUNTIME_DATA2& GetRuntimeData2() noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA2>(this, 0x48, 0x60);
+			return REL::RelocateMember<RUNTIME_DATA2>(this, 0x48);
 		}
 
 		[[nodiscard]] inline const RUNTIME_DATA2& GetRuntimeData2() const noexcept
 		{
-			return REL::RelocateMember<RUNTIME_DATA2>(this, 0x48, 0x60);
+			return REL::RelocateMember<RUNTIME_DATA2>(this, 0x48);
 		}
 
 		[[nodiscard]] inline EXTENDED_CONSOLE_DATA* TryGetExtendedConsoleData() noexcept
@@ -90,7 +90,7 @@ public:                                                                \
 			if (REL::Module::IsAE()) {
 				return nullptr;
 			}
-			return &REL::RelocateMember<EXTENDED_CONSOLE_DATA>(this, 0, 0x58);
+			return &REL::RelocateMember<EXTENDED_CONSOLE_DATA>(this, 0);
 		}
 
 		[[nodiscard]] inline const EXTENDED_CONSOLE_DATA* TryGetExtendedConsoleData() const noexcept
@@ -98,15 +98,13 @@ public:                                                                \
 			if (REL::Module::IsAE()) {
 				return nullptr;
 			}
-			return &REL::RelocateMember<EXTENDED_CONSOLE_DATA>(this, 0, 0x58);
+			return &REL::RelocateMember<EXTENDED_CONSOLE_DATA>(this, 0);
 		}
 
 		// members
-#ifndef SKYRIM_CROSS_VR
 		RUNTIME_DATA_CONTENT
 		EXTENDED_CONSOLE_DATA_CONTENT
 		RUNTIME_DATA_CONTENT2
-#endif
 
 	protected:
 		void
